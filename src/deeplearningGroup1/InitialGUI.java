@@ -1,3 +1,4 @@
+package deeplearningGroup1;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -51,7 +52,11 @@ public  class InitialGUI extends Application {
 	Image Check, Wrong;
 	CheckBox StudentCheckBox, TeacherCheckBox;
 	
+	@Override
+	public void start(Stage t) {}
+	
 
+	/*
 	@Override
 	public void start(Stage theFirstOne) {
 		
@@ -534,7 +539,7 @@ public  class InitialGUI extends Application {
 		theFirstOne.setScene(scene1);
 		theFirstOne.show();
 
-	}
+	}*/
 
 	public static void main(String[] args) {
 		launch(args);
