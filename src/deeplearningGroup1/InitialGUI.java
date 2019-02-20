@@ -1,4 +1,3 @@
-package deeplearningGroup1;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -58,9 +57,9 @@ public  class InitialGUI extends Application {
 		root = new Pane();
 		Scene scene1 = new Scene(root, 600, 600);		// new scene x = 600; y = 600
 		ImageView justImage = new ImageView();
-		/*Image Background = new Image("background.png");
+		Image Background = new Image("background.png");
 		justImage.setImage(Background);
-		root.getChildren().add(justImage);*/
+		root.getChildren().add(justImage);
 	//**************************************************************
 		//Creating the menu bar
 		
