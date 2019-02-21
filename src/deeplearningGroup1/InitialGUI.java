@@ -351,7 +351,7 @@ public  class InitialGUI extends Application {
 			    
 			    			
 			    	
-			    	if (passwordField.getText().contentEquals(RepeatPasswordField.getText()))		// checking if the text is equal to the other repeat password
+			    	if (passwordField.getText().contentEquals(RepeatPasswordField.getText()) && StudentCheckBox.isSelected())		// checking if the text is equal to the other repeat password
 		    						{
 		    						
 				    					Check = new Image("check image.png");
@@ -368,6 +368,15 @@ public  class InitialGUI extends Application {
 				    					GoodMessage.setEditable(false);
 				    					GoodMessage.setStyle("-fx-background-color: rgba(255, 255, 255, 1);");
 				    					CreateAccountPage.add(GoodMessage, 1, 9);
+				    					
+				    					 	
+				    					 				
+				    					 				StudentGUI studentGui = new StudentGUI();
+				    					 				studentGui.StudentBox();
+				    					 				theFirstOne.hide();
+				    					 		
+				    					 			
+				    					
 				    					
 				    					//GoodMessage.setText(Color.GREEN);
 				    					
