@@ -1,5 +1,6 @@
 package deeplearningGroup1;
 
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -27,13 +29,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 //variables 20
 //Creating the menu bar 34
 //Adding Action to the menu login 46
 //Login Info Page 90
 //Adding Action to the menu create account 186
-//edit
+//Antonino Abeshi
 
 public  class InitialGUI extends Application {
 	
@@ -52,18 +55,15 @@ public  class InitialGUI extends Application {
 	Image Check, Wrong;
 	CheckBox StudentCheckBox, TeacherCheckBox;
 	
-	
+
 	@Override
 	public void start(Stage theFirstOne) {
-		//ninosFunction(theFirstOne);
-	}
-	
-	public void ninosFunction(Stage theFirstOne) {
+		//nino's function 
 		
 		root = new Pane();
 		Scene scene1 = new Scene(root, 600, 600);		// new scene x = 600; y = 600
 		ImageView justImage = new ImageView();
-		Image Background = new Image("background.png");
+		Image Background = new Image("background.png"); //This background was givin us trouble so I deleted it. 
 		justImage.setImage(Background);
 		root.getChildren().add(justImage);
 	//**************************************************************
@@ -76,9 +76,9 @@ public  class InitialGUI extends Application {
 		name.setLayoutY(50);
 		root.getChildren().add(name);
 		
-		BEGIN = new MenuButton("Login/CreateAccount");
+		BEGIN = new MenuButton("Login/CreateAccount:");
 		Login = new MenuItem("Login");
-		CreateAccount = new MenuItem("CreateAccount");
+		CreateAccount = new MenuItem("Create Account");
 		BEGIN.getItems().addAll(Login, CreateAccount);
 		BEGIN.setLayoutX(200);
 		BEGIN.setLayoutY(300);
@@ -108,7 +108,7 @@ public  class InitialGUI extends Application {
 				loginTitle.setFont(Font.font("Times New Roman",FontWeight.NORMAL, 20));
 				userName = new Label("User Name:");
 			    userTextField = new TextField();
-			    password = new Label("Password");
+			    password = new Label("Password:");
 			    passwordField = new PasswordField();
 			    
 			    LoginPage.add(loginTitle, 0, 0,2,1);   //row 0, column 0, and spanning 2 columns  but only 1 row
@@ -126,13 +126,13 @@ public  class InitialGUI extends Application {
 			    LoginPage.add(horisontalBox, 1, 4);
 			    
 			    //Student or teacher checkbox (we will add events later)
-			    StudentCheckBox = new CheckBox();
-			    StudentCheckBox.setText("Student");
-			    LoginPage.add(StudentCheckBox, 0, 11);
+			    // StudentCheckBox = new CheckBox();
+			    //  StudentCheckBox.setText("Student");
+			    // LoginPage.add(StudentCheckBox, 0, 11);
 			    
-			    TeacherCheckBox = new CheckBox();
-			    TeacherCheckBox.setText("Teacher");
-			    LoginPage.add(TeacherCheckBox, 1, 11);
+			   // TeacherCheckBox = new CheckBox();
+			   // TeacherCheckBox.setText("Teacher");
+			   // LoginPage.add(TeacherCheckBox, 1, 11);
 			    
 			    
 			    writtenText = new Text();				// adding more text to the sign in box when pressing the sign in button
@@ -220,35 +220,35 @@ public  class InitialGUI extends Application {
 				
 				
 				//Enter Username
-				Username = new Label("Username");
-				CreateAccountPage.add(Username, 0, 3);
-				UsernameTextField = new TextField();
-				CreateAccountPage.add(UsernameTextField, 1, 3);
+				//Username = new Label("Username");
+				//CreateAccountPage.add(Username, 0, 3);
+				//UsernameTextField = new TextField();
+				//CreateAccountPage.add(UsernameTextField, 1, 3);
 				
 				//Enter Password
-			    password = new Label("Password");
+			    password = new Label("Password:");
 			    CreateAccountPage.add(password, 0, 4);
 			    passwordField = new PasswordField();
 			    CreateAccountPage.add(passwordField, 1, 4);
 
 			    //repeat Password
-			    RepeatPassword = new Label("Repeat Password");
+			    RepeatPassword = new Label("Repeat Password:");
 			    CreateAccountPage.add(RepeatPassword, 0, 5);
 			    RepeatPasswordField = new PasswordField();
 			    CreateAccountPage.add(RepeatPasswordField, 1, 5);
 
 			    //Enter Email Address
-			    emailAddress = new Label("Enter Email Address");
-			    CreateAccountPage.add(emailAddress, 0, 6);
+			    emailAddress = new Label("Enter Username or Email:");
+			    CreateAccountPage.add(emailAddress, 0, 3);
 			    emailAddressField = new TextField();
-			    CreateAccountPage.add(emailAddressField, 1, 6);
+			    CreateAccountPage.add(emailAddressField, 1, 3);
 			    
 				
 			    //Repeat Email Address
-			    emailAddress1 = new Label("Verify Email Address");
-			    CreateAccountPage.add(emailAddress1, 0, 7);
-			    emailAddressField1 = new TextField();
-			    CreateAccountPage.add(emailAddressField1, 1, 7);
+			    //emailAddress1 = new Label("Verify Email Address");
+			    //CreateAccountPage.add(emailAddress1, 0, 7);
+			    //emailAddressField1 = new TextField();
+			    //CreateAccountPage.add(emailAddressField1, 1, 7);
 			    
 			    // grid lines
 			    CreateAccountPage.setGridLinesVisible(false);
@@ -265,6 +265,7 @@ public  class InitialGUI extends Application {
 			    StudentCheckBox.setText("Student");
 			    CreateAccountPage.add(StudentCheckBox, 0, 11);
 			    
+			    // going to add teacher and student options 
 			    TeacherCheckBox = new CheckBox();
 			    TeacherCheckBox.setText("Teacher");
 			    CreateAccountPage.add(TeacherCheckBox, 1, 11);
@@ -281,7 +282,7 @@ public  class InitialGUI extends Application {
 			    	
 			    	System.out.println(FirstNameTextField.getText());
 			    	System.out.println(LastNameTextField.getText());
-			    	System.out.println(UsernameTextField.getText());
+			    	System.out.println(emailAddressField.getText());
 			    	
 			    	
 			    	
@@ -363,10 +364,14 @@ public  class InitialGUI extends Application {
 				    					check4.setFill(new ImagePattern(Check2));
 				    					CreateAccountPage.add(check4, 3, 5);
 				    					
-				    					Text WrongMessage = new Text();
-				    					WrongMessage.setText("  ");
-				    					CreateAccountPage.add(WrongMessage, 1, 9);
-				    					WrongMessage.setFill(Color.GREEN);
+				    					TextField GoodMessage = new TextField("Good Password");
+				    					GoodMessage.setEditable(false);
+				    					GoodMessage.setStyle("-fx-background-color: rgba(255, 255, 255, 1);");
+				    					CreateAccountPage.add(GoodMessage, 1, 9);
+				    					
+				    					//GoodMessage.setText(Color.GREEN);
+				    					
+				    					
 				    					
 		    						} else 
 				    					{
@@ -380,145 +385,15 @@ public  class InitialGUI extends Application {
 				    					check2.setFill(new ImagePattern(Wrong2));
 				    					CreateAccountPage.add(check2, 3, 5);
 				    					
-				    					Text WrongMessage1 = new Text();
-				    					WrongMessage1.setText("Passwords dont match");
-				    					WrongMessage1.setFill(Color.FIREBRICK);
-				    					CreateAccountPage.add(WrongMessage1, 1, 9);
+				    					TextField WrongMessage = new TextField("Passwords don't match");
+				    					WrongMessage.setEditable(false);
+				    					WrongMessage.setStyle("-fx-background-color: rgba(255, 255, 255, 1);");
+				    					//WrongMessage1.setText("Passwords dont match");
+				    					//WrongMessage1.setTextFill(Color.FIREBRICK);
+				    					CreateAccountPage.add(WrongMessage, 1, 9);
 				    				}
-    			
-    	
-    			
-		//******************************************************************************************************************	    	
-			    	//email comparison and stuff
-			    	System.out.println(emailAddressField.getText()); 
-			    	System.out.println(emailAddressField1.getText());
-			    	
-			    	if ((emailAddressField.getText().isEmpty()) && emailAddressField1.getText().isEmpty())
-			    		//if (!passwordField.getText().contentEquals(RepeatPasswordField.getText()))
-		    			{
-								{
-									
-									
-			    				Image imageX = new Image("x image.png");
-			    				Circle check5 = new Circle(10);
-			    				check5.setFill(new ImagePattern(imageX));
-			    				CreateAccountPage.add(check5, 3, 6);
-			    				
-			    				Image imageX2 = new Image("x image.png");
-		    					Circle check6 = new Circle(10);
-		    					check6.setFill(new ImagePattern(imageX2));
-		    					CreateAccountPage.add(check6, 3, 7);
-		    					
-			    				
-			    				
-			    				//ImageView checkView = new ImageView(Check);
-			    				//checkView.setPreserveRatio(true);
-			    				//CreateAccountPage.add(checkView, 0, 10);
-			    			
-			    			}
-		    			}
-			    	else if (!emailAddressField.getText().isEmpty() && !emailAddressField1.getText().isEmpty())  // checking if the textbox is embty
-			    				
-			    					{
-			    						
-			    					Image imageCheck = new Image("check image.png");
-			    					Circle check7 = new Circle(10);
-			    					check7.setFill(new ImagePattern(imageCheck));
-			    					CreateAccountPage.add(check7, 3, 6);
-			    					
-			    					Image imageCheck2 = new Image("check image.png");
-			    					Circle check8 = new Circle(10);
-			    					check8.setFill(new ImagePattern(imageCheck2));
-			    					CreateAccountPage.add(check8, 3, 7);
-			    					
-			    					Text WrongMessage = new Text();
-			    					WrongMessage.setText(" ");
-			    					CreateAccountPage.add(WrongMessage, 1, 10);
-			    					WrongMessage.setFill(Color.GREEN);
-			    					
-			    				}
-			    					else 
-			    					{
-			    						
-					    				Image imageX = new Image("x image.png");
-					    				Circle check5 = new Circle(10);
-					    				check5.setFill(new ImagePattern(imageX));
-					    				CreateAccountPage.add(check5, 3, 6);
-					    				
-					    				Image imageX2 = new Image("x image.png");
-				    					Circle check6 = new Circle(10);
-				    					check6.setFill(new ImagePattern(imageX2));
-				    					CreateAccountPage.add(check6, 3, 7);
-				    					Text WrongMessage = new Text();
-				    					
-				    					WrongMessage.setText("Emails dont match");
-				    					CreateAccountPage.add(WrongMessage, 1, 10);
-				    					WrongMessage.setFill(Color.FIREBRICK);
-				    					
-			    					}
-			    	if (emailAddressField.getText().contentEquals(emailAddressField1.getText()))		// checking if the text is equal to the other repeat password
-					{
-			    		Image imageCheck = new Image("check image.png");
-    					Circle check7 = new Circle(10);
-    					check7.setFill(new ImagePattern(imageCheck));
-    					CreateAccountPage.add(check7, 3, 6);
-    					
-    					Image imageCheck2 = new Image("check image.png");
-    					Circle check8 = new Circle(10);
-    					check8.setFill(new ImagePattern(imageCheck2));
-    					CreateAccountPage.add(check8, 3, 7);
-    					
-    					Text WrongMessage = new Text();
-    					WrongMessage.setText(" ");
-    					CreateAccountPage.add(WrongMessage, 1, 10);
-    					WrongMessage.setFill(Color.GREEN);
-					}
-			    	
-			    	else {
-			    		
-			    		Image imageX = new Image("x image.png");
-	    				Circle check5 = new Circle(10);
-	    				check5.setFill(new ImagePattern(imageX));
-	    				CreateAccountPage.add(check5, 3, 6);
-	    				
-	    				Image imageX2 = new Image("x image.png");
-    					Circle check6 = new Circle(10);
-    					check6.setFill(new ImagePattern(imageX2));
-    					CreateAccountPage.add(check6, 3, 7);
-    					
-    					Text WrongMessage = new Text();
-    					WrongMessage.setText("Emails dont match");
-    					WrongMessage.setFill(Color.FIREBRICK);
-    					CreateAccountPage.add(WrongMessage, 1, 10);
-			    	}
-			    			
-			    	
-			    	//-------------------------------------
-			    	//writtenText.setFill(Color.FIREBRICK);
-			    	//writtenText.setText("Create Account Pressed");
-			    	
-			    });
+			    }); 
 			    
-			  CreateAnAccountButton.addEventHandler(KeyEvent.KEY_PRESSED, ev -> 
-			    
-			    {
-			    	if(ev.getCode() == KeyCode.ENTER)						// if enter is pressed then you can sign in as well
-			    	{
-			    		System.out.println(FirstNameTextField.getText());
-				    	System.out.println(LastNameTextField.getText());
-				    	System.out.println(UsernameTextField.getText());
-				    	System.out.println(passwordField.getText());
-				    	System.out.println(RepeatPasswordField.getText());
-				    	System.out.println(emailAddressField.getText());
-				    	System.out.println(emailAddressField1.getText());
-			    		//writtenText.setFill(Color.FIREBRICK);
-				    	//writtenText.setText("Enter button pressed");
-			    		
-			    	}
-			    	
-			    });
-			    
-			  
 			  // back button 
 				Back1 = new Button("Back");
 				CreateAccountPage.add(Back1, 5, 9);
@@ -531,7 +406,7 @@ public  class InitialGUI extends Application {
 				
 					}
 				});
-			}
+			    }
 		});
 		
 		
