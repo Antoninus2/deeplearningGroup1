@@ -25,7 +25,7 @@ public class SQLConnection {
         String connectionUrl =
                 "jdbc:sqlserver://egs.database.windows.net:1433;"
                         + "database=egs;"
-                        + "user=username;"
+                        + "user=user;"
                         + "password=password;"
                         + "encrypt=true;"
                         + "trustServerCertificate=false;"
