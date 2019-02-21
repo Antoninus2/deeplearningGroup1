@@ -52,13 +52,13 @@ public  class InitialGUI extends Application {
 	Image Check, Wrong;
 	CheckBox StudentCheckBox, TeacherCheckBox;
 	
-	@Override
-	public void start(Stage t) {}
 	
-
-	/*
 	@Override
 	public void start(Stage theFirstOne) {
+		//ninosFunction(theFirstOne);
+	}
+	
+	public void ninosFunction(Stage theFirstOne) {
 		
 		root = new Pane();
 		Scene scene1 = new Scene(root, 600, 600);		// new scene x = 600; y = 600
@@ -539,7 +539,7 @@ public  class InitialGUI extends Application {
 		theFirstOne.setScene(scene1);
 		theFirstOne.show();
 
-	}*/
+	}
 
 	public static void main(String[] args) {
 		launch(args);

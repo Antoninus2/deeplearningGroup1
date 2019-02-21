@@ -11,12 +11,12 @@ public class Jarvis {
 	private final String fileNameWordList = "words.txt";
 	private String[] wordList;
 	
-	/*
+	
 	public static void main(String args[]) {
 		Jarvis j = new Jarvis();
 		j.loadWordList();
-		//j.printWords(5);
-	}*/
+		j.printWords(5);
+	}
 	
 	public Jarvis() {
 		
