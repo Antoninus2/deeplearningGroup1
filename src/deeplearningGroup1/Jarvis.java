@@ -13,22 +13,15 @@ public class Jarvis {
 	private String[] wordList;
 	private NeuralNet ai;
 	
-	
 	public static void main(String args[]) {
 		Essay essay = new Essay(1, 200, 4, "starter topic");
 		essay.writeEssay("Hello, worldd !");
 		Jarvis j = new Jarvis();
 		j.loadWordList();
-		/*
-		System.out.println("\nMisspellings:");
-		System.out.println(j.checkSpelling(essay));
+		int spelling = j.checkSpelling(essay);
+		int wordLimit = (j.checkWordLimit(essay) ? 1 : 0);
+		int grammar = j.checkGrammar(essay);
 		
-		System.out.println("\nWithin word Limit:");
-		System.out.println(j.checkWordLimit(essay));
-		
-		System.out.println("\nChecking Grammar:");
-		System.out.println(j.checkGrammar(essay));
-		*/
 		j.ai.print();
 	}
 	
