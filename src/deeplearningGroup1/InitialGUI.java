@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -28,6 +29,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 //variables 20
 //Creating the menu bar 34
@@ -35,9 +37,9 @@ import javafx.stage.Stage;
 //Login Info Page 90
 //Adding Action to the menu create account 186
 //Antonino Abeshi
-//
+
 public  class InitialGUI extends Application {
-	StudentAccount student;		//Lauren- create student object for Student Account
+	
 	// Variables
 	
 	Pane root;
@@ -56,8 +58,6 @@ public  class InitialGUI extends Application {
 
 	@Override
 	public void start(Stage theFirstOne) {
-		
-		StudentAccount student= new StudentAccount();		//Lauren
 		//nino's function 
 		
 		root = new Pane();
@@ -225,6 +225,12 @@ public  class InitialGUI extends Application {
 				//UsernameTextField = new TextField();
 				//CreateAccountPage.add(UsernameTextField, 1, 3);
 				
+				  //Enter Email Address
+			    emailAddress = new Label("Enter Username or Email:");
+			    CreateAccountPage.add(emailAddress, 0, 3);
+			    emailAddressField = new TextField();
+			    CreateAccountPage.add(emailAddressField, 1, 3);
+			    
 				//Enter Password
 			    password = new Label("Password:");
 			    CreateAccountPage.add(password, 0, 4);
@@ -237,11 +243,7 @@ public  class InitialGUI extends Application {
 			    RepeatPasswordField = new PasswordField();
 			    CreateAccountPage.add(RepeatPasswordField, 1, 5);
 
-			    //Enter Email Address
-			    emailAddress = new Label("Enter Username or Email:");
-			    CreateAccountPage.add(emailAddress, 0, 3);
-			    emailAddressField = new TextField();
-			    CreateAccountPage.add(emailAddressField, 1, 3);
+			  
 			    
 				
 			    //Repeat Email Address
@@ -280,19 +282,16 @@ public  class InitialGUI extends Application {
 			    CreateAnAccountButton.setOnAction(event1 -> 
 			    {
 			    	
-			    	student.setFirstName(FirstNameTextField.getText());		//Lauren- send stuff to account
-			    	student.setLastName(LastNameTextField.getText());
-			    	student.setEmail(emailAddressField.getText());
+			    	System.out.println(FirstNameTextField.getText());
+			    	System.out.println(LastNameTextField.getText());
+			    	System.out.println(emailAddressField.getText());
 			    	
 			    	
 			    	
 			    // comparing the password fields 
-			    	if(passwordField.getText().equals(RepeatPasswordField.getText())) {		//Lauren-send password to account
-			    		student.setPass(passwordField.getText());
-			    	}
+			    	
 			    	System.out.println(passwordField.getText());	
 			    	System.out.println(RepeatPasswordField.getText());
-			    
 			    	
 			    if ((passwordField.getText().isEmpty()) && RepeatPasswordField.getText().isEmpty())
 			    		//if (passwordField.getText().contentEquals(RepeatPasswordField.getText()))
