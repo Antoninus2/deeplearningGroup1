@@ -35,7 +35,7 @@ import javafx.stage.Stage;
 //Login Info Page 90
 //Adding Action to the menu create account 186
 //Antonino Abeshi
-
+//
 public  class InitialGUI extends Application {
 	StudentAccount student;		//Lauren- create student object for Student Account
 	// Variables
