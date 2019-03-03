@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -19,6 +20,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -63,7 +68,9 @@ public  class InitialGUI extends Application {
 		root = new Pane();
 		Scene scene1 = new Scene(root, 600, 600);		// new scene x = 600; y = 600
 		ImageView justImage = new ImageView();
-		Image Background = new Image("background.png"); //This background was givin us trouble so I deleted it. 
+		justImage.setFitHeight(600);
+		justImage.setFitWidth(600);
+		Image Background = new Image("sure.jpg"); 
 		justImage.setImage(Background);
 		root.getChildren().add(justImage);
 	//**************************************************************
@@ -89,12 +96,30 @@ public  class InitialGUI extends Application {
 		
 		Login.setOnAction(new EventHandler<ActionEvent>() {
 			
+			
 			@Override
 			public void handle(ActionEvent event) {
+			
 				LoginPage = new GridPane();
+				Image image2 = new Image ("sure.jpg");
+				LoginPage.setBackground(new Background(new BackgroundImage(image2,BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));
 				Scene scene2 = new Scene(LoginPage, 600,600);
 				theFirstOne.setScene(scene2);
 				theFirstOne.setTitle("LOGIN");
+				
+				/* 
+				 * Creates an Image for the background of the login page
+			 * 
+			 * 
+			 */
+				
+				/*ImageView LoginImage = new ImageView();
+				LoginImage.setFitHeight(600);
+				LoginImage.setFitWidth(600);
+				Image Background = new Image("sure.jpg"); 
+				LoginImage.setImage(Background);
+				LoginPagePane.getChildren().add(LoginImage);*/
+				
 				
 	//**************************************************************************************			
 			//Login Information and Login page in general 
@@ -117,7 +142,20 @@ public  class InitialGUI extends Application {
 			    LoginPage.add(password, 0, 2);
 			    LoginPage.add(passwordField, 1, 2);
 			    
-			    LoginPage.setGridLinesVisible(false);
+			    LoginPage.setGridLinesVisible(false);  // observing the grid lines for visual help
+			    
+			    Hyperlink forgotPassword = new Hyperlink("ForgotPassword");  // forgot password will open a new window 
+			    LoginPage.add(forgotPassword, 0, 7);
+			    
+			    forgotPassword.setOnAction(event5 -> {						// once the hyperlink is selected it will sent the person to a window which they will have to retrieve their password
+			    	
+			    	PasswordRetrievalGUI retrievePassword = new PasswordRetrievalGUI();   
+	 				retrievePassword.PasswordReset();
+	 				theFirstOne.hide();
+	 		
+			    });
+			    
+			    
 			    
 			    SignInButton = new Button("Sign In");
 			    horisontalBox = new HBox(10);
@@ -160,10 +198,8 @@ public  class InitialGUI extends Application {
 			    	}
 			    	
 			    });
-			    
-			    
-			
-	//**************************************************************************************************	
+			   
+	
 			// Back button 
 				Back = new Button("Back");
 				LoginPage.add(Back, 5, 7);			//creating a back button
@@ -190,6 +226,8 @@ public  class InitialGUI extends Application {
 			public void handle(ActionEvent event) {
 				CreateAccountPage = new GridPane();
 				Scene scene3 = new Scene(CreateAccountPage, 600,600);
+				Image image3 = new Image ("sure.jpg");
+				CreateAccountPage.setBackground(new Background(new BackgroundImage(image3,BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));
 				theFirstOne.setScene(scene3);
 				theFirstOne.setTitle("CREATE ACCOUNT");
 				
