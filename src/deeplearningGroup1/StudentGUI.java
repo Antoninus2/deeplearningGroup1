@@ -85,10 +85,13 @@ public class StudentGUI{
 		pane1.add(clickToSubmit, 4, 25, 5,1);
 		clickToSubmit.setOnAction(event1 -> 
 	    {
-	    	Essay e = new Essay(0, 300, 4, "topic");
+	    	String topic = essayTopic.getText();
+	    	Essay e = new Essay(0, 300, 4, topic);
 	    	e.writeEssay(enterTextField.getText());
-	    	double grade = jarvis.gradeEssay(e);
+	    	//TODO: here you go nino, call this function:
+	    	String grade = jarvis.gradeEssay(e);
 	    	
+	    	System.out.println("Topic: " + topic);
 	    	System.out.println("Essay: \n{\n" + enterTextField.getText() + "\n}");
 	    	System.out.println("Grade: " + grade);
 	    	
