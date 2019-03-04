@@ -9,6 +9,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
@@ -36,11 +42,14 @@ public class StudentGUI{
 	}
    
 	/**
-	 * @StudentBox creating a student box
+	 * @StudentBox creating a student box for them to writte the essay in
+	 * 
 	 */
 	public void StudentBox() 
 	{
 		pane1 = new GridPane();
+		Image image2 = new Image ("sure.jpg");
+		pane1.setBackground(new Background(new BackgroundImage(image2,BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));
 		
 		pane1.setPadding(new Insets(25,25,25,25));
 		pane1.setAlignment(Pos.TOP_LEFT);
@@ -71,7 +80,7 @@ public class StudentGUI{
 		enterTextField.setWrapText(true);
 		pane1.add(enterTextField, 0, 4, 10, 10);
 		
-		clickToSubmit = new Button("Click To Submit");   //button to submbit
+		clickToSubmit = new Button("Click To Submit");   //button to submit
 		pane1.add(clickToSubmit, 4, 25, 5,1);
 		clickToSubmit.setOnAction(event1 -> 
 	    {
