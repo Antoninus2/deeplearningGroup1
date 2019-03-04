@@ -35,8 +35,12 @@ public class Jarvis {
 	public static void main(String args[]) {
 		Essay essay = new Essay(1, 200, 4, "starter topic");
 		essay.writeEssay("Hello , worldd !");
+		Jarvis jarvis = new Jarvis();
+		
+		jarvis.log("Grade: " + jarvis.gradeEssay(essay));
 	}
 	*/
+	
 	/**
 	 * creates a new Jarvis, loads the wordList, sets the weights and biases of the neural network, then creates the neural network from those weights/biases
 	 */
@@ -70,11 +74,11 @@ public class Jarvis {
 		}));
 		
 		biases.add(new Matrix(new double[][] {
-			{5},
-			{5},
-			{5},
-			{5},
-			{5}
+			{6},
+			{7},
+			{8},
+			{9},
+			{0}
 		}));
 		
 		 createNeuralNet(layerNames, weights, biases);
@@ -197,8 +201,10 @@ public class Jarvis {
 		String grade = "No Grade";
 		double gradeNumber = 0;
 		for (int i = 0; i < output.getM(); i++) {
-			if (output.get(i, 1) > gradeNumber)
+			if (output.get(i, 0) > gradeNumber) {
 				grade = grades[i];
+				gradeNumber = output.get(i, 0);
+			}
 		}
 		return grade;
 	}

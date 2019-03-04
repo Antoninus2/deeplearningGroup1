@@ -47,7 +47,11 @@ public  class InitialGUI extends Application {
 	
 	// Variables
 	
-	Jarvis jarvis;
+	/**
+	 * Jarvis is the neural network for grading essays
+	 */
+	private Jarvis jarvis;
+	
 	Pane root;
 	MenuButton BEGIN;
 	MenuItem Login, CreateAccount;

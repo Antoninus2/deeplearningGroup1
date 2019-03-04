@@ -55,6 +55,10 @@ public class NeuralLayer {
 		return m;
 	}
 	
+	public void print() {
+		
+	}
+	
 	private void log(String msg) {
 		System.out.println(msg);
 	}
