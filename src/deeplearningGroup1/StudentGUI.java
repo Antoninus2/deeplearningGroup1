@@ -35,10 +35,11 @@ public class StudentGUI{
 	private TextField enterEssayTopic;
 	private TextArea enterTextField;
 	private Text essayTopic, enterText;
+	private Jarvis jarvis;
 	
 	
-	public StudentGUI() {
-		
+	public StudentGUI(Jarvis jarvis) {
+		this.jarvis = jarvis;
 	}
    
 	/**
@@ -84,9 +85,12 @@ public class StudentGUI{
 		pane1.add(clickToSubmit, 4, 25, 5,1);
 		clickToSubmit.setOnAction(event1 -> 
 	    {
+	    	Essay e = new Essay(0, 300, 4, "topic");
+	    	e.writeEssay(enterTextField.getText());
+	    	double grade = jarvis.gradeEssay(e);
 	    	
-	    	
-	    	System.out.println(enterTextField.getText());
+	    	System.out.println("Essay: \n{\n" + enterTextField.getText() + "\n}");
+	    	System.out.println("Grade: " + grade);
 	    	
 	    });
 		

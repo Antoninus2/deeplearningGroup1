@@ -2,16 +2,20 @@ package deeplearningGroup1;
 
 public class NeuralLayer {
 	
+	private String id;
+	
 	private Matrix weights;
 	
 	private Matrix bias;
 	
-	public NeuralLayer(Matrix weights, Matrix bias) {
+	public NeuralLayer(String id, Matrix weights, Matrix bias) {
+		this.id = id;
 		this.weights = weights;
 		this.bias = bias;
 	}
 	
-	public NeuralLayer(int weightWidth, int weightHeight, int biasHeight) {
+	public NeuralLayer(String id, int weightWidth, int weightHeight, int biasHeight) {
+		this.id = id;
 		double[][] weights = new double[weightHeight][weightWidth];
 		double[][] bias = new double[biasHeight][1];
 		
@@ -38,14 +42,13 @@ public class NeuralLayer {
 	}
 	
 	public Matrix calculateSigmoid(Matrix input) {
-		log("Calculating sigmoid...");
-		if (weights.getWidth() != input.getHeight()) {
-			log("ERROR: sigmoid size incompatibility:\nweights width = " + weights.getWidth() + ", input height = " + input.getHeight());
+		if (weights.getN() != input.getM()) {
+			log("ERROR: sigmoid size incompatibility:\nweights width = " + weights.getN() + ", input height = " + input.getM());
 			System.exit(1);
 		}
 		Matrix m = weights.multiply(input).plus(bias);
-		for (int i = 0; i < m.getHeight(); i++) {
-			for (int j = 0; j < m.getWidth(); j++) {
+		for (int i = 0; i < m.getM(); i++) {
+			for (int j = 0; j < m.getN(); j++) {
 				m.set(i, j, 1/(1+Math.exp(-1*m.get(i, j))));
 			}
 		}
