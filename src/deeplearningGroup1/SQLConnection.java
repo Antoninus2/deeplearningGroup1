@@ -1,10 +1,9 @@
 package deeplearningGroup1;
 
-// Name: Timothy Mitchell
-// Project: Essay Grading System - SE 300
-// Group Members: Jimmy, Steven, Nino, Lauren, and Gurvir
-// Date: 02/19/19
-// Credit: Microsoft SQL Server Tutorial
+/**
+ * @author Timothy Mitchell
+ *
+ */
 
 
 import java.sql.Connection;
@@ -15,10 +14,10 @@ import java.sql.Statement;
 
 public class SQLConnection {
 	
-	/*
+	
 	public static void main(String[] args) {
 		connect();
-	}*/
+	}
 	
     // Connect to the egs database.
     public static void connect() {
@@ -43,7 +42,7 @@ public class SQLConnection {
         	// Print results from select statement for all five columns
         	while (resultSet.next()) {
             	System.out.println(resultSet.getString(1) + " | " + resultSet.getString(2) + " | " + 
-            		resultSet.getString(3) + " | " + resultSet.getString(4));// + " | " + resultSet.getString(5));
+            		resultSet.getString(3) + " | " + resultSet.getString(4) + " | " + resultSet.getString(5));
         	}
         	
         }
@@ -51,5 +50,9 @@ public class SQLConnection {
         catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void saveData (double[][] data, String table) {
+    	
     }
 }

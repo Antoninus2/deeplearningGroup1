@@ -197,10 +197,11 @@ public  class InitialGUI extends Application {
 			    	writtenText.setText("Sign in button pressed");
 			    	
 			    	// Connects to sql
+			    	// TODO: correct the sql connection stuff
 			    	String connectionUrl =
 			                "jdbc:sqlserver://egs.database.windows.net:1433;"
 			                        + "database=egs;"
-			                        + "user=egs;"
+			                        + "user=user;"
 			                        + "password=Grading2019!;"
 			                        + "encrypt=true;"
 			                        + "trustServerCertificate=false;"
@@ -213,18 +214,23 @@ public  class InitialGUI extends Application {
 
 			            // Do a select statement that shows the entire table
 			        	String string1 = "'"+userTextField.getText()+"'";
-			            String selectSql = "SELECT Passwords from dbo.User_Info where Username = " + string1; //dbo.Essays
+			            String selectSql = "SELECT Passwords, User_Type from dbo.User_Info where Username = " + string1; //dbo.Essays
 			        	resultSet = statement.executeQuery(selectSql);
 			        	
 			        	// Retrieves passwords from sql and checks it with login password
 			        	while (resultSet.next()) {
 			            	String sqlPasswords = resultSet.getString(1);
+			            	String sqlUserType = resultSet.getString(2);
 			            	System.out.println(resultSet.getString(1));
-			            	if (sqlPasswords == passwordField.getText()) {
-						        // Brings you to your account
-				 				StudentGUI studentGui = new StudentGUI();
-				 				studentGui.StudentBox();
-				 				theFirstOne.hide();
+			            	if (sqlPasswords.equals(passwordField.getText())) {
+			            		if (sqlUserType.equals("Student")) {
+							        // Brings you to your student account
+					 				StudentGUI studentGui = new StudentGUI(jarvis);
+					 				studentGui.StudentBox();
+					 				theFirstOne.hide();
+			            		} else if (sqlUserType.equals("Teacher")) {
+			            			// Go to teacher account
+			            		}
 				        	}
 			        	}
 			        	
@@ -252,10 +258,11 @@ public  class InitialGUI extends Application {
 				    	writtenText.setText("Enter button pressed");
 				    	
 				    	// Connects to sql
+				    	// TODO: correct the sql connection stuff
 				    	String connectionUrl =
 				                "jdbc:sqlserver://egs.database.windows.net:1433;"
 				                        + "database=egs;"
-				                        + "user=egs;"
+				                        + "user=user;"
 				                        + "password=Grading2019!;"
 				                        + "encrypt=true;"
 				                        + "trustServerCertificate=false;"
@@ -268,18 +275,23 @@ public  class InitialGUI extends Application {
 
 				            // Do a select statement that shows the entire table
 				        	String string1 = "'"+userTextField.getText()+"'";
-				            String selectSql = "SELECT Passwords from dbo.User_Info where Username = " + string1; //dbo.Essays
+				            String selectSql = "SELECT Passwords, User_Type from dbo.User_Info where Username = " + string1; //dbo.Essays
 				        	resultSet = statement.executeQuery(selectSql);
 				        	
 				        	// Retrieves passwords from sql and checks it with login password
 				        	while (resultSet.next()) {
 				            	String sqlPasswords = resultSet.getString(1);
+				            	String sqlUserType = resultSet.getString(2);
 				            	System.out.println(resultSet.getString(1));
-				            	if (sqlPasswords == passwordField.getText()) {
-							        // Brings you to your account
-					 				StudentGUI studentGui = new StudentGUI();
-					 				studentGui.StudentBox();
-					 				theFirstOne.hide();
+				            	if (sqlPasswords.equals(passwordField.getText())) {
+				            		if (sqlUserType.equals("Student")) {
+								        // Brings you to your student account
+						 				StudentGUI studentGui = new StudentGUI(jarvis);
+						 				studentGui.StudentBox();
+						 				theFirstOne.hide();
+				            		} else if (sqlUserType.equals("Teacher")) {
+				            			// Go to teacher account
+				            		}
 					        	}
 				        	}
 				        	
@@ -426,10 +438,11 @@ public  class InitialGUI extends Application {
 			    	
 			    	
 			    	// Connects to sql
+			    	// TODO: correct the sql connection stuff
 			    	String connectionUrl =
 			                "jdbc:sqlserver://egs.database.windows.net:1433;"
 			                        + "database=egs;"
-			                        + "user=egs;"
+			                        + "user=user;"
 			                        + "password=Grading2019!;"
 			                        + "encrypt=true;"
 			                        + "trustServerCertificate=false;"
@@ -440,8 +453,14 @@ public  class InitialGUI extends Application {
 			        try (Connection connection = DriverManager.getConnection(connectionUrl);
 			        	Statement statement = connection.createStatement();) {
 
+			        	String user_type = null;
+			        	if (StudentCheckBox.isSelected()) {
+			        		user_type = "Student";
+			        	} else if (TeacherCheckBox.isSelected()) {
+			        		user_type = "Teacher";
+			        	}
 			            // Do a select statement that shows the entire table
-			        	String string1 = "('" + FirstNameTextField.getText()+ "', '" + LastNameTextField.getText() + "', '" + emailAddressField.getText() + "', '" + passwordField.getText() + "',null);";
+			        	String string1 = "('" + FirstNameTextField.getText()+ "', '" + LastNameTextField.getText() + "', '" + emailAddressField.getText() + "', '" + passwordField.getText() + "', '" + user_type + "');";
 			            String selectSql = "INSERT INTO dbo.User_Info (First_Name,Last_Name,Username,Passwords,User_Type) values " + string1; //dbo.Essays
 			        	resultSet = statement.execute(selectSql);
 			        	
