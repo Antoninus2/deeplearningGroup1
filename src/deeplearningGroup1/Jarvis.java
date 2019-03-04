@@ -2,7 +2,7 @@ package deeplearningGroup1;
 
 /**
  * @author Steven Rose
- * @version 0.8
+ * @version 0.7
  * @see Matrix
  */
 
@@ -81,13 +81,15 @@ public class Jarvis {
 	}
 	
 	/**
-	 * Creates a neural network based on the input id strings
-	 * @param layerNames
-	 * 		An array of the id's of each layer in the network
-	 * @param idStrings
-	 * 		A 2D List of the id's of each neuron in the network, arranged by layer
+	 * Creates and populates the neuralLayers List
+	 * @param names
+	 * 		Array of strings for ids of each neural layer
+	 * @param weights
+	 * 		List of Matrix of weights from one layer to the next, each Matrix of size [output x input]
+	 * @param biases
+	 * 		List of column Matrix of biases for each layer, each bias of size [output x 1]
 	 */
-	public void createNeuralNet(String[] names, List< Matrix > weights, List< Matrix > biases) {
+	private void createNeuralNet(String[] names, List< Matrix > weights, List< Matrix > biases) {
 		if (weights.size() != biases.size()) {
 			log("ERROR: # of weights and biases do not match:");
 			log("# of weight matrices = " + weights.size());
@@ -104,9 +106,9 @@ public class Jarvis {
 	/**
 	 * calculates the output of the neural network given an input
 	 * @param input
-	 * 		a column matrix of inputs to the neural network
+	 * 		Column Matrix of inputs to the neural network
 	 * @return
-	 * 		a column matrix of values from 0..1 for each output neuron
+	 * 		Column Matrix of values from 0..1 for each output neuron
 	 */
 	public Matrix calculateOutput(Matrix input) {
 		return calculateOutput(input, neuralLayers.size()-1);
@@ -115,13 +117,13 @@ public class Jarvis {
 	/**
 	 * Iteratively calculates output of each layer in the network based on the output of the previous layer
 	 * @param input
-	 * 		column matrix of input values from previous layer
+	 * 		Column Matrix of input values from previous layer
 	 * @param i
-	 * 		which layer the output is being calculated for
+	 * 		Which layer the output is being calculated for
 	 * @return
-	 * 		
+	 * 		Column Matrix of output for current layer
 	 */
-	public Matrix calculateOutput(Matrix input, int i) {
+	private Matrix calculateOutput(Matrix input, int i) {
 		if (i == 0) {
 			return neuralLayers.get(i).calculateSigmoid(input);
 		} else {
@@ -129,7 +131,17 @@ public class Jarvis {
 		}
 	}
 	
-	public Matrix deltaOutput(Matrix output, Matrix desiredOutput) {
+	/**
+	 * Calculates the desired change to the output to achieve the desiredOutput
+	 * Not implemented as of version 0.7
+	 * @param output
+	 * 		Column Matrix of actual output of neural network
+	 * @param desiredOutput
+	 * 		Column Matrix of desired output of neural network
+	 * @return
+	 * 		Column Matrix of desired changes to actual output to achieve desired output
+	 */
+	private Matrix deltaOutput(Matrix output, Matrix desiredOutput) {
 		Matrix delC_delA = output.minus(desiredOutput).multiply(2);
 		Matrix delSigma_delZ = new Matrix(output.getM(), 1);
 		for (int i = 0; i < output.getM(); i++) {
@@ -139,11 +151,24 @@ public class Jarvis {
 		return delC_delA.elementMultiply(delSigma_delZ);
 	}
 	
-	public void deltaLayer(Matrix deltaLayerPlusOne) {
+	/**
+	 * Calculates the desired changes to weights and biases for a given layer to achieve the desired output
+	 * Not implemented as of version 0.7
+	 * @param deltaLayerPlusOne
+	 * 		Column Matrix of desired changes to layer after current layer
+	 */
+	private void deltaLayer(Matrix deltaLayerPlusOne) {
 		
 	}
 	
-	public double gradeEssay(Essay essay) {
+	/**
+	 * Grades an essay
+	 * @param essay
+	 * 		Essay to be graded
+	 * @return
+	 * 		Grade for the essay
+	 */
+	public String gradeEssay(Essay essay) {
 		double spelling = checkSpelling(essay);
 		double wordLimit = (checkWordLimit(essay) ? 1 : 0);
 		double grammar = checkGrammar(essay);
@@ -157,6 +182,7 @@ public class Jarvis {
 		});
 		Matrix output = calculateOutput(input);
 		output.print();
+		/*
 		Matrix desiredOutput = new Matrix(output.getM(), output.getN());
 		desiredOutput.set(0, 0, .5);
 		Matrix dC_da = new Matrix(output.getM(), output.getN());
@@ -165,8 +191,16 @@ public class Jarvis {
 				dC_da.set(i, j, 2*(output.get(i, j) - desiredOutput.get(i, j)));
 			}
 		}
+		*/
 		
-		return output.get(0, 0);
+		String[] grades = {"A", "B", "C", "D", "F"};
+		String grade = "No Grade";
+		double gradeNumber = 0;
+		for (int i = 0; i < output.getM(); i++) {
+			if (output.get(i, 1) > gradeNumber)
+				grade = grades[i];
+		}
+		return grade;
 	}
 	
 	/**

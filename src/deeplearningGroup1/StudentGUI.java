@@ -87,7 +87,7 @@ public class StudentGUI{
 	    {
 	    	Essay e = new Essay(0, 300, 4, "topic");
 	    	e.writeEssay(enterTextField.getText());
-	    	double grade = jarvis.gradeEssay(e);
+	    	String grade = jarvis.gradeEssay(e);
 	    	
 	    	System.out.println("Essay: \n{\n" + enterTextField.getText() + "\n}");
 	    	System.out.println("Grade: " + grade);
