@@ -1,6 +1,14 @@
 package deeplearningGroup1;
 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -143,7 +151,7 @@ public  class InitialGUI extends Application {
 			    	System.out.println(userTextField.getText());
 			    	System.out.println(passwordField.getText());
 			    	writtenText.setFill(Color.FIREBRICK);
-			    	writtenText.setText("Sign in button presed");
+			    	writtenText.setText("Sign in button pressed");
 			    	
 			    });
 			    
@@ -271,6 +279,8 @@ public  class InitialGUI extends Application {
 			    CreateAccountPage.add(TeacherCheckBox, 1, 11);
 			    
 			    
+			    
+			    
 				 
 			    //displays the text after pressing the button to create account 
 			    //writtenText = new Text();				// adding more text to the sign in box when pressing the sign in button
@@ -284,7 +294,41 @@ public  class InitialGUI extends Application {
 			    	System.out.println(LastNameTextField.getText());
 			    	System.out.println(emailAddressField.getText());
 			    	
-			    	
+			    	String connectionUrl =
+			                "jdbc:sqlserver://egs.database.windows.net:1433;"
+			                        + "database=egs;"
+			                        + "user=egs;"
+			                        + "password=Grading2019!;"
+			                        + "encrypt=true;"
+			                        + "trustServerCertificate=false;"
+			                        + "loginTimeout=30;";
+			        
+			        boolean resultSet;
+
+			        try (Connection connection = DriverManager.getConnection(connectionUrl);
+			        	Statement statement = connection.createStatement();) {
+
+			            // Do a select statement that shows the entire table
+			        	String string1 = "('" + FirstNameTextField.getText()+ "', '" + LastNameTextField.getText() + "', '" + emailAddressField.getText() + "', '" + passwordField.getText() + "',null);";
+			        	//string1 = "('first name','last name','email','pass','userType')";
+			            String selectSql = "INSERT INTO dbo.User_Info (First_Name,Last_Name,Username,Passwords,User_Type) values " + string1; //dbo.Essays
+			        	resultSet = statement.execute(selectSql);
+			        	
+			        	/*
+			        	// Print results from select statement for all five columns
+			        	while (resultSet.next()) {
+			            	//String username = resultSet.getString(1);
+			            	String password = resultSet.getString(2); 
+			        	}
+			        	*/
+			        	
+			        }
+			        // Handle any errors that may have occurred.
+			        catch (SQLServerException e) {
+			            e.printStackTrace();
+			        } catch (SQLException e) {
+						e.printStackTrace();
+					}
 			    	
 			    // comparing the password fields 
 			    	
@@ -401,6 +445,15 @@ public  class InitialGUI extends Application {
 				    					//WrongMessage1.setTextFill(Color.FIREBRICK);
 				    					CreateAccountPage.add(WrongMessage, 1, 9);
 				    				}
+			    	
+			    	
+			    	
+			    	
+
+			        
+			        
+			        
+			        
 			    }); 
 			    
 			  // back button 
