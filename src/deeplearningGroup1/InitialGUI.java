@@ -206,7 +206,7 @@ public  class InitialGUI extends Application {
 			                "jdbc:sqlserver://egs.database.windows.net:1433;"
 			                        + "database=egs;"
 			                        + "user=user;"
-			                        + "password=Grading2019!;"
+			                        + "password=password;"
 			                        + "encrypt=true;"
 			                        + "trustServerCertificate=false;"
 			                        + "loginTimeout=30;";
@@ -234,6 +234,7 @@ public  class InitialGUI extends Application {
 					 				theFirstOne.hide();
 			            		} else if (sqlUserType.equals("Teacher")) {
 			            			// Go to teacher account
+			            			// TODO: Jimmy add teacher account acccess here
 			            		}
 				        	}
 			        	}
@@ -267,7 +268,7 @@ public  class InitialGUI extends Application {
 				                "jdbc:sqlserver://egs.database.windows.net:1433;"
 				                        + "database=egs;"
 				                        + "user=user;"
-				                        + "password=Grading2019!;"
+				                        + "password=password;"
 				                        + "encrypt=true;"
 				                        + "trustServerCertificate=false;"
 				                        + "loginTimeout=30;";
@@ -295,6 +296,7 @@ public  class InitialGUI extends Application {
 						 				theFirstOne.hide();
 				            		} else if (sqlUserType.equals("Teacher")) {
 				            			// Go to teacher account
+				            			// TODO: Jimmy add teacher account acccess here
 				            		}
 					        	}
 				        	}
@@ -447,7 +449,7 @@ public  class InitialGUI extends Application {
 			                "jdbc:sqlserver://egs.database.windows.net:1433;"
 			                        + "database=egs;"
 			                        + "user=user;"
-			                        + "password=Grading2019!;"
+			                        + "password=password;"
 			                        + "encrypt=true;"
 			                        + "trustServerCertificate=false;"
 			                        + "loginTimeout=30;";
