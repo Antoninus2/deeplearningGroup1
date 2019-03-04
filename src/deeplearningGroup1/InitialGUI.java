@@ -191,6 +191,49 @@ public  class InitialGUI extends Application {
 			    	writtenText.setFill(Color.FIREBRICK);
 			    	writtenText.setText("Sign in button pressed");
 			    	
+			    	// Connects to sql
+			    	String connectionUrl =
+			                "jdbc:sqlserver://egs.database.windows.net:1433;"
+			                        + "database=egs;"
+			                        + "user=egs;"
+			                        + "password=Grading2019!;"
+			                        + "encrypt=true;"
+			                        + "trustServerCertificate=false;"
+			                        + "loginTimeout=30;";
+			        
+			        ResultSet resultSet;
+
+			        try (Connection connection = DriverManager.getConnection(connectionUrl);
+			        	Statement statement = connection.createStatement();) {
+
+			            // Do a select statement that shows the entire table
+			        	String string1 = "'"+userTextField.getText()+"'";
+			            String selectSql = "SELECT Passwords from dbo.User_Info where Username = " + string1; //dbo.Essays
+			        	resultSet = statement.executeQuery(selectSql);
+			        	
+			        	// Retrieves passwords from sql and checks it with login password
+			        	while (resultSet.next()) {
+			            	String sqlPasswords = resultSet.getString(1);
+			            	System.out.println(resultSet.getString(1));
+			            	if (sqlPasswords == passwordField.getText()) {
+						        // Brings you to your account
+				 				StudentGUI studentGui = new StudentGUI();
+				 				studentGui.StudentBox();
+				 				theFirstOne.hide();
+				        	}
+			        	}
+			        	
+			        	
+			        }
+			        
+			        // Handle any errors that may have occurred.
+			        catch (SQLServerException e) {
+			            e.printStackTrace();
+			        } catch (SQLException e) {
+			    		e.printStackTrace();
+			    	}
+			        
+			    	
 			    });
 			    
 			    LoginPage.addEventHandler(KeyEvent.KEY_PRESSED, ev -> 
@@ -202,6 +245,48 @@ public  class InitialGUI extends Application {
 				    	System.out.println(passwordField.getText());
 			    		writtenText.setFill(Color.FIREBRICK);
 				    	writtenText.setText("Enter button pressed");
+				    	
+				    	// Connects to sql
+				    	String connectionUrl =
+				                "jdbc:sqlserver://egs.database.windows.net:1433;"
+				                        + "database=egs;"
+				                        + "user=egs;"
+				                        + "password=Grading2019!;"
+				                        + "encrypt=true;"
+				                        + "trustServerCertificate=false;"
+				                        + "loginTimeout=30;";
+				        
+				        ResultSet resultSet;
+
+				        try (Connection connection = DriverManager.getConnection(connectionUrl);
+				        	Statement statement = connection.createStatement();) {
+
+				            // Do a select statement that shows the entire table
+				        	String string1 = "'"+userTextField.getText()+"'";
+				            String selectSql = "SELECT Passwords from dbo.User_Info where Username = " + string1; //dbo.Essays
+				        	resultSet = statement.executeQuery(selectSql);
+				        	
+				        	// Retrieves passwords from sql and checks it with login password
+				        	while (resultSet.next()) {
+				            	String sqlPasswords = resultSet.getString(1);
+				            	System.out.println(resultSet.getString(1));
+				            	if (sqlPasswords == passwordField.getText()) {
+							        // Brings you to your account
+					 				StudentGUI studentGui = new StudentGUI();
+					 				studentGui.StudentBox();
+					 				theFirstOne.hide();
+					        	}
+				        	}
+				        	
+				        	
+				        }
+				        
+				        // Handle any errors that may have occurred.
+				        catch (SQLServerException e) {
+				            e.printStackTrace();
+				        } catch (SQLException e) {
+				    		e.printStackTrace();
+				    	}
 			    		
 			    	}
 			    	
@@ -334,6 +419,8 @@ public  class InitialGUI extends Application {
 			    	System.out.println(LastNameTextField.getText());
 			    	System.out.println(emailAddressField.getText());
 			    	
+			    	
+			    	// Connects to sql
 			    	String connectionUrl =
 			                "jdbc:sqlserver://egs.database.windows.net:1433;"
 			                        + "database=egs;"
@@ -350,17 +437,8 @@ public  class InitialGUI extends Application {
 
 			            // Do a select statement that shows the entire table
 			        	String string1 = "('" + FirstNameTextField.getText()+ "', '" + LastNameTextField.getText() + "', '" + emailAddressField.getText() + "', '" + passwordField.getText() + "',null);";
-			        	//string1 = "('first name','last name','email','pass','userType')";
 			            String selectSql = "INSERT INTO dbo.User_Info (First_Name,Last_Name,Username,Passwords,User_Type) values " + string1; //dbo.Essays
 			        	resultSet = statement.execute(selectSql);
-			        	
-			        	/*
-			        	// Print results from select statement for all five columns
-			        	while (resultSet.next()) {
-			            	//String username = resultSet.getString(1);
-			            	String password = resultSet.getString(2); 
-			        	}
-			        	*/
 			        	
 			        }
 			        // Handle any errors that may have occurred.
