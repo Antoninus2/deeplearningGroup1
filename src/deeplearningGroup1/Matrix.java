@@ -90,9 +90,41 @@ public class Matrix {
         for (int i = 0; i < C.M; i++)
             for (int j = 0; j < C.N; j++)
                 for (int k = 0; k < A.N; k++)
-                    C.data[i][j] += (A.data[i][k] * B.data[k][j]);
+                    C.data[i][j] = (A.data[i][k] * B.data[k][j]);
         return C;
     }
+    
+    public Matrix multiply(double b) {
+    	Matrix A = this;
+    	Matrix C = new Matrix(A.M, A.N);
+        for (int i = 0; i < C.M; i++)
+            for (int j = 0; j < C.N; j++)
+                for (int k = 0; k < A.N; k++)
+                    C.data[i][j] = A.data[i][k] * b;
+        return C;
+    }
+    
+    public Matrix elementMultiply(Matrix B) {
+    	Matrix A = this;
+    	if (A.M != B.M || A.N != B.N) throw new RuntimeException("Illegal matrix dimensions.");
+    	Matrix C = new Matrix(A.M, A.N);
+    	for (int i = 0; i < A.M; i++)
+            for (int j = 0; j < A.N; j++)
+                C.data[i][j] = A.data[i][j] * B.data[i][j];
+    	return C;
+    }
+    
+    /*
+    // return B = e^A
+    public Matrix exp() {
+    	Matrix A = this;
+    	Matrix B = new Matrix(A.M, A.N);
+    	for (int i = 0; i < A.M; i++)
+    		for (int j = 0; j < A.N; j++)
+    			B.data[i][j] = Math.exp(A.data[i][j]);
+    	return B;
+    }
+    */
     
     // return B = A^p
     public Matrix pow(double p) {
@@ -118,11 +150,11 @@ public class Matrix {
     	data[y][x] = num;
     }
     
-    public int getHeight() {
+    public int getM() {
     	return M;
     }
     
-    public int getWidth() {
+    public int getN() {
     	return N;
     }
 

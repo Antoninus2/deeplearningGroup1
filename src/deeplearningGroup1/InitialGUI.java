@@ -55,6 +55,7 @@ public  class InitialGUI extends Application {
 	
 	// Variables
 	
+	Jarvis jarvis;
 	Pane root;
 	MenuButton BEGIN;
 	MenuItem Login, CreateAccount;
@@ -71,6 +72,10 @@ public  class InitialGUI extends Application {
 
 	@Override
 	public void start(Stage theFirstOne) {
+		
+		//Jarvis
+		jarvis = new Jarvis();
+		
 		//nino's function 
 		
 		root = new Pane();
@@ -533,7 +538,7 @@ public  class InitialGUI extends Application {
 				    					
 				    					 	
 				    					 				
-				    					 				StudentGUI studentGui = new StudentGUI();
+				    					 				StudentGUI studentGui = new StudentGUI(jarvis);
 				    					 				studentGui.StudentBox();
 				    					 				theFirstOne.hide();
 				    					 		
