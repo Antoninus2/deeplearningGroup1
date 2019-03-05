@@ -22,7 +22,7 @@ public class SQLConnection {
     // Connect to the egs database.
     public static void connect() {
         String connectionUrl =
-                "jdbc:sqlserver://egs.database.windows.net:1433;"
+                "jdbc:sqlserver://database.database.windows.net:1433;"
                         + "database=egs;"
                         + "user=user;"
                         + "password=password;"

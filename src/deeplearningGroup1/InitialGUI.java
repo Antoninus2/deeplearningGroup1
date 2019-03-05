@@ -204,7 +204,7 @@ public  class InitialGUI extends Application {
 			    	// Connects to sql
 			    	// TODO: correct the sql connection stuff
 			    	String connectionUrl =
-			                "jdbc:sqlserver://egs.database.windows.net:1433;"
+			                "jdbc:sqlserver://database.database.windows.net:1433;"
 			                        + "database=egs;"
 			                        + "user=user;"
 			                        + "password=password;"
@@ -266,7 +266,7 @@ public  class InitialGUI extends Application {
 				    	// Connects to sql
 				    	// TODO: correct the sql connection stuff
 				    	String connectionUrl =
-				                "jdbc:sqlserver://egs.database.windows.net:1433;"
+				                "jdbc:sqlserver://database.database.windows.net:1433;"
 				                        + "database=egs;"
 				                        + "user=user;"
 				                        + "password=password;"
@@ -447,7 +447,7 @@ public  class InitialGUI extends Application {
 			    	// Connects to sql
 			    	// TODO: correct the sql connection stuff
 			    	String connectionUrl =
-			                "jdbc:sqlserver://egs.database.windows.net:1433;"
+			                "jdbc:sqlserver://database.database.windows.net:1433;"
 			                        + "database=egs;"
 			                        + "user=user;"
 			                        + "password=password;"
