@@ -36,6 +36,9 @@ public class StudentGUI{
 	private TextArea enterTextField;
 	private Text essayTopic, enterText;
 	private Jarvis jarvis;
+	public Stage fourthOne;
+	private Scene scene4;
+	private Pane pane2;
 	
 	
 	public StudentGUI(Jarvis jarvis) {
@@ -44,6 +47,9 @@ public class StudentGUI{
    
 	/**
 	 * @StudentBox creating a student box for them to writte the essay in
+	 * 
+	 */
+	/**
 	 * 
 	 */
 	public void StudentBox() 
@@ -88,9 +94,93 @@ public class StudentGUI{
 	    	String topic = essayTopic.getText();
 	    	Essay e = new Essay(0, 300, 4, topic);
 	    	e.writeEssay(enterTextField.getText());
-	    	//TODO: here you go nino, call this function:
+	    	//TODO: Done
 	    	String grade = jarvis.gradeEssay(e);
+	    	//*******************************************************************************************
+	    	/**
+	    	 *@Antonino Abeshi
+	    	 *@GradePage  creating the switch statement in order to open the grade 
+	    	 */
 	    	
+	    	switch(grade = jarvis.gradeEssay(e))
+	    	{
+	    					//A Panel
+	    		case "A":	pane2 = new Pane();
+							scene4 = new Scene(pane2, 600, 600);
+							Label A = new Label();
+							A.setText("A");
+							A.setFont(Font.font("Calibri",FontWeight.BOLD, 100));
+							A.setLayoutX(250);
+							A.setLayoutY(200);
+							pane2.getChildren().add(A);
+							fourthOne = new Stage();
+							fourthOne.setTitle(" Letter Grade");
+							fourthOne.setScene(scene4);
+							fourthOne.show();
+							secondOne.hide();
+							break;
+							// B Panel
+		    	case "B":	pane2 = new Pane();
+							scene4 = new Scene(pane2, 600, 600);
+							Label B = new Label();
+							B.setText("B");
+							B.setFont(Font.font("Calibri",FontWeight.BOLD, 100));
+							B.setLayoutX(250);
+							B.setLayoutY(200);
+							pane2.getChildren().add(B);
+							fourthOne = new Stage();
+							fourthOne.setTitle(" Letter Grade");
+							fourthOne.setScene(scene4);
+							fourthOne.show();
+							secondOne.hide();
+							break;
+							// C Panel
+		    	case "C":	pane2 = new Pane();
+							scene4 = new Scene(pane2, 600, 600);
+							Label C = new Label();
+							C.setText("D");
+							C.setFont(Font.font("Calibri",FontWeight.BOLD, 100));
+							C.setLayoutX(250);
+							C.setLayoutY(200);
+							pane2.getChildren().add(C);
+							fourthOne = new Stage();
+							fourthOne.setTitle(" Letter Grade");
+							fourthOne.setScene(scene4);
+							fourthOne.show();
+							secondOne.hide();
+							break;
+							//D Panel
+		    	case "D":  	pane2 = new Pane();
+							scene4 = new Scene(pane2, 600, 600);
+							Label D = new Label();
+							D.setText("D");
+							D.setFont(Font.font("Calibri",FontWeight.BOLD, 100));
+							D.setLayoutX(250);
+							D.setLayoutY(200);
+							pane2.getChildren().add(D);
+							fourthOne = new Stage();
+							fourthOne.setTitle(" Letter Grade");
+							fourthOne.setScene(scene4);
+							fourthOne.show();
+							secondOne.hide();
+							break;
+		    	case "F":  	pane2 = new Pane();
+							scene4 = new Scene(pane2, 600, 600);
+							Label F = new Label();
+							F.setText("F");
+							F.setFont(Font.font("Calibri",FontWeight.BOLD, 100));
+							F.setLayoutX(250);
+							F.setLayoutY(200);
+							pane2.getChildren().add(F);
+							fourthOne = new Stage();
+							fourthOne.setTitle(" Letter Grade");
+							fourthOne.setScene(scene4);
+							fourthOne.show();
+							secondOne.hide();
+							break;
+				default:    System.out.println("No Grade");			
+	    	}
+	    			
 	    	System.out.println("Topic: " + topic);
 	    	System.out.println("Essay: \n{\n" + enterTextField.getText() + "\n}");
 	    	System.out.println("Grade: " + grade);

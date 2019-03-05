@@ -2,6 +2,8 @@ package deeplearningGroup1;
 
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -27,6 +29,7 @@ public class PasswordRetrievalGUI{
 	private GridPane pane1;
 	private Button clickToSubmit;
 	private TextField EmailTextField;
+	private InitialGUI initalGUI;
 
 	
 	public PasswordRetrievalGUI() {
@@ -56,6 +59,7 @@ public class PasswordRetrievalGUI{
 		
 		EnterEmail();
 		Submit();
+		Back();
 	}
 	
 	public void EnterEmail() {
@@ -77,12 +81,28 @@ public class PasswordRetrievalGUI{
 	    {
 	    	
 	    	
-	    	System.out.println(EmailTextField.getText());
-	    	StudentAccount emailR = new StudentAccount();
-	    	emailR.reset(EmailTextField.getText());
+	    	//System.out.println(EmailTextField.getText());
+	    	//StudentAccount emailR = new StudentAccount();
+	    	//emailR.reset(EmailTextField.getText());
 	    	
 	    });
 		
+	}
+	
+	public void Back()
+	{
+		
+		Button Back = new Button("Back");
+		pane1.add(Back, 1, 10);			//creating a back button
+		
+			Back.setOnAction(new EventHandler<ActionEvent>() {  // adding the back button options to go back to the main scene 
+			
+			@Override
+			public void handle(ActionEvent event) {
+				
+		
+			}
+		});
 	}
 	
 		

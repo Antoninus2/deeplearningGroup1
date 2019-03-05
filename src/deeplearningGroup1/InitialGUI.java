@@ -56,7 +56,7 @@ public  class InitialGUI extends Application {
 	// Variables
 	
 	/**
-	 * Jarvis is the neural network for grading essays
+	 * @Jarvis is the neural network for grading essays
 	 */
 	private Jarvis jarvis;
 	
@@ -162,7 +162,8 @@ public  class InitialGUI extends Application {
 			    LoginPage.setGridLinesVisible(false);  // observing the grid lines for visual help
 			    
 			    Hyperlink forgotPassword = new Hyperlink("ForgotPassword");  // forgot password will open a new window 
-			    LoginPage.add(forgotPassword, 0, 7);
+			    forgotPassword.setUserData(Color.BLACK);
+			    LoginPage.add(forgotPassword, 0, 16);
 			    
 			    forgotPassword.setOnAction(event5 -> {						// once the hyperlink is selected it will sent the person to a window which they will have to retrieve their password
 			    	
