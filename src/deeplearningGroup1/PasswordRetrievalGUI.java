@@ -1,3 +1,10 @@
+/**
+		 * @author Antonino Abeshi 
+		 * Creating the Password Retrieval Tools nessesary to achieve success (Work in progress)
+		 */
+
+
+
 package deeplearningGroup1;
 
 import javafx.animation.Timeline;
@@ -62,6 +69,9 @@ public class PasswordRetrievalGUI{
 		Back();
 	}
 	
+	/**
+	 * @Email email is entered here in order to get back the code 
+	 */
 	public void EnterEmail() {
 		
 		// Enter email
@@ -72,6 +82,9 @@ public class PasswordRetrievalGUI{
 
 	}
 	
+	/**
+	 * @SubmitTheEmail this action will allow the system to sent an email to the person who is using this specific email.
+	 */
 	public void Submit() {
 		
 	

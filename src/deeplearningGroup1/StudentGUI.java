@@ -1,3 +1,8 @@
+/**
+ * @author Antonino Abeshi
+ *
+ */
+
 package deeplearningGroup1;
 
 import javafx.animation.Timeline;
@@ -22,10 +27,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-/**
- * @author Antonino Abeshi
- *
- */
+
 public class StudentGUI{
 
 	public Stage secondOne;
@@ -47,10 +49,6 @@ public class StudentGUI{
    
 	/**
 	 * @StudentBox creating a student box for them to writte the essay in
-	 * 
-	 */
-	/**
-	 * 
 	 */
 	public void StudentBox() 
 	{
@@ -89,8 +87,15 @@ public class StudentGUI{
 		
 		clickToSubmit = new Button("Click To Submit");   //button to submit
 		pane1.add(clickToSubmit, 4, 25, 5,1);
+		
+		/**
+		 * @ButtonToSubmit this button makes sure that we retrieve the data from the typing and its graded by Jarvis
+		 */
 		clickToSubmit.setOnAction(event1 -> 
 	    {
+	    	/**
+			 * @Author Steven Rose Adding the connection from Jarvis to the sumbit button
+			 */
 	    	String topic = essayTopic.getText();
 	    	Essay e = new Essay(0, 300, 4, topic);
 	    	e.writeEssay(enterTextField.getText());
@@ -98,7 +103,7 @@ public class StudentGUI{
 	    	String grade = jarvis.gradeEssay(e);
 	    	//*******************************************************************************************
 	    	/**
-	    	 *@Antonino Abeshi
+	    	 *@Author Antonino Abeshi
 	    	 *@GradePage  creating the switch statement in order to open the grade 
 	    	 */
 	    	
