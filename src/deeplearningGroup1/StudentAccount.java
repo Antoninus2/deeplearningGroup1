@@ -22,6 +22,7 @@ public class StudentAccount {
 		fn=scan.nextLine();
 		System.out.println("Last name: \n");
 		ln=scan.nextLine();
+		
 		//search no matching accounts for that name
 		try {
 			Scanner scanner = new Scanner(file);
@@ -41,9 +42,11 @@ public class StudentAccount {
 			e.printStackTrace();
 		}
 		
+		
 
 		System.out.println("Create a username: \n");
 		usn=scan.nextLine();
+		
 		//search no matching usernames
 		try {
 			Scanner scanner = new Scanner(file);
@@ -62,6 +65,7 @@ public class StudentAccount {
 		System.out.println("Create a password: \n");
 		pwd = scan.nextLine();
 		
+		
 		//print account creation confirmation to user
 		printConfirm();
 	}
@@ -71,6 +75,8 @@ public class StudentAccount {
 		usn=scan.nextLine();
 		System.out.println("\nPassword: ");
 		pwd=scan.nextLine();
+		
+		
 		//compare for match, login, reject otherwise
 		try {
 			Scanner scanner = new Scanner(file);
@@ -92,6 +98,8 @@ public class StudentAccount {
 	}
 	
 	
+	
+	
 	public void printInfo() {		//for admin purposes only, prints account info for ALL accounts
 		
 		try {
@@ -102,6 +110,8 @@ public class StudentAccount {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	
 	public void reset(String email) {		//sends reset link to email if email is in the system
@@ -124,6 +134,8 @@ public class StudentAccount {
 		}
 		System.out.println("Your email was not found in the database. Try again.\n");
 	}
+	
+	
 	
 	
 	public void recovery(String fn, String ln) {		//attempts to recover the account by matching first and last names
@@ -151,10 +163,14 @@ public class StudentAccount {
 		System.out.println("Your information does not match the database. Try again.\n");
 	}
 	
+	
+	
 	private void printConfirm() {		//prints a confirmation of account info to USER upon creation
 		System.out.printf("Your account information is as follows: \n Username: %s\n Password: %s\n First name: %s\n Last name: %s\n Email: %s\n", usn, pwd, fn, ln, email);
 		System.out.println("Please keep this information for your records.\n");
 	}
+	
+	
 	
 	//setters and getters to print to file from the GUI input
 	public String getFirstName() {return fn;}

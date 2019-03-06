@@ -52,7 +52,7 @@ import javafx.stage.StageStyle;
 
 
 public  class InitialGUI extends Application {
-	
+	StudentAccount student=new StudentAccount();
 	// Variables
 	
 	/**
@@ -204,8 +204,8 @@ public  class InitialGUI extends Application {
 			    
 			    SignInButton.setOnAction(event1 -> 
 			    {
-			    	System.out.println(userTextField.getText());
-			    	System.out.println(passwordField.getText());
+			    	student.setUser(userTextField.getText());
+			    	student.setPass(passwordField.getText());
 			    	writtenText.setFill(Color.FIREBRICK);
 			    	writtenText.setText("Sign in button pressed");
 			    	
@@ -269,8 +269,8 @@ public  class InitialGUI extends Application {
 			    {
 			    	if(ev.getCode() == KeyCode.ENTER)						// if enter is pressed then you can sign in as well
 			    	{
-			    		System.out.println(userTextField.getText());
-				    	System.out.println(passwordField.getText());
+			    		student.setUser((userTextField.getText()));
+				    	student.setPass((passwordField.getText()));
 			    		writtenText.setFill(Color.FIREBRICK);
 				    	writtenText.setText("Enter button pressed");
 				    	
@@ -485,9 +485,9 @@ public  class InitialGUI extends Application {
 			    CreateAnAccountButton.setOnAction(event1 -> 
 			    {
 			    	
-			    	System.out.println(FirstNameTextField.getText());
-			    	System.out.println(LastNameTextField.getText());
-			    	System.out.println(emailAddressField.getText());
+			    	student.setFirstName((FirstNameTextField.getText()));
+			    	student.setLastName((LastNameTextField.getText()));
+			    	student.setEmail((emailAddressField.getText()));
 			    	
 			    	
 			    	// Connects to sql
@@ -532,7 +532,7 @@ public  class InitialGUI extends Application {
 					 * gives you a check image if yes
 					 * also prints to the console 
 					 */
-			    	System.out.println(passwordField.getText());	
+			    	student.setPass((passwordField.getText()));	
 			    	System.out.println(RepeatPasswordField.getText());
 			    	
 			    if ((passwordField.getText().isEmpty()) && RepeatPasswordField.getText().isEmpty())
@@ -651,7 +651,7 @@ public  class InitialGUI extends Application {
 			    	
 			    	
 			    	
-			    	
+			    
 
 			        
 			        
