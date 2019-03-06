@@ -1,11 +1,5 @@
 package deeplearningGroup1;
 
-/**
- * @author Steven Rose
- * @version 0.7
- * @see Matrix
- */
-
 import java.util.Scanner;
 
 import java.io.File;
@@ -14,6 +8,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Jarvis is the neural network essay grading class through the use of a
+ * trained neural network, consisting of a list of Neural Layers with associated weights and biases
+ * @author Steven Rose
+ * @version 1.0
+ * @see NeuralLayer
+ * @see Matrix
+ * @see Essay
+ */
 public class Jarvis {
 	
 	/**
@@ -31,16 +34,6 @@ public class Jarvis {
 	 */
 	private List<NeuralLayer> neuralLayers;
 	
-	/*
-	public static void main(String args[]) {
-		Essay essay = new Essay(1, 200, 4, "starter topic");
-		essay.writeEssay("Hello , worldd !");
-		Jarvis jarvis = new Jarvis();
-		
-		jarvis.log("Grade: " + jarvis.gradeEssay(essay));
-	}
-	*/
-	
 	/**
 	 * creates a new Jarvis, loads the wordList, sets the weights and biases of the neural network, then creates the neural network from those weights/biases
 	 */
@@ -49,7 +42,12 @@ public class Jarvis {
 		loadWordList();
 		
 		String[] layerNames = {"input", "hidden 1", "output"};
-		
+		/* Current size of neural network:
+		 * 		3 inputs
+		 * 		4 neurons in hidden layer
+		 * 		5 outputs (A,B,C,D,F)
+		 */
+			
 		List <Matrix> weights = new ArrayList<>();
 		weights.add(new Matrix(new double[][] {
 			{.01, -.02, .03},
@@ -137,7 +135,7 @@ public class Jarvis {
 	
 	/**
 	 * Calculates the desired change to the output to achieve the desiredOutput
-	 * Not implemented as of version 0.7
+	 * Not implemented as of version 1.0
 	 * @param output
 	 * 		Column Matrix of actual output of neural network
 	 * @param desiredOutput
@@ -157,7 +155,7 @@ public class Jarvis {
 	
 	/**
 	 * Calculates the desired changes to weights and biases for a given layer to achieve the desired output
-	 * Not implemented as of version 0.7
+	 * Not implemented as of version 1.0
 	 * @param deltaLayerPlusOne
 	 * 		Column Matrix of desired changes to layer after current layer
 	 */
@@ -214,7 +212,8 @@ public class Jarvis {
 	 * 
 	 * @param e
 	 * 		Essay to be graded
-	 * @return number of grammatical mistakes made in essay
+	 * @return
+	 * 		Number of grammatical mistakes made in essay
 	 */
 	public double checkGrammar(Essay e) {
 		String essay = e.getEssay();
@@ -234,10 +233,10 @@ public class Jarvis {
 	
 	/**
 	 * Checks if essay is within word limit
-	 * 
 	 * @param e
 	 * 		Essay to be graded
-	 * @return true if within word limit, false otherwise
+	 * @return
+	 * 		True if within word limit, false otherwise
 	 */
 	public boolean checkWordLimit(Essay e) {
 		String essay = e.getEssay();
@@ -248,7 +247,8 @@ public class Jarvis {
 	 * Returns number of misspelled words
 	 * @param e
 	 * 		Essay to be graded
-	 * @return an integer of the number of misspelled words
+	 * @return
+	 * 		Number of misspelled words as a percentage of total words in the essay
 	 */
 	public double checkSpelling(Essay e) {
 		String essay = e.getEssay();
@@ -302,7 +302,7 @@ public class Jarvis {
 	/**
 	 * Prints a String to the console
 	 * @param msg
-	 * 		message to be printed
+	 * 		Message to be printed
 	 */
 	private void log(String msg) {
 		System.out.println(msg);

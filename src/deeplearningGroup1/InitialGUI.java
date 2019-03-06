@@ -1,3 +1,8 @@
+/**
+ * @author Antonino Abeshi 
+ * @version 0.7
+ * @see Initial GUI
+ */
 package deeplearningGroup1;
 
 
@@ -44,15 +49,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-//variables 20
-//Creating the menu bar 34
-//Adding Action to the menu login 46
-//Login Info Page 90
-//Adding Action to the menu create account 186
-//Antonino Abeshi
+
 
 public  class InitialGUI extends Application {
-	
+	StudentAccount student=new StudentAccount();
 	// Variables
 	
 	/**
@@ -80,8 +80,9 @@ public  class InitialGUI extends Application {
 		//Jarvis
 		jarvis = new Jarvis();
 		
-		//nino's function 
-		
+		/**
+		 * @function Antonino's
+		 */
 		root = new Pane();
 		Scene scene1 = new Scene(root, 600, 600);		// new scene x = 600; y = 600
 		ImageView justImage = new ImageView();
@@ -92,7 +93,9 @@ public  class InitialGUI extends Application {
 		root.getChildren().add(justImage);
 	//**************************************************************
 		//Creating the menu bar
-		
+		/**
+		 * @creating MenuBar
+		 */
 		Label name = new Label();
 		name.setText("WELCOME TO THE DEEP LEARNING - ESSAY GRADING SYSTEM");
 		name.setFont(Font.font("Calibri",FontWeight.BOLD, 20));
@@ -110,7 +113,9 @@ public  class InitialGUI extends Application {
 		
 	//**************************************************************
 		//Adding action to the menu login 
-		
+		/**
+		 * @adding action to the menu Login
+		 */
 		Login.setOnAction(new EventHandler<ActionEvent>() {
 			
 			
@@ -124,22 +129,12 @@ public  class InitialGUI extends Application {
 				theFirstOne.setScene(scene2);
 				theFirstOne.setTitle("LOGIN");
 				
-				/* 
-				 * Creates an Image for the background of the login page
-			 * 
-			 * 
-			 */
-				
-				/*ImageView LoginImage = new ImageView();
-				LoginImage.setFitHeight(600);
-				LoginImage.setFitWidth(600);
-				Image Background = new Image("sure.jpg"); 
-				LoginImage.setImage(Background);
-				LoginPagePane.getChildren().add(LoginImage);*/
-				
-				
 	//**************************************************************************************			
 			//Login Information and Login page in general 
+				/**
+				 * @information Login information set and the Login page created
+				 * @gridpaneSetup The way the gridpane is set up is row 0, column 0, and spanning 2 columns  but only 1 row
+				 */
 				
 				LoginPage.setAlignment(Pos.CENTER);
 				LoginPage.setHgap(10);
@@ -159,12 +154,23 @@ public  class InitialGUI extends Application {
 			    LoginPage.add(password, 0, 2);
 			    LoginPage.add(passwordField, 1, 2);
 			    
+			    /**
+				 * @observation boolean action to the grid lines for visual help
+				 */
+			    
 			    LoginPage.setGridLinesVisible(false);  // observing the grid lines for visual help
+			    
+			    /**
+				 * @hyperlink in case of forgot password
+				 */
 			    
 			    Hyperlink forgotPassword = new Hyperlink("ForgotPassword");  // forgot password will open a new window 
 			    forgotPassword.setUserData(Color.BLACK);
 			    LoginPage.add(forgotPassword, 0, 16);
 			    
+			    /**
+				 * @action hyperlink will lead to a new stage being called from the PasswordRetrievalGUI
+				 */
 			    forgotPassword.setOnAction(event5 -> {						// once the hyperlink is selected it will sent the person to a window which they will have to retrieve their password
 			    	
 			    	PasswordRetrievalGUI retrievePassword = new PasswordRetrievalGUI();   
@@ -190,14 +196,16 @@ public  class InitialGUI extends Application {
 			   // TeacherCheckBox.setText("Teacher");
 			   // LoginPage.add(TeacherCheckBox, 1, 11);
 			    
-			    
+			    /**
+				 * @confirmation confirmation text is added to the sign in box when the button is pressed
+				 */
 			    writtenText = new Text();				// adding more text to the sign in box when pressing the sign in button
 			    LoginPage.add(writtenText, 1, 6);
 			    
 			    SignInButton.setOnAction(event1 -> 
 			    {
-			    	System.out.println(userTextField.getText());
-			    	System.out.println(passwordField.getText());
+			    	student.setUser(userTextField.getText());
+			    	student.setPass(passwordField.getText());
 			    	writtenText.setFill(Color.FIREBRICK);
 			    	writtenText.setText("Sign in button pressed");
 			    	
@@ -253,13 +261,16 @@ public  class InitialGUI extends Application {
 			    	
 			    });
 			    
+			    /**
+				 * @enter sign in with the key Enter from the keyboard
+				 */
 			    LoginPage.addEventHandler(KeyEvent.KEY_PRESSED, ev -> 
 			    
 			    {
 			    	if(ev.getCode() == KeyCode.ENTER)						// if enter is pressed then you can sign in as well
 			    	{
-			    		System.out.println(userTextField.getText());
-				    	System.out.println(passwordField.getText());
+			    		student.setUser((userTextField.getText()));
+				    	student.setPass((passwordField.getText()));
 			    		writtenText.setFill(Color.FIREBRICK);
 				    	writtenText.setText("Enter button pressed");
 				    	
@@ -316,7 +327,9 @@ public  class InitialGUI extends Application {
 			    	
 			    });
 			   
-	
+			    /**
+				 * @backButton creating a back button, and adding the back button options to go back to the main scene
+				 */
 			// Back button 
 				Back = new Button("Back");
 				LoginPage.add(Back, 5, 7);			//creating a back button
@@ -336,7 +349,9 @@ public  class InitialGUI extends Application {
 		
 		//*******************************************************************
 		//Adding action to the menu CreateAccount
-		
+		/**
+		 * @accountCreation this creates the account creation process 
+		 */
 		CreateAccount.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -349,7 +364,9 @@ public  class InitialGUI extends Application {
 				theFirstOne.setTitle("CREATE ACCOUNT");
 				
 	//Adding the CreateAccountPage
-				
+				/**
+				 * @adding adding the CreateAccountPage
+				 */
 				CreateAccountPage.setAlignment(Pos.TOP_CENTER);
 				CreateAccountPage.setHgap(10);
 				CreateAccountPage.setVgap(10);
@@ -361,12 +378,17 @@ public  class InitialGUI extends Application {
 				CreateAccountPage.add(AccountTitle, 0, 0,2,1);   //row 0, column 0, and spanning 2 columns  but only 1 row
 				
 				// Enter First Name
+				/**
+				 * @adding First name
+				 */
 				FirstName = new Label("First Name:");
 				CreateAccountPage.add(FirstName, 0, 1);
 				FirstNameTextField = new TextField();
 				CreateAccountPage.add(FirstNameTextField, 1, 1);
 				
-				
+				/**
+				 * @adding Last Name
+				 */
 				//Enter last name
 				LastName = new Label("Last Name:");
 				CreateAccountPage.add(LastName, 0, 2);
@@ -381,18 +403,27 @@ public  class InitialGUI extends Application {
 				//CreateAccountPage.add(UsernameTextField, 1, 3);
 				
 				  //Enter Email Address
+				/**
+				 * @adding EmailAddress
+				 */
 			    emailAddress = new Label("Enter Username or Email:");
 			    CreateAccountPage.add(emailAddress, 0, 3);
 			    emailAddressField = new TextField();
 			    CreateAccountPage.add(emailAddressField, 1, 3);
 			    
 				//Enter Password
+			    /**
+				 * @adding Password Textbox
+				 */
 			    password = new Label("Password:");
 			    CreateAccountPage.add(password, 0, 4);
 			    passwordField = new PasswordField();
 			    CreateAccountPage.add(passwordField, 1, 4);
 
 			    //repeat Password
+			    /**
+				 * @adding reset Password Textbox
+				 */
 			    RepeatPassword = new Label("Repeat Password:");
 			    CreateAccountPage.add(RepeatPassword, 0, 5);
 			    RepeatPasswordField = new PasswordField();
@@ -408,9 +439,15 @@ public  class InitialGUI extends Application {
 			    //CreateAccountPage.add(emailAddressField1, 1, 7);
 			    
 			    // grid lines
+			    /**
+				 * @visibility  grid lines
+				 */
 			    CreateAccountPage.setGridLinesVisible(false);
 			    
 			    // creating the button to make the account
+			    /**
+				 * @adding adding the button to make the account
+				 */
 			    CreateAnAccountButton = new Button("Create an Account");
 			    horisontalBox = new HBox(10);
 			    horisontalBox.setAlignment(Pos.BOTTOM_CENTER);
@@ -418,11 +455,17 @@ public  class InitialGUI extends Application {
 			    CreateAccountPage.add(horisontalBox, 1, 8);
 			    
 			    //Student or teacher checkbox (we will add events later)
+			    /**
+				 * @adding the student checkbox
+				 */
 			    StudentCheckBox = new CheckBox();
 			    StudentCheckBox.setText("Student");
 			    CreateAccountPage.add(StudentCheckBox, 0, 11);
 			    
 			    // going to add teacher and student options 
+			    /**
+				 * @adding the teacher and student options 
+				 */
 			    TeacherCheckBox = new CheckBox();
 			    TeacherCheckBox.setText("Teacher");
 			    CreateAccountPage.add(TeacherCheckBox, 1, 11);
@@ -436,12 +479,15 @@ public  class InitialGUI extends Application {
 			    //CreateAccountPage.add(writtenText, 1, 9);
 			    
 			    // we are creating the button to put in  images are Check and Wrong
+			    /**
+				 * @CreateAccountButton which when pressed makes it possible to create an account
+				 */
 			    CreateAnAccountButton.setOnAction(event1 -> 
 			    {
 			    	
-			    	System.out.println(FirstNameTextField.getText());
-			    	System.out.println(LastNameTextField.getText());
-			    	System.out.println(emailAddressField.getText());
+			    	student.setFirstName((FirstNameTextField.getText()));
+			    	student.setLastName((LastNameTextField.getText()));
+			    	student.setEmail((emailAddressField.getText()));
 			    	
 			    	
 			    	// Connects to sql
@@ -480,8 +526,13 @@ public  class InitialGUI extends Application {
 					}
 			    	
 			    // comparing the password fields 
-			    	
-			    	System.out.println(passwordField.getText());	
+			        /**
+					 * @comparing this compares the passowrd fields wether they are the same or not 
+					 * gives you a wrong x image if not
+					 * gives you a check image if yes
+					 * also prints to the console 
+					 */
+			    	student.setPass((passwordField.getText()));	
 			    	System.out.println(RepeatPasswordField.getText());
 			    	
 			    if ((passwordField.getText().isEmpty()) && RepeatPasswordField.getText().isEmpty())
@@ -505,7 +556,10 @@ public  class InitialGUI extends Application {
 			    			
 			    			}
 		    			}
-			    else if (!passwordField.getText().isEmpty() && !RepeatPasswordField.getText().isEmpty())  // checking if the texbox is embty
+			    /**
+				 * @check if the textbox is empty 
+				 */
+			    else if (!passwordField.getText().isEmpty() && !RepeatPasswordField.getText().isEmpty())  // checking if the textbox is empty
 			    					{
 			    	
 			    						
@@ -597,7 +651,7 @@ public  class InitialGUI extends Application {
 			    	
 			    	
 			    	
-			    	
+			    
 
 			        
 			        
@@ -606,6 +660,9 @@ public  class InitialGUI extends Application {
 			    }); 
 			    
 			  // back button 
+			    /**
+				 * @BackButton simply a back button with an action 
+				 */
 				Back1 = new Button("Back");
 				CreateAccountPage.add(Back1, 5, 9);
 				
@@ -620,7 +677,9 @@ public  class InitialGUI extends Application {
 			    }
 		});
 		
-		
+		/**
+		 * @Stage this is the stage (primary one)
+		 */
 		theFirstOne.setTitle(" WELCOME TO THE ESSAY GRADING SYSTEM 1.0");
 		theFirstOne.setScene(scene1);
 		theFirstOne.show();
