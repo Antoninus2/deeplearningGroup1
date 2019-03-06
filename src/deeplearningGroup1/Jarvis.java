@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Jarvis is the neural network essay grading class through the use of a
- * trained neural network, consisting of a list of Neural Layers
+ * trained neural network, consisting of a list of Neural Layers with associated weights and biases
  * @author Steven Rose
  * @version 1.0
  * @see NeuralLayer

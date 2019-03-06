@@ -1,9 +1,9 @@
 package deeplearningGroup1;
 
 /**
- * A 2D array of doubles with defined matrix operations
+ * Matrix is a 2D array of doubles with defined matrix operations
  * @author Steven Rose
- * @verison 1.0
+ * version 1.0
  */
 public class Matrix {
 	

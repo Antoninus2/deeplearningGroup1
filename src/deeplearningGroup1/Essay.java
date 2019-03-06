@@ -1,9 +1,9 @@
 package deeplearningGroup1;
 
 /**
- * Holds all the data pertaining to a single essay written by a single student
+ * Essay holds all the data pertaining to a single essay written by a single student
  * @author Steven Rose
- * @verison 1.0
+ * version 1.0
  */
 public class Essay {
 	
@@ -20,7 +20,7 @@ public class Essay {
 	/**
 	 * Time the student actual took writing the essay
 	 */
-	private int timeTaken; //length of time (in min) for student to type essay
+	private int timeTaken;
 	
 	/**
 	 * Holds the topic of the essay
