@@ -204,10 +204,10 @@ public  class InitialGUI extends Application {
 			    	// Connects to sql
 			    	// TODO: correct the sql connection stuff
 			    	String connectionUrl =
-			                "jdbc:sqlserver://database.database.windows.net:1433;"
+			                "jdbc:sqlserver://egs.database.windows.net:1433;"
 			                        + "database=egs;"
-			                        + "user=user;"
-			                        + "password=password;"
+			                        + "user=egs;"
+			                        + "password=Grading2019!;"
 			                        + "encrypt=true;"
 			                        + "trustServerCertificate=false;"
 			                        + "loginTimeout=30;";
@@ -266,10 +266,10 @@ public  class InitialGUI extends Application {
 				    	// Connects to sql
 				    	// TODO: correct the sql connection stuff
 				    	String connectionUrl =
-				                "jdbc:sqlserver://database.database.windows.net:1433;"
+				                "jdbc:sqlserver://egs.database.windows.net:1433;"
 				                        + "database=egs;"
-				                        + "user=user;"
-				                        + "password=password;"
+				                        + "user=egs;"
+				                        + "password=Grading2019!;"
 				                        + "encrypt=true;"
 				                        + "trustServerCertificate=false;"
 				                        + "loginTimeout=30;";
@@ -447,10 +447,10 @@ public  class InitialGUI extends Application {
 			    	// Connects to sql
 			    	// TODO: correct the sql connection stuff
 			    	String connectionUrl =
-			                "jdbc:sqlserver://database.database.windows.net:1433;"
+			                "jdbc:sqlserver://egs.database.windows.net:1433;"
 			                        + "database=egs;"
-			                        + "user=user;"
-			                        + "password=password;"
+			                        + "user=egs;"
+			                        + "password=Grading2019!;"
 			                        + "encrypt=true;"
 			                        + "trustServerCertificate=false;"
 			                        + "loginTimeout=30;";
