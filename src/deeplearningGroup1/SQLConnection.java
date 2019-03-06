@@ -14,7 +14,6 @@ import java.sql.Statement;
 
 public class SQLConnection {
 	
-	
 	public static void main(String[] args) {
 		connect();
 	}

@@ -1,19 +1,45 @@
 package deeplearningGroup1;
 
+/**
+ * A 2D array of doubles with defined matrix operations
+ * @author Steven Rose
+ * @verison 1.0
+ */
 public class Matrix {
 	
-	private final int M;             // number of rows
-    private final int N;             // number of columns
+	/**
+	 * Number of rows in the matrix
+	 */
+	private final int M;
+	
+	/**
+	 * Number of columns in the matrix
+	 */
+    private final int N;
+    
+    /**
+     * 2D array of data in matrix
+     */
     private final double[][] data;   // M-by-N array
 
-    // create M-by-N matrix of 0's
+    /**
+     * Creates an empty m x n matrix
+     * @param M
+     * 		Height of matrix
+     * @param N
+     * 		Width of matrix
+     */
     public Matrix(int M, int N) {
         this.M = M;
         this.N = N;
         data = new double[M][N];
     }
 
-    // create matrix based on 2d array
+    /**
+     * Creates a matrix from existing 2D array
+     * @param data
+     * 		2D array of data to make matrix from
+     */
     public Matrix(double[][] data) {
         M = data.length;
         N = data[0].length;
@@ -23,7 +49,15 @@ public class Matrix {
                     this.data[i][j] = data[i][j];
     }
 
-    // create and return a random M-by-N matrix with values between 0 and 1
+    /**
+     * Returns m x n matrix of random values [0..1)
+     * @param M
+     * 		Height of matrix
+     * @param N
+     * 		Width of matrix
+     * @return
+     * 		Matrix with random [0..1) values
+     */
     public static Matrix random(int M, int N) {
         Matrix A = new Matrix(M, N);
         for (int i = 0; i < M; i++)
@@ -32,7 +66,13 @@ public class Matrix {
         return A;
     }
 
-    // create and return the N-by-N identity matrix
+    /**
+     * Creates n x n identity matrix
+     * @param N
+     * 		Size of matrix
+     * @return
+     * 		Identity matrix
+     */
     public static Matrix identity(int N) {
         Matrix I = new Matrix(N, N);
         for (int i = 0; i < N; i++)
@@ -40,7 +80,11 @@ public class Matrix {
         return I;
     }
 
-    // create and return the transpose of the invoking matrix
+    /**
+     * Returns transpose of the matrix
+     * @return
+     * 	Transpose of matrix
+     */
     public Matrix transpose() {
         Matrix A = new Matrix(N, M);
         for (int i = 0; i < M; i++)
@@ -49,7 +93,13 @@ public class Matrix {
         return A;
     }
 
-    // return C = A + B
+    /**
+     * Returns Matrix A + B
+     * @param B
+     * 		Matrix to add
+     * @return
+     * 		Sum of matrices
+     */
     public Matrix plus(Matrix B) {
         Matrix A = this;
         if (B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix dimensions.");
@@ -60,8 +110,13 @@ public class Matrix {
         return C;
     }
 
-
-    // return C = A - B
+    /**
+     * Returns Matrix A - B
+     * @param B
+     * 		Matrix to subtract
+     * @return
+     * 		Difference of matrices
+     */
     public Matrix minus(Matrix B) {
         Matrix A = this;
         if (B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix dimensions.");
@@ -72,7 +127,13 @@ public class Matrix {
         return C;
     }
 
-    // does A == B exactly?
+    /**
+     * Checks if two matrices are equal
+     * @param B
+     * 		Matrix to check against
+     * @return
+     * 		True if matrices are equal, false otherwise
+     */
     public boolean isEqual(Matrix B) {
         Matrix A = this;
         if (B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix dimensions.");
@@ -82,7 +143,13 @@ public class Matrix {
         return true;
     }
 
-    // return C = A * B
+    /**
+     * Returns matrix A * B
+     * @param B
+     * 		Matrix to multiply by
+     * @return
+     * 		Product of matrices
+     */
     public Matrix multiply(Matrix B) {
         Matrix A = this;
         if (A.N != B.M) throw new RuntimeException("Illegal matrix dimensions.");
@@ -94,6 +161,13 @@ public class Matrix {
         return C;
     }
     
+    /**
+     * Returns matrix A * b
+     * @param b
+     * 		Scalar to multiply by
+     * @return
+     * 		Product of matrix and scalar
+     */
     public Matrix multiply(double b) {
     	Matrix A = this;
     	Matrix C = new Matrix(A.M, A.N);
@@ -104,6 +178,13 @@ public class Matrix {
         return C;
     }
     
+    /**
+     * Returns element by element product of A .* B
+     * @param B
+     * 		Matrix to multiply by
+     * @return
+     * 		Element wise product of matrices
+     */
     public Matrix elementMultiply(Matrix B) {
     	Matrix A = this;
     	if (A.M != B.M || A.N != B.N) throw new RuntimeException("Illegal matrix dimensions.");
@@ -114,19 +195,13 @@ public class Matrix {
     	return C;
     }
     
-    /*
-    // return B = e^A
-    public Matrix exp() {
-    	Matrix A = this;
-    	Matrix B = new Matrix(A.M, A.N);
-    	for (int i = 0; i < A.M; i++)
-    		for (int j = 0; j < A.N; j++)
-    			B.data[i][j] = Math.exp(A.data[i][j]);
-    	return B;
-    }
-    */
-    
-    // return B = A^p
+    /**
+     * Returns Matrix elements raised to a power
+     * @param p
+     * 		power to raise matrix element to
+     * @return
+     * 		Element wise matrix raised to the power p
+     */
     public Matrix pow(double p) {
     	Matrix A = this;
     	Matrix B = new Matrix(A.M, A.N);
@@ -138,26 +213,62 @@ public class Matrix {
     	return B;
     }
     
+    /**
+     * Returns the 2D array of data of matrix
+     * @return
+     * 		2D array of data
+     */
     public double[][] getData() {
     	return data;
     }
     
+    /**
+     * Returns a single element of a matrix
+     * @param y
+     * 		Y location of element
+     * @param x
+     * 		X location of element
+     * @return
+     * 		Value of matrix at location (x, y)
+     */
     public double get(int y, int x) {
     	return data[y][x];
     }
     
+    /**
+     * Sets a single element of a matrix
+     * @param y
+     * 		Y location of element
+     * @param x
+     * 		X location of element
+     * @param num
+     * 		Number to set as new element at location (y, x)
+     */
     public void set(int y, int x, double num) {
     	data[y][x] = num;
     }
     
+    /**
+     * Returns height of matrix
+     * @return
+     * 		Number of rows in matrix
+     */
     public int getM() {
     	return M;
     }
     
+    /**
+     * Returns width of matrix
+     * @return
+     * 		Number of columns in matrix
+     */
     public int getN() {
     	return N;
     }
 
+    /**
+     * Prints all the values of a matrix to the console
+     */
     public void print() {
         for (int i = 0; i < M; i++) {
             for (int j = 0; j < N; j++) 
