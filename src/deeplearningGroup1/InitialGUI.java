@@ -211,18 +211,13 @@ public  class InitialGUI extends Application {
 			    	
 			    	// Connects to sql
 			    	// TODO: correct the sql connection stuff
-			    	String connectionUrl =
-			                "jdbc:sqlserver://egs.database.windows.net:1433;"
-			                        + "database=egs;"
-			                        + "user=egs;"
-			                        + "password=Grading2019!;"
-			                        + "encrypt=true;"
-			                        + "trustServerCertificate=false;"
-			                        + "loginTimeout=30;";
+			    	SQLConnection connect = new SQLConnection();
+			    	String connectionurl = connect.connect();
 			        
 			        ResultSet resultSet;
 
-			        try (Connection connection = DriverManager.getConnection(connectionUrl);
+	
+					try (Connection connection = DriverManager.getConnection(connectionurl);
 			        	Statement statement = connection.createStatement();) {
 
 			            // Do a select statement that shows the entire table
@@ -276,18 +271,12 @@ public  class InitialGUI extends Application {
 				    	
 				    	// Connects to sql
 				    	// TODO: correct the sql connection stuff
-				    	String connectionUrl =
-				                "jdbc:sqlserver://egs.database.windows.net:1433;"
-				                        + "database=egs;"
-				                        + "user=egs;"
-				                        + "password=Grading2019!;"
-				                        + "encrypt=true;"
-				                        + "trustServerCertificate=false;"
-				                        + "loginTimeout=30;";
+				    	SQLConnection connect = new SQLConnection();
+				    	String connectionurl = connect.connect();
 				        
 				        ResultSet resultSet;
 
-				        try (Connection connection = DriverManager.getConnection(connectionUrl);
+				        try (Connection connection = DriverManager.getConnection(connectionurl);
 				        	Statement statement = connection.createStatement();) {
 
 				            // Do a select statement that shows the entire table
@@ -492,18 +481,12 @@ public  class InitialGUI extends Application {
 			    	
 			    	// Connects to sql
 			    	// TODO: correct the sql connection stuff
-			    	String connectionUrl =
-			                "jdbc:sqlserver://egs.database.windows.net:1433;"
-			                        + "database=egs;"
-			                        + "user=egs;"
-			                        + "password=Grading2019!;"
-			                        + "encrypt=true;"
-			                        + "trustServerCertificate=false;"
-			                        + "loginTimeout=30;";
+			    	SQLConnection connect = new SQLConnection();
+			    	String connectionurl = connect.connect();
 			        
 			        boolean resultSet;
 
-			        try (Connection connection = DriverManager.getConnection(connectionUrl);
+			        try (Connection connection = DriverManager.getConnection(connectionurl);
 			        	Statement statement = connection.createStatement();) {
 
 			        	String user_type = null;
