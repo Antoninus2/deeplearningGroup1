@@ -210,7 +210,6 @@ public  class InitialGUI extends Application {
 			    	writtenText.setText("Sign in button pressed");
 			    	
 			    	// Connects to sql
-			    	// TODO: correct the sql connection stuff
 			    	SQLConnection connect = new SQLConnection();
 			    	String connectionurl = connect.connect();
 			        
@@ -270,7 +269,6 @@ public  class InitialGUI extends Application {
 				    	writtenText.setText("Enter button pressed");
 				    	
 				    	// Connects to sql
-				    	// TODO: correct the sql connection stuff
 				    	SQLConnection connect = new SQLConnection();
 				    	String connectionurl = connect.connect();
 				        
@@ -480,7 +478,6 @@ public  class InitialGUI extends Application {
 			    	
 			    	
 			    	// Connects to sql
-			    	// TODO: correct the sql connection stuff
 			    	SQLConnection connect = new SQLConnection();
 			    	String connectionurl = connect.connect();
 			        
