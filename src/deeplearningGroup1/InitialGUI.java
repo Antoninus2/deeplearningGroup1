@@ -53,6 +53,7 @@ import javafx.stage.StageStyle;
 
 public  class InitialGUI extends Application {
 	StudentAccount student=new StudentAccount();
+	StudentHomePage homePage = new StudentHomePage();
 	// Variables
 	
 	/**
@@ -289,10 +290,11 @@ public  class InitialGUI extends Application {
 				            	System.out.println(resultSet.getString(1));
 				            	if (sqlPasswords.equals(passwordField.getText())) {
 				            		if (sqlUserType.equals("Student")) {
-								        // Brings you to your student account
+								        //Brings you to your student account
 						 				StudentGUI studentGui = new StudentGUI(jarvis);
 						 				studentGui.StudentBox();
 						 				theFirstOne.hide();
+				            			
 				            		} else if (sqlUserType.equals("Teacher")) {
 				            			// Go to teacher account
 				            			// TODO: Jimmy add teacher account acccess here
@@ -598,10 +600,13 @@ public  class InitialGUI extends Application {
 				    					
 				    					 	
 				    					 				
-				    					 				StudentGUI studentGui = new StudentGUI(jarvis);
-				    					 				studentGui.StudentBox();
-				    					 				theFirstOne.hide();
+				    					 				//StudentGUI studentGui = new StudentGUI(jarvis);
+				    					 				//studentGui.StudentBox();
+				    					 				//theFirstOne.hide();
 				    					 		
+				    					 				StudentHomePage homePage = new StudentHomePage();
+				    					 				homePage.StudentHomePageStarting();
+				    					 				theFirstOne.hide();
 				    					 			
 				    					
 				    					
