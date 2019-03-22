@@ -3,7 +3,7 @@ package deeplearningGroup1;
 /**
  * Essay holds all the data pertaining to a single essay written by a single student
  * @author Steven Rose
- * version 1.0
+ * @version 1.0
  */
 public class Essay {
 	

@@ -205,7 +205,7 @@ public  class InitialGUI extends Application {
 			    
 			    SignInButton.setOnAction(event1 -> 
 			    {
-			    	student.setUser(userTextField.getText());
+			    	student.setEmail(userTextField.getText());
 			    	student.setPass(passwordField.getText());
 			    	writtenText.setFill(Color.FIREBRICK);
 			    	writtenText.setText("Sign in button pressed");
@@ -264,7 +264,7 @@ public  class InitialGUI extends Application {
 			    {
 			    	if(ev.getCode() == KeyCode.ENTER)						// if enter is pressed then you can sign in as well
 			    	{
-			    		student.setUser((userTextField.getText()));
+			    		student.setEmail((userTextField.getText()));
 				    	student.setPass((passwordField.getText()));
 			    		writtenText.setFill(Color.FIREBRICK);
 				    	writtenText.setText("Enter button pressed");
@@ -607,8 +607,13 @@ public  class InitialGUI extends Application {
 				    					 				StudentHomePage homePage = new StudentHomePage();
 				    					 				homePage.StudentHomePageStarting();
 				    					 				theFirstOne.hide();
+				    					 				
+				    					 				student.setFirstName(FirstNameTextField.getText());
+				    					 				student.setLastName(LastNameTextField.getText());
+				    					 				student.setEmail(emailAddressField.getText());
+				    					 				student.setPass(passwordField.getText());
 				    					 			
-				    					
+				    					 				student.printConfirm();
 				    					
 				    					//GoodMessage.setText(Color.GREEN);
 				    					
