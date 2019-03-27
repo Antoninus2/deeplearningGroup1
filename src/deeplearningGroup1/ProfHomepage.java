@@ -36,8 +36,8 @@ public class ProfHomepage{
 	public ProfHomepage(){
 		// Create background
 		homePane = new GridPane();
-		//Image image2 = new Image ("sure.jpg");
-		//homePane.setBackground(new Background(new BackgroundImage(image2,BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));
+		Image image2 = new Image ("sure.jpg");
+		homePane.setBackground(new Background(new BackgroundImage(image2,BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));
 		
 		homePane.setPadding(new Insets(25,25,25,25));
 		homePane.setAlignment(Pos.TOP_LEFT);
@@ -97,9 +97,9 @@ public class ProfHomepage{
 		
 		// Make wizard work
 		crtCourseB.setOnAction(e -> {ncStage.close();
-								  numClasses++;
-								  createCourseBttn(secInput.getCharacters().toString());
-								  });
+								  	 numClasses++;
+								  	 createCourseBttn(secInput.getCharacters().toString());
+								  	});
 	}
 	
 	
@@ -120,11 +120,15 @@ public class ProfHomepage{
 		for(int i = 0; i < 4; i++) {
 			courseID[i] = randomFrom(0,9);
 		}
-		courseB.setOnAction(e -> goToCourseGUI(courseID, courseName));
+		// creation of the course object
+		Course course = new Course(courseID, courseName);
+		// go to course GUI when button clicked
+		courseB.setOnAction(e -> goToCourseGUI(courseID, courseName, course));
 	}
 	
-	private void goToCourseGUI(int[] courseID, String courseName) {
-		Course courseGUI = new Course(courseID, courseName, profStage);
+	// Might want to rework the logic here, doesn't make sense to make a new GUI every time button clicked
+	private void goToCourseGUI(int[] courseID, String courseName, Course course) {
+		ProfCourseGUI courseGUI = new ProfCourseGUI(courseID, courseName, profStage, course);
 	}
 	
 	
