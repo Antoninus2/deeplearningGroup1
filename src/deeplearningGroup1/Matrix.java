@@ -3,7 +3,7 @@ package deeplearningGroup1;
 /**
  * Matrix is a 2D array of doubles with defined matrix operations
  * @author Steven Rose
- * version 1.0
+ * @version 1.0
  */
 public class Matrix {
 	

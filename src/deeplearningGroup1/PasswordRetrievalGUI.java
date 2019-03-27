@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
@@ -29,15 +30,32 @@ import javafx.stage.Stage;
  * @author Antonino Abeshi
  *
  */
+	
 public class PasswordRetrievalGUI{
 
 	public Stage thirdOne;
 	private Scene scene3;
-	private GridPane pane1;
+	private GridPane pane1; 
+	private Pane pane4;
 	private Button clickToSubmit;
 	private TextField EmailTextField;
 	private InitialGUI initalGUI;
 
+	public Stage secondOne;
+	private Scene scene2;
+	//private GridPane pane1;
+	//private Button clickToSubmit;
+	private TextField enterEssayTopic;
+	private TextArea enterTextField;
+	private Text essayTopic, enterText;
+	private Jarvis jarvis;
+	public Stage fourthOne;
+	private Scene scene4;
+	private Pane pane2;
+
+		
+	
+	StudentAccount student= new StudentAccount();
 	
 	public PasswordRetrievalGUI() {
 		
@@ -93,8 +111,14 @@ public class PasswordRetrievalGUI{
 		clickToSubmit.setOnAction(event1 -> 
 	    {
 	    	
+	    	//scene2 = new Scene(pane4, 600, 600);
+			//secondOne = new Stage();
+			//secondOne.setTitle(" Welcome Student ");
+			//secondOne.setScene(scene2);
+			//secondOne.show();
+	    	//student.reset(EmailTextField.getText());
 	    	
-	    	//System.out.println(EmailTextField.getText());
+	    	System.out.println(EmailTextField.getText());
 	    	//StudentAccount emailR = new StudentAccount();
 	    	//emailR.reset(EmailTextField.getText());
 	    	

@@ -53,6 +53,7 @@ import javafx.stage.StageStyle;
 
 public  class InitialGUI extends Application {
 	StudentAccount student=new StudentAccount();
+	StudentHomePage homePage = new StudentHomePage();
 	// Variables
 	
 	/**
@@ -204,25 +205,19 @@ public  class InitialGUI extends Application {
 			    
 			    SignInButton.setOnAction(event1 -> 
 			    {
-			    	student.setUser(userTextField.getText());
+			    	student.setEmail(userTextField.getText());
 			    	student.setPass(passwordField.getText());
 			    	writtenText.setFill(Color.FIREBRICK);
 			    	writtenText.setText("Sign in button pressed");
 			    	
 			    	// Connects to sql
-			    	// TODO: correct the sql connection stuff
-			    	String connectionUrl =
-			                "jdbc:sqlserver://egs.database.windows.net:1433;"
-			                        + "database=egs;"
-			                        + "user=egs;"
-			                        + "password=Grading2019!;"
-			                        + "encrypt=true;"
-			                        + "trustServerCertificate=false;"
-			                        + "loginTimeout=30;";
+			    	SQLConnection connect = new SQLConnection();
+			    	String connectionurl = connect.connect();
 			        
 			        ResultSet resultSet;
 
-			        try (Connection connection = DriverManager.getConnection(connectionUrl);
+	
+					try (Connection connection = DriverManager.getConnection(connectionurl);
 			        	Statement statement = connection.createStatement();) {
 
 			            // Do a select statement that shows the entire table
@@ -269,25 +264,18 @@ public  class InitialGUI extends Application {
 			    {
 			    	if(ev.getCode() == KeyCode.ENTER)						// if enter is pressed then you can sign in as well
 			    	{
-			    		student.setUser((userTextField.getText()));
+			    		student.setEmail((userTextField.getText()));
 				    	student.setPass((passwordField.getText()));
 			    		writtenText.setFill(Color.FIREBRICK);
 				    	writtenText.setText("Enter button pressed");
 				    	
 				    	// Connects to sql
-				    	// TODO: correct the sql connection stuff
-				    	String connectionUrl =
-				                "jdbc:sqlserver://egs.database.windows.net:1433;"
-				                        + "database=egs;"
-				                        + "user=egs;"
-				                        + "password=Grading2019!"
-				                        + "encrypt=true;"
-				                        + "trustServerCertificate=false;"
-				                        + "loginTimeout=30;";
+				    	SQLConnection connect = new SQLConnection();
+				    	String connectionurl = connect.connect();
 				        
 				        ResultSet resultSet;
 
-				        try (Connection connection = DriverManager.getConnection(connectionUrl);
+				        try (Connection connection = DriverManager.getConnection(connectionurl);
 				        	Statement statement = connection.createStatement();) {
 
 				            // Do a select statement that shows the entire table
@@ -302,10 +290,11 @@ public  class InitialGUI extends Application {
 				            	System.out.println(resultSet.getString(1));
 				            	if (sqlPasswords.equals(passwordField.getText())) {
 				            		if (sqlUserType.equals("Student")) {
-								        // Brings you to your student account
+								        //Brings you to your student account
 						 				StudentGUI studentGui = new StudentGUI(jarvis);
 						 				studentGui.StudentBox();
 						 				theFirstOne.hide();
+				            			
 				            		} else if (sqlUserType.equals("Teacher")) {
 				            			// Go to teacher account
 				            			// TODO: Jimmy add teacher account acccess here
@@ -491,19 +480,12 @@ public  class InitialGUI extends Application {
 			    	
 			    	
 			    	// Connects to sql
-			    	// TODO: correct the sql connection stuff
-			    	String connectionUrl =
-			                "jdbc:sqlserver://egs.database.windows.net:1433;"
-			                        + "database=egs;"
-			                        + "user=egs;"
-			                        + "password=Grading2019!;"
-			                        + "encrypt=true;"
-			                        + "trustServerCertificate=false;"
-			                        + "loginTimeout=30;";
+			    	SQLConnection connect = new SQLConnection();
+			    	String connectionurl = connect.connect();
 			        
 			        boolean resultSet;
 
-			        try (Connection connection = DriverManager.getConnection(connectionUrl);
+			        try (Connection connection = DriverManager.getConnection(connectionurl);
 			        	Statement statement = connection.createStatement();) {
 
 			        	String user_type = null;
@@ -618,12 +600,20 @@ public  class InitialGUI extends Application {
 				    					
 				    					 	
 				    					 				
-				    					 				StudentGUI studentGui = new StudentGUI(jarvis);
-				    					 				studentGui.StudentBox();
-				    					 				theFirstOne.hide();
+				    					 				//StudentGUI studentGui = new StudentGUI(jarvis);
+				    					 				//studentGui.StudentBox();
+				    					 				//theFirstOne.hide();
 				    					 		
+				    					 				StudentHomePage homePage = new StudentHomePage();
+				    					 				homePage.StudentHomePageStarting();
+				    					 				theFirstOne.hide();
+				    					 				
+				    					 				student.setFirstName(FirstNameTextField.getText());
+				    					 				student.setLastName(LastNameTextField.getText());
+				    					 				student.setEmail(emailAddressField.getText());
+				    					 				student.setPass(passwordField.getText());
 				    					 			
-				    					
+				    					 				student.printConfirm();
 				    					
 				    					//GoodMessage.setText(Color.GREEN);
 				    					

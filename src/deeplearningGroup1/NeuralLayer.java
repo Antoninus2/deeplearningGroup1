@@ -3,7 +3,7 @@ package deeplearningGroup1;
 /**
  * NeuralLayer holds the weights and biases corresponding to a single layer in a neural network in {@link Matrix} form
  * @author Steven Rose
- * version 1.0
+ * @version 1.0
  * @see Jarvis
  */
 public class NeuralLayer {
