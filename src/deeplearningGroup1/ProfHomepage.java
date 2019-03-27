@@ -36,8 +36,8 @@ public class ProfHomepage{
 	public ProfHomepage(){
 		// Create background
 		homePane = new GridPane();
-		Image image2 = new Image ("sure.jpg");
-		homePane.setBackground(new Background(new BackgroundImage(image2,BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));
+		Image image = new Image ("redbackground.jpg");
+		homePane.setBackground(new Background(new BackgroundImage(image,BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));
 		
 		homePane.setPadding(new Insets(25,25,25,25));
 		homePane.setAlignment(Pos.TOP_LEFT);

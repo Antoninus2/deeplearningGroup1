@@ -176,7 +176,7 @@ public class StudentHomePage {
 	}
 
 	public static void main(String[] args) {
-		
+	
 	}
 
 }
