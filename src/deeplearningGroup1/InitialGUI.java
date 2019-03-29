@@ -216,7 +216,6 @@ public  class InitialGUI extends Application {
 			        
 			        ResultSet resultSet;
 
-	
 					try (Connection connection = DriverManager.getConnection(connectionurl);
 			        	Statement statement = connection.createStatement();) {
 
@@ -233,8 +232,8 @@ public  class InitialGUI extends Application {
 			            	if (sqlPasswords.equals(passwordField.getText())) {
 			            		if (sqlUserType.equals("Student")) {
 							        // Brings you to your student account
-					 				StudentGUI studentGui = new StudentGUI(jarvis);
-					 				studentGui.StudentBox();
+					 				StudentHomePage homePage = new StudentHomePage();
+					 				homePage.StudentHomePageStarting();
 					 				theFirstOne.hide();
 			            		} else if (sqlUserType.equals("Teacher")) {
 			            			// Go to teacher account
@@ -252,6 +251,7 @@ public  class InitialGUI extends Application {
 			        } catch (SQLException e) {
 			    		e.printStackTrace();
 			    	}
+			    
 			        
 			    	
 			    });
@@ -287,13 +287,12 @@ public  class InitialGUI extends Application {
 				        	while (resultSet.next()) {
 				            	String sqlPasswords = resultSet.getString(1);
 				            	String sqlUserType = resultSet.getString(2);
-				            	System.out.println(resultSet.getString(1));
 				            	if (sqlPasswords.equals(passwordField.getText())) {
 				            		if (sqlUserType.equals("Student")) {
 								        //Brings you to your student account
-						 				StudentGUI studentGui = new StudentGUI(jarvis);
-						 				studentGui.StudentBox();
-						 				theFirstOne.hide();
+    					 				StudentHomePage homePage = new StudentHomePage();
+    					 				homePage.StudentHomePageStarting();
+    					 				theFirstOne.hide();
 				            			
 				            		} else if (sqlUserType.equals("Teacher")) {
 				            			// Go to teacher account
@@ -478,7 +477,8 @@ public  class InitialGUI extends Application {
 			    	student.setLastName((LastNameTextField.getText()));
 			    	student.setEmail((emailAddressField.getText()));
 			    	
-			    	
+			    	if ((FirstNameTextField.getText().isEmpty()) || (LastNameTextField.getText().isEmpty()) || (emailAddressField.getText().isEmpty()) || (passwordField.getText().isEmpty())) {
+			    	} else if ((FirstNameTextField.getText().isEmpty() == false) && (LastNameTextField.getText().isEmpty() == false) && (emailAddressField.getText().isEmpty() == false) && (passwordField.getText().isEmpty() == false)) {
 			    	// Connects to sql
 			    	SQLConnection connect = new SQLConnection();
 			    	String connectionurl = connect.connect();
@@ -506,6 +506,7 @@ public  class InitialGUI extends Application {
 			        } catch (SQLException e) {
 						e.printStackTrace();
 					}
+			    	}
 			    	
 			    // comparing the password fields 
 			        /**
