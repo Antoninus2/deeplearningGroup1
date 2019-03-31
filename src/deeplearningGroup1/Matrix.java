@@ -1,5 +1,9 @@
 package deeplearningGroup1;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 /**
  * Matrix is a 2D array of doubles with defined matrix operations
  * @author Steven Rose
@@ -58,11 +62,12 @@ public class Matrix {
      * @return
      * 		Matrix with random [0..1) values
      */
-    public static Matrix random(int M, int N) {
+    public static Matrix random(int M, int N, int max) {
         Matrix A = new Matrix(M, N);
         for (int i = 0; i < M; i++)
-            for (int j = 0; j < N; j++)
-                A.data[i][j] = Math.random();
+            for (int j = 0; j < N; j++) {
+            	A.data[i][j] = Math.random() * max * (Math.random() < 0.5 ? -1 : 1);
+            }
         return A;
     }
 
@@ -157,7 +162,7 @@ public class Matrix {
         for (int i = 0; i < C.M; i++)
             for (int j = 0; j < C.N; j++)
                 for (int k = 0; k < A.N; k++)
-                    C.data[i][j] = (A.data[i][k] * B.data[k][j]);
+                    C.data[i][j] += (A.data[i][k] * B.data[k][j]);
         return C;
     }
     
@@ -173,8 +178,7 @@ public class Matrix {
     	Matrix C = new Matrix(A.M, A.N);
         for (int i = 0; i < C.M; i++)
             for (int j = 0; j < C.N; j++)
-                for (int k = 0; k < A.N; k++)
-                    C.data[i][j] = A.data[i][k] * b;
+            	C.data[i][j] = A.data[i][j] * b;
         return C;
     }
     
@@ -211,6 +215,15 @@ public class Matrix {
     		}
     	}
     	return B;
+    }
+    
+    public Matrix divide(double b) {
+    	Matrix A = this;
+    	Matrix C = new Matrix(A.M, A.N);
+        for (int i = 0; i < C.M; i++)
+            for (int j = 0; j < C.N; j++)
+            	C.data[i][j] = A.data[i][j] / b;
+        return C;
     }
     
     /**
@@ -270,11 +283,21 @@ public class Matrix {
      * Prints all the values of a matrix to the console
      */
     public void print() {
+    	PrintWriter out = null;
+    	try {
+			 out = new PrintWriter(new FileWriter("log_file.txt", true));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         for (int i = 0; i < M; i++) {
-            for (int j = 0; j < N; j++) 
-                System.out.printf("%9.4f ", data[i][j]);
+            for (int j = 0; j < N; j++) {
+            	System.out.printf("%9.4f ", data[i][j]);
+            	out.printf("%9.4f ", data[i][j]);
+            }
             System.out.println();
+            out.println();
         }
+        out.close();
     }
 
 }
