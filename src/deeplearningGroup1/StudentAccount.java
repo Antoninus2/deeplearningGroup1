@@ -5,7 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
+
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 public class StudentAccount {
 	String usn;		//username
@@ -14,107 +21,9 @@ public class StudentAccount {
 	String fn;		//First name
 	String ln;		//Last name
 
-	Scanner scan= new Scanner(System.in);
-
-	File file = new File("AccountInformation.txt");
-	
 
 	
-	public void signUp() {			//student sign up- takes in first name, last name, email, sets password and username with first-time confirmation
-	/*	System.out.println("First name: \n");		//Nino- from GUI
-		fn=scan.nextLine();
-		System.out.println("Last name: \n");		//Nino- from GUI
-		ln=scan.nextLine();
-		*/
-		//Tim- search no matching accounts for that name in database
-		try {
-
-			Scanner scanner = new Scanner(file);
-			while(scanner.hasNextLine()) {
-				String line= scanner.nextLine();
-				String strArray[]=line.split(",");
-				if(strArray[1].equals(fn)) {
-					if(strArray[2].equals(ln)) {
-						System.out.println("Sorry, that matches a name "
-								+ "in our database. Forgot login?\n");		//Nino- if match to database print to GUI
-						//allow button switch to login screen
-					}
-					break;
-				}
-			}
-			scanner.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	/*	
-		System.out.println("Enter email\n");
-		email=scan.nextLine();
-	*/	
-	/*	System.out.println("Create a username: \n");		
-		usn=scan.nextLine();
-		
-		*/
-		
-		//search no matching usernames
-		try {
-			Scanner scanner = new Scanner(file);
-			while(scanner.hasNextLine()) {
-				String line= scanner.nextLine();
-				String strArray[]=line.split(",");
-				if(strArray[3].equals(email)) {
-					System.out.println("Sorry, that username is already taken.\n");
-					break;
-				}
-			}
-			scanner.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		
-		//System.out.println("Create a password: \n");  //Nino- from GUI
-		//pwd = scan.nextLine();
-		
-		
-		//print account creation confirmation to user
-		printConfirm();
-	}
-	
-	
-	
-	
-	
-	
-	public void login() {			//student login takes in username and password, compares for match, logs student in (need database)
-	/*	System.out.println("Username: ");		//Nino- From GUI
-		usn=scan.nextLine();
-		System.out.println("\nPassword: ");		//Nino- From GUI
-		pwd=scan.nextLine();
-		
-	*/	
-		//Tim- compare for match in database, login, reject otherwise
-		try {
-			Scanner scanner = new Scanner(file);
-			while(scanner.hasNextLine()) {
-				String line= scanner.nextLine();
-				String strArray[]=line.split(",");
-				if(strArray[3].equals(email)) {
-					if(strArray[0].equals(pwd)) {
-						//login----NINO
-					}
-					break;
-				}
-			}
-			scanner.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	//	System.out.println("The username or password you have entered is incorrect.\n");		//Nino
-	}
-	
-	
-	
-	
+	// print account info from sql
 	private void printInfo() {		//for admin purposes only, prints account info for ALL accounts
 		
 		try {
@@ -143,9 +52,34 @@ public class StudentAccount {
 		pwd=newPassArray[0]+ newPassArray[1]+ newPassArray[2]+ newPassArray[3]
 				+newPassArray[4]+newPassArray[5]+ newPassArray[6]+ newPassArray[7]+ newPassArray[8]+newPassArray[9];		//prints new password
 		//System.out.println("Enter your email: ");		//Nino-GUI
-		email=scan.nextLine();
-		//Tim- search for email in database
-		try {
+		
+
+
+    	// Connects to sql
+    	SQLConnection connect = new SQLConnection();
+    	String connectionurl = connect.connect();
+        
+        ResultSet resultSet;
+        try (Connection connection = DriverManager.getConnection(connectionurl);
+	        	Statement statement = connection.createStatement();) {
+
+	            // Updates the account with the new password when they request it
+        		String string1 = "'"+pwd+"'";
+	        	String string2 = "'"+email+"'";
+	            String selectSql = "update dbo.User_Info set Password = " + string1+ " where Username = " + string2; //dbo.Essays
+	        	resultSet = statement.executeQuery(selectSql);
+	        	
+	        	
+        } catch (SQLServerException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+    		e.printStackTrace();
+    	}
+        
+        
+        
+        // Not sure if this is needed when we have SQL
+		/*try {
 
 			Scanner scanner = new Scanner(file);
 			while(scanner.hasNextLine()) {
@@ -161,38 +95,10 @@ public class StudentAccount {
 			e.printStackTrace();
 		}
 		System.out.println("Your email was not found in the database. Try again.\n");  //Nino- GUI
-	}
-	
-	
-	
-	
-	public void recovery(String fn, String ln) {		//attempts to recover the account by matching first and last names
-	/*	
-		System.out.println("First name: ");		//Nino-GUI
-		fn=scan.nextLine();
-		System.out.println("Last name: ");		//Nino-GUI
-		ln=scan.nextLine();
 		*/
-		//Tim- search name in database
-		try {
-			Scanner scanner = new Scanner(file);
-			while(scanner.hasNextLine()) {
-				String line= scanner.nextLine();
-				String strArray[]=line.split(",");
-				if(strArray[1].equals(fn)) {
-					if(strArray[2].equals(ln)) {
-						System.out.printf("Your username is: %s", usn);		//Nino-GUI
-					}
-					break;
-				}
-			}
-			scanner.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Your information does not match the database. Try again.\n");		//Nino-Gui
 	}
 	
+
 	
 	
 	public void printConfirm() {		//prints a confirmation of account info to USER upon creation---NINO
