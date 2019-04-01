@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="mssql-jdbc-7.2.1.jre8.jar"/>
-<<<<<<< .merge_file_a19628
 	<classpathentry kind="lib" path="poi-4.0.1/poi-4.0.1.jar"/>
 	<classpathentry kind="lib" path="poi-4.0.1/poi-ooxml-4.0.1.jar"/>
 	<classpathentry kind="lib" path="poi-4.0.1/ooxml-lib/xmlbeans-3.0.2.jar"/>
@@ -19,7 +18,5 @@
 	<classpathentry kind="lib" path="poi-4.0.1/lib/junit-4.12.jar"/>
 	<classpathentry kind="lib" path="poi-4.0.1/lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="poi-4.0.1/poi-ooxml-schemas-4.0.1.jar"/>
-=======
->>>>>>> .merge_file_a18684
 	<classpathentry kind="output" path="bin"/>
 </classpath>
