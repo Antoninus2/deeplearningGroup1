@@ -50,6 +50,7 @@ public class Jarvis {
 		j.log("----------START----------");
 		Essay essay = new Essay(1, 100, 5, "topic");
 		essay.writeEssay("This is my tesst essay .");
+		
 		try {
 			j.train(essayTrainingFileName, 2);
 		} catch (IOException e) {
