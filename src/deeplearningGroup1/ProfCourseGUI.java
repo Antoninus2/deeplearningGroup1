@@ -30,7 +30,7 @@ public class ProfCourseGUI{
 	private int scale = 10;
 	private Text alreadyEssay;
 	public Stage courseStage;
-	private Boolean essayErrorFlag;
+	private Boolean essayErrorFlag;   // TODO make error flag work
 	
 // Constructor
 	public ProfCourseGUI(int[] courseID, String courseName, Course course) { 
@@ -54,7 +54,7 @@ public class ProfCourseGUI{
 		addButtons();
 		
 		// Make Buttons Work
-		nwEssyB.setOnAction(e -> { if(course.getEssayStatus() && essayErrorFlag) {
+		nwEssyB.setOnAction(e -> { if(course.getEssayStatus() && essayErrorFlag) {  //TODO make errorFlag work
 										alreadyEssay = new Text("Please end this essay before creating a new one.");
 										alreadyEssay.setFill(Color.RED);
 										alreadyEssay.setWrappingWidth(678);
@@ -90,10 +90,10 @@ public class ProfCourseGUI{
 		pcPane.getChildren().add(endEssaySessionB);
 		
 		endEssaySessionB.setOnAction(e -> { course.setEssayStatus(false);
-											essayErrorFlag = false; 	//TODO
+											essayErrorFlag = false; 	//TODO make error flag works
 											pcPane.getChildren().remove(eInProgress);
 											pcPane.getChildren().remove(endEssaySessionB);
-											pcPane.getChildren().remove(alreadyEssay); 	//TODO this may be causing problems...maybe....
+											pcPane.getChildren().remove(alreadyEssay); 	//TODO causing problems...use error flag
 										  });
 	}
 	
@@ -182,12 +182,12 @@ public class ProfCourseGUI{
 		nwEssyB.setLayoutY(scale * 1);
 		pcPane.getChildren().add(nwEssyB);
 		
-		grdBkB = new Button("Gradebook");
+		grdBkB = new Button("Gradebook"); 	// TODO make toggle button
 		grdBkB.setLayoutX(scale * 1);
 		grdBkB.setLayoutY(scale * 4);
 		pcPane.getChildren().add(grdBkB);
 		
-		statsB = new Button("Statistics");
+		statsB = new Button("Statistics"); 	// TODO make toggle button
 		statsB.setLayoutX(scale * 1);
 		statsB.setLayoutY(scale * 7);
 		pcPane.getChildren().add(statsB);
