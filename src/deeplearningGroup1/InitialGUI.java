@@ -618,15 +618,10 @@ public  class InitialGUI extends Application {
 				    					
 				    					
 				    					
-<<<<<<< HEAD
 				    					ProfHomepage profPage = new ProfHomepage();
 				            			theFirstOne.hide();  //TODO timmy has to make sure that this is teacher sql
 		    						}
 		    						else {
-=======
-		    						} else 
-				    					{
->>>>>>> 35894cf6a0f225b00cecec84cfd7b7108143c65b
 		    							Wrong = new Image("x image.png");
 					    				Circle check1 = new Circle(10);
 					    				check1.setFill(new ImagePattern(Wrong));

@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 import java.util.Scanner;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
@@ -147,47 +148,14 @@ public class StudentAccount {
 		//email=scan.nextLine();
 		//Tim- search for email in database
 
-		return pwdStr;	//takes in email and gives back new random password
-=======
+		
 		System.out.println("Your email was not found in the database. Try again.\n");  //Nino- GUI
+		return pwdStr;	//takes in email and gives back new random password
 	}
-	
-	
-	
-	
-	public void recovery(String fn, String ln) {		//attempts to recover the account by matching first and last names
-	/*	
-		System.out.println("First name: ");		//Nino-GUI
-		fn=scan.nextLine();
-		System.out.println("Last name: ");		//Nino-GUI
-		ln=scan.nextLine();
-		*/
-		//Tim- search name in database
-		try {
-			Scanner scanner = new Scanner(file);
-			while(scanner.hasNextLine()) {
-				String line= scanner.nextLine();
-				String strArray[]=line.split(",");
-				if(strArray[1].equals(fn)) {
-					if(strArray[2].equals(ln)) {
-						System.out.printf("Your username is: %s", usn);		//Nino-GUI
-					}
-					break;
-				}
-			}
-			scanner.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Your information does not match the database. Try again.\n");		//Nino-Gui
-	}
-	
-	
 	
 	public void printConfirm() {		//prints a confirmation of account info to USER upon creation---NINO
 		System.out.printf("Your account information is as follows: \n  Password: %s\n First name: %s\n Last name: %s\n Email: %s\n",  pwd, fn, ln, email);
 		System.out.println("Please keep this information for your records.\n");
->>>>>>> 35894cf6a0f225b00cecec84cfd7b7108143c65b
 	}
 
 

@@ -124,12 +124,8 @@ public class PasswordRetrievalGUI{
 	    	//emailR.reset(EmailTextField.getText());
 	    	
 	    });
-<<<<<<< HEAD
 		String email = EmailTextField.getText();
     	return email;
-=======
-		
->>>>>>> 35894cf6a0f225b00cecec84cfd7b7108143c65b
 	}
 	
 	public void Back()
