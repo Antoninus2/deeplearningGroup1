@@ -237,8 +237,8 @@ public  class InitialGUI extends Application {
 					 				studentGui.StudentBox();
 					 				theFirstOne.hide();
 			            		} else if (sqlUserType.equals("Teacher")) {
-			            			// Go to teacher account
-			            			// TODO: Jimmy add teacher account acccess here
+			            			ProfHomepage profPage = new ProfHomepage();
+			            			theFirstOne.hide();
 			            		}
 				        	}
 			        	}
