@@ -34,7 +34,6 @@ public class ProfHomepage{
 	
 // Constructor
 	public ProfHomepage(){
-//<<<<<<< HEAD
 		// Create background
 		homePane = new GridPane();
 		Image image = new Image ("ERAUlogo.jpeg");
@@ -67,39 +66,6 @@ public class ProfHomepage{
 	}
 	
 // Methods
-
-		
-	
-	
-	public void ProfHomepage2() {
-		// Create background
-				homePane = new GridPane();
-				Image image = new Image ("redbackground.jpg");
-				homePane.setBackground(new Background(new BackgroundImage(image,BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));
-				
-				homePane.setPadding(new Insets(25,25,25,25));
-				homePane.setAlignment(Pos.TOP_LEFT);
-				homePane.setHgap(25);
-				homePane.setVgap(5);
-				
-				// Create Buttons
-				nwClssB = new Button("Create New Section");
-				homePane.add(nwClssB, 4, 5);
-				
-				// Place scene in stage
-				scene = new Scene(homePane, 600, 600);
-				profStage = new Stage();
-				profStage.setTitle(" Welcome Professor ");
-				profStage.setScene(scene);
-				profStage.show();
-				
-				homePane.setGridLinesVisible(false);
-				
-				// Assign actions to buttons
-				nwClssB.setOnAction(e -> createNewCourse());
-		
-	}
-	// Methods
 	
 	/**
 	 * @author J.McGuire
