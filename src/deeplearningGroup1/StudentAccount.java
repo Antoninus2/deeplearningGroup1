@@ -82,18 +82,21 @@ public class StudentAccount {
 */
 
 		// Connects to sql
+		
+		PasswordRetrievalGUI pass = new PasswordRetrievalGUI();
+		String email = pass.Submit();
 		SQLConnection connecting = new SQLConnection();
 		String connectionurl = connecting.connect();
 
-		ResultSet resultSet;
+		boolean resultSet;
 		try (Connection connection = DriverManager.getConnection(connectionurl);
 				Statement statement = connection.createStatement();) {
 
 			// Updates the account with the new password when they request it
 			String string1 = "'"+pwdStr+"'";
 			String string2 = "'"+email+"'";
-			String selectSql = "update dbo.User_Info set Password = " + string1+ " where Username = " + string2; //dbo.Essays
-			resultSet = statement.executeQuery(selectSql);
+			String selectSql = "update dbo.User_Info set Passwords = " + string1+ " where Username = " + string2; //dbo.Essays
+			resultSet = statement.execute(selectSql);
 
 
 		} catch (SQLServerException e) {

@@ -21,8 +21,8 @@ public class SQLConnection {
     	String connectionUrl =
                 "jdbc:sqlserver://db.database.windows.net:1433;"
                         + "database=db;"
-                        + "user=usr;"
-                        + "password=pwd;"
+                        + "user=db;"
+                        + "password=db;"
                         + "encrypt=true;"
                         + "trustServerCertificate=false;"
                         + "loginTimeout=30;";
