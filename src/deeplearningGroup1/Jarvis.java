@@ -3,19 +3,10 @@ package deeplearningGroup1;
 import java.util.Scanner;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
-
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  * Jarvis is the neural network essay grading class through the use of a
@@ -33,8 +24,6 @@ public class Jarvis {
 	 */
 	private final String fileNameWordList = "words.txt";
 	
-	private final static String essayTrainingFileName = "resources/Essay Data/training_set_rel3_set1.xlsx";
-	
 	/**
 	 * wordList is the list of words for checking spelling
 	 */
@@ -44,21 +33,6 @@ public class Jarvis {
 	 * neuralLayers is a list of all the layers of the neural network, and holds the weights and biases of each layer
 	 */
 	private List<NeuralLayer> neuralLayers;
-	
-	public static void main(String[] args) {
-		Jarvis j = new Jarvis();
-		j.log("----------START----------");
-		Essay essay = new Essay(1, 100, 5, "topic");
-		essay.writeEssay("This is my tesst essay .");
-		
-		try {
-			j.train(essayTrainingFileName, 2);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//j.train(essay, new Matrix(new double[][] {{0},{1}}));
-		j.log("----------END----------");
-	}
 	
 	/**
 	 * creates a new Jarvis, loads the wordList, sets the weights and biases of the neural network, then creates the neural network from those weights/biases
@@ -70,19 +44,40 @@ public class Jarvis {
 		String[] layerNames = {"input", "hidden 1", "output"};
 		/* Current size of neural network:
 		 * 		3 inputs
-		 * 		5 hidden
-		 * 		3 outputs
+		 * 		4 neurons in hidden layer
+		 * 		5 outputs (A,B,C,D,F)
 		 */
-		
-		//TODO: Pull weights/biases from database
-		
-		int randMax = 10;
+			
 		List <Matrix> weights = new ArrayList<>();
-		weights.add(Matrix.random(5, 3, randMax));
-		weights.add(Matrix.random(4, 5, randMax));
+		weights.add(new Matrix(new double[][] {
+			{.01, -.02, .03},
+			{.04, .05, -.06},
+			{.07, -.08, -.09},
+			{-.10, .11, .12}
+		}));
+		weights.add(new Matrix(new double[][] {
+			{.13, -.14, .15, -.16},
+			{.13, -.14, .15, -.16},
+			{.13, -.14, .15, -.16},
+			{.13, -.14, .15, -.16},
+			{.13, -.14, .15, -.16}
+		}));
+		
 		List <Matrix> biases = new ArrayList<>();
-		biases.add(Matrix.random(5, 1, randMax));
-		biases.add(Matrix.random(4, 1, randMax));
+		biases.add(new Matrix(new double[][] {
+			{-1},
+			{2},
+			{-3},
+			{4}
+		}));
+		
+		biases.add(new Matrix(new double[][] {
+			{6},
+			{7},
+			{8},
+			{9},
+			{0}
+		}));
 		
 		 createNeuralNet(layerNames, weights, biases);
 	}
@@ -139,6 +134,36 @@ public class Jarvis {
 	}
 	
 	/**
+	 * Calculates the desired change to the output to achieve the desiredOutput
+	 * Not implemented as of version 1.0
+	 * @param output
+	 * 		Column Matrix of actual output of neural network
+	 * @param desiredOutput
+	 * 		Column Matrix of desired output of neural network
+	 * @return
+	 * 		Column Matrix of desired changes to actual output to achieve desired output
+	 */
+	private Matrix deltaOutput(Matrix output, Matrix desiredOutput) {
+		Matrix delC_delA = output.minus(desiredOutput).multiply(2);
+		Matrix delSigma_delZ = new Matrix(output.getM(), 1);
+		for (int i = 0; i < output.getM(); i++) {
+			double a = output.get(i, 1);
+			delSigma_delZ.set(i, 1, a*Math.exp(-a) / Math.pow(1+Math.exp(-a), 2));
+		}
+		return delC_delA.elementMultiply(delSigma_delZ);
+	}
+	
+	/**
+	 * Calculates the desired changes to weights and biases for a given layer to achieve the desired output
+	 * Not implemented as of version 1.0
+	 * @param deltaLayerPlusOne
+	 * 		Column Matrix of desired changes to layer after current layer
+	 */
+	private void deltaLayer(Matrix deltaLayerPlusOne) {
+		
+	}
+	
+	/**
 	 * Grades an essay
 	 * @param essay
 	 * 		Essay to be graded
@@ -146,21 +171,29 @@ public class Jarvis {
 	 * 		Grade for the essay
 	 */
 	public String gradeEssay(Essay essay) {
-		Matrix input = getInputMatrix(essay);
+		double spelling = checkSpelling(essay);
+		double wordLimit = (checkWordLimit(essay) ? 1 : 0);
+		double grammar = checkGrammar(essay);
+		log("spelling = " + spelling);
+		log("wordLimit = " + wordLimit);
+		log("grammar = " + grammar);
+		Matrix input = new Matrix(new double[][] {
+				{spelling},
+				{wordLimit},
+				{grammar}
+		});
 		Matrix output = calculateOutput(input);
 		output.print();
-		log("\ninput:");
-		input.print();
-		log("\nweights:");
-		neuralLayers.get(0).getWeights().print();
-		log("\nbiases:");
-		neuralLayers.get(0).getBias().print();
-		log("\nweighted input:");
-		neuralLayers.get(0).getWeightedInput().print();
-		log("\nactivations:");
-		neuralLayers.get(0).getActivations().print();
-		log("\nlayers: " + neuralLayers.size());
-		
+		/*
+		Matrix desiredOutput = new Matrix(output.getM(), output.getN());
+		desiredOutput.set(0, 0, .5);
+		Matrix dC_da = new Matrix(output.getM(), output.getN());
+		for (int i = 0; i < dC_da.getM(); i++) {
+			for (int j = 0; j < dC_da.getN(); j++) {
+				dC_da.set(i, j, 2*(output.get(i, j) - desiredOutput.get(i, j)));
+			}
+		}
+		*/
 		
 		String[] grades = {"A", "B", "C", "D", "F"};
 		String grade = "No Grade";
@@ -172,164 +205,6 @@ public class Jarvis {
 			}
 		}
 		return grade;
-	}
-	
-	private void train(String fileName, int batchSize) throws IOException {
-		
-		FileInputStream fis = new FileInputStream(new File(fileName));
-		XSSFWorkbook workbook = new XSSFWorkbook(fis);
-		XSSFSheet sheet = workbook.getSheetAt(0);
-		
-		Iterator<Row> rowIter = sheet.iterator();
-		int rowNum = 0;
-		Essay[] essays = new Essay[batchSize];
-		Matrix[] grades = new Matrix[batchSize];
-		double numGrade;
-		while (rowIter.hasNext() && rowNum < batchSize) {
-			Row row = rowIter.next();
-			essays[rowNum] = new Essay(1, Integer.MAX_VALUE, Integer.MAX_VALUE, "training");
-			essays[rowNum].writeEssay(row.getCell(2).getStringCellValue());
-			numGrade = row.getCell(6).getNumericCellValue();
-			grades[rowNum] = new Matrix(neuralLayers.get(neuralLayers.size()-1).getBias().getM(), 1);
-			if (numGrade > 9) {
-				grades[rowNum].set(0, 0, 1); //A
-			} else if (numGrade > 6) {
-				grades[rowNum].set(1, 0, 1); //B
-			} else if (numGrade > 3) {
-				grades[rowNum].set(2, 0, 1); //C
-			} else {
-				grades[rowNum].set(3, 0, 1); //D
-			}
-			//log("row = " + rowNum);
-			//log("essay:\n" + essays[rowNum].getEssay());
-			//log("expected grade: " + numGrade);
-			//grades[rowNum].print();
-			rowNum++;
-		}
-		
-		workbook.close();
-		fis.close();
-		
-		List< Matrix[][] > gradient = new ArrayList<>();
-		for (int i = 0; i < batchSize; i++) {
-			gradient.add(train(essays[i], grades[i]));
-		}
-		
-		log("\n----------------------------\nGradient:\n");
-		Matrix[][] avgGradient = new Matrix[2][neuralLayers.size()];
-		for (int i = 0; i < batchSize; i++) {
-			log("\nessay #: " + i);
-			for (int j = 0; j < neuralLayers.size(); j++) {
-				if (i == 0) {
-					avgGradient[0][j] = new Matrix(gradient.get(i)[0][j].getM(), 1);
-					avgGradient[1][j] = new Matrix(gradient.get(i)[1][j].getM(), gradient.get(i)[1][j].getN());
-				}
-				
-				
-				log("bias error:");
-				gradient.get(i)[0][j].print();
-				log("weights error:");
-				gradient.get(i)[1][j].print();
-				avgGradient[0][j] = avgGradient[0][j].plus(gradient.get(i)[0][j]);
-				avgGradient[1][j] = avgGradient[1][j].plus(gradient.get(i)[1][j]);
-			}
-			
-		}
-		
-		for (int j = 0; j < neuralLayers.size(); j++) {
-			avgGradient[0][j] = avgGradient[0][j].divide(batchSize);
-			avgGradient[1][j] = avgGradient[1][j].divide(batchSize);
-		}
-		
-		NeuralLayer nl;
-		log("\n-----------------------\ncurrent neural net:");
-		for (int i = 0; i < neuralLayers.size(); i++) {
-			log("neural layer #" + (i+1));
-			nl = neuralLayers.get(i);
-			nl.print();
-		}
-		
-		log("\n\naverage bias errors:");
-		for (int j = 0; j < neuralLayers.size(); j++) {
-			avgGradient[0][j].print();
-			log("");
-		}
-		
-		log("\naverage weights errors:");
-		for (int j = 0; j < neuralLayers.size(); j++) {
-			avgGradient[1][j].print();
-			log("");
-		}
-		
-		log("-----------------------\nnew neural net:");
-		for (int i = 0; i < neuralLayers.size(); i++) {
-			log("neural layer #" + (i+1));
-			nl = neuralLayers.get(i);
-			nl.changeBias(avgGradient[0][i]);
-			nl.changeWeights(avgGradient[1][i]);
-			nl.print();
-		}
-		
-		//TODO: save new biases/weights to database
-	}
-	
-	private Matrix[][] train(Essay essay, Matrix desiredOutput) {
-		Matrix input = getInputMatrix(essay);
-		Matrix output = calculateOutput(input);
-		Matrix delC_A = output.minus(desiredOutput).multiply(-2);
-		
-		log("\n----------------\nTraining...");
-		log("input:");
-		input.print();
-		log("output:");
-		output.print();
-		log("desired output:");
-		desiredOutput.print();
-		log("--------------------");
-		
-		NeuralLayer nl, nlNext;
-		for (int i = neuralLayers.size()-1; i >= 0; i--) {
-			nl = neuralLayers.get(i);
-			if (i == neuralLayers.size()-1) {
-				nl.calculateError(delC_A);
-				nl.calculateCost(desiredOutput);
-			} else {
-				nlNext = neuralLayers.get(i+1);
-				nl.calculateError(nlNext.getWeights(), nlNext.getBiasError());
-			}
-			if (i == 0) {
-				nl.calculateWeightError(input);
-			} else {
-				nl.calculateWeightError(neuralLayers.get(i-1).getActivations());
-			}
-			
-		}
-		
-		Matrix[][] grad = new Matrix[2][neuralLayers.size()];
-		for (int i = 0; i < neuralLayers.size(); i++) {
-			nl = neuralLayers.get(i);
-			log("neural layer #" + (i+1));
-			nl.printAll();
-			grad[0][i] = new Matrix(nl.getBiasError().getData());
-			grad[1][i] = new Matrix(nl.getWeightsError().getData());
-		}
-		
-		return grad;
-	}
-	
-	private Matrix getInputMatrix(Essay essay) {
-		double spelling = checkSpelling(essay);
-		double wordLimit = (checkWordLimit(essay) ? 1 : 0);
-		double grammar = checkGrammar(essay);
-		//log("spelling = " + spelling);
-		//log("wordLimit = " + wordLimit);
-		//log("grammar = " + grammar);
-		Matrix input = new Matrix(new double[][] {
-				{spelling},
-				{wordLimit},
-				{grammar}
-		});
-		return input;
 	}
 	
 	/**
@@ -377,7 +252,9 @@ public class Jarvis {
 	 */
 	public double checkSpelling(Essay e) {
 		String essay = e.getEssay();
+		//log("Essay: " + essay);
 		String[] words = essay.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
+		//log("Words:");
 		
 		double numMisspelled = 0;
 		boolean isRealWord;
@@ -386,6 +263,7 @@ public class Jarvis {
 			if (!isRealWord) {
 				numMisspelled++;
 			}
+			//log(words[i] + "; " + isRealWord + "; " + numMisspelled);
 			
 		}
 		
@@ -422,21 +300,12 @@ public class Jarvis {
 	}
 	
 	/**
-	 * Prints a String to the console and a log file
+	 * Prints a String to the console
 	 * @param msg
 	 * 		Message to be printed
 	 */
 	private void log(String msg) {
 		System.out.println(msg);
-		PrintWriter out;
-		try {
-			out = new PrintWriter(new FileWriter("log_file.txt", true));
-			out.println(msg);
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 	}
 
 }

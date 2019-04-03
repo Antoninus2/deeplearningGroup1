@@ -7,14 +7,6 @@
 
 package deeplearningGroup1;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -26,12 +18,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -42,35 +31,31 @@ import javafx.stage.Stage;
  *
  */
 	
-public class PasswordRetrievalGUI {
-	
-	TemporaryPasswordReturnGUI Temporary = new TemporaryPasswordReturnGUI();
+public class PasswordRetrievalGUI{
+
 	public Stage thirdOne;
 	private Scene scene3;
 	private GridPane pane1; 
-	//private Pane pane4;
+	private Pane pane4;
 	private Button clickToSubmit;
 	private TextField EmailTextField;
-	public Button Back;
-	
+	private InitialGUI initalGUI;
 
 	public Stage secondOne;
-	///private Scene scene2;
+	private Scene scene2;
 	//private GridPane pane1;
 	//private Button clickToSubmit;
-	//private TextField enterEssayTopic;
-	//private TextArea enterTextField;
-	//private Text essayTopic, enterText;
-//	private Jarvis jarvis;
-//	public Stage fourthOne;
-	//private Scene scene4;
-	//private Pane pane2;
+	private TextField enterEssayTopic;
+	private TextArea enterTextField;
+	private Text essayTopic, enterText;
+	private Jarvis jarvis;
+	public Stage fourthOne;
+	private Scene scene4;
+	private Pane pane2;
 
 		
 	
 	StudentAccount student= new StudentAccount();
-	
-	public InitialGUI initalGUI;
 	
 	public PasswordRetrievalGUI() {
 		
@@ -123,19 +108,28 @@ public class PasswordRetrievalGUI {
 	
 		clickToSubmit = new Button("Click To Submit");   //button to submit
 		pane1.add(clickToSubmit, 4, 10, 5,1);
-		clickToSubmit.setOnAction(e->
-		{
-			
-			Temporary.OpenTemp();
+		clickToSubmit.setOnAction(event1 -> 
+	    {
+	    	
+	    	//scene2 = new Scene(pane4, 600, 600);
+			//secondOne = new Stage();
+			//secondOne.setTitle(" Welcome Student ");
+			//secondOne.setScene(scene2);
+			//secondOne.show();
+	    	//student.reset(EmailTextField.getText());
+	    	
 	    	System.out.println(EmailTextField.getText());
 	    	
 	    	//StudentAccount emailR = new StudentAccount();
 	    	//emailR.reset(EmailTextField.getText());
-	    
 	    	
 	    });
+<<<<<<< HEAD
 		String email = EmailTextField.getText();
     	return email;
+=======
+		
+>>>>>>> 35894cf6a0f225b00cecec84cfd7b7108143c65b
 	}
 	
 	public void Back()
@@ -144,12 +138,13 @@ public class PasswordRetrievalGUI {
 		Button Back = new Button("Back");
 		pane1.add(Back, 1, 10);			//creating a back button
 		
-			Back.setOnAction(e-> {  // adding the back button options to go back to the main scene 
+			Back.setOnAction(new EventHandler<ActionEvent>() {  // adding the back button options to go back to the main scene 
 			
-			
+			@Override
+			public void handle(ActionEvent event) {
 				
 		
-			
+			}
 		});
 	}
 	

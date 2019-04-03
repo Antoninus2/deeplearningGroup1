@@ -232,8 +232,8 @@ public  class InitialGUI extends Application {
 			            	if (sqlPasswords.equals(passwordField.getText())) {
 			            		if (sqlUserType.equals("Student")) {
 							        // Brings you to your student account
-					 				StudentHomePage homePage = new StudentHomePage();
-					 				homePage.StudentHomePageStarting();
+					 				StudentGUI studentGui = new StudentGUI(jarvis);
+					 				studentGui.StudentBox();
 					 				theFirstOne.hide();
 			            		} else if (sqlUserType.equals("Teacher")) {
 			            			ProfHomepage profPage = new ProfHomepage();
@@ -251,7 +251,6 @@ public  class InitialGUI extends Application {
 			        } catch (SQLException e) {
 			    		e.printStackTrace();
 			    	}
-			    
 			        
 			    	
 			    });
@@ -287,12 +286,13 @@ public  class InitialGUI extends Application {
 				        	while (resultSet.next()) {
 				            	String sqlPasswords = resultSet.getString(1);
 				            	String sqlUserType = resultSet.getString(2);
+				            	System.out.println(resultSet.getString(1));
 				            	if (sqlPasswords.equals(passwordField.getText())) {
 				            		if (sqlUserType.equals("Student")) {
 								        //Brings you to your student account
-    					 				StudentHomePage homePage = new StudentHomePage();
-    					 				homePage.StudentHomePageStarting();
-    					 				theFirstOne.hide();
+						 				StudentGUI studentGui = new StudentGUI(jarvis);
+						 				studentGui.StudentBox();
+						 				theFirstOne.hide();
 				            			
 				            		} else if (sqlUserType.equals("Teacher")) {
 				            			ProfHomepage profPage = new ProfHomepage();
@@ -477,8 +477,7 @@ public  class InitialGUI extends Application {
 			    	student.setLastName((LastNameTextField.getText()));
 			    	student.setEmail((emailAddressField.getText()));
 			    	
-			    	if ((FirstNameTextField.getText().isEmpty()) || (LastNameTextField.getText().isEmpty()) || (emailAddressField.getText().isEmpty()) || (passwordField.getText().isEmpty())) {
-			    	} else if ((FirstNameTextField.getText().isEmpty() == false) && (LastNameTextField.getText().isEmpty() == false) && (emailAddressField.getText().isEmpty() == false) && (passwordField.getText().isEmpty() == false)) {
+			    	
 			    	// Connects to sql
 			    	SQLConnection connect = new SQLConnection();
 			    	String connectionurl = connect.connect();
@@ -506,7 +505,6 @@ public  class InitialGUI extends Application {
 			        } catch (SQLException e) {
 						e.printStackTrace();
 					}
-			    	}
 			    	
 			    // comparing the password fields 
 			        /**
@@ -619,30 +617,16 @@ public  class InitialGUI extends Application {
 				    					//GoodMessage.setText(Color.GREEN);
 				    					
 				    					
-				    					 				/**
-				    									 * @check if the teacher's checkbox is selected then open the teacher home page
-				    									 */
-		    						} else if (passwordField.getText().contentEquals(RepeatPasswordField.getText()) && TeacherCheckBox.isSelected())
-		    						{
-		    							Check = new Image("check image.png");
-				    					Circle check3 = new Circle(10);
-				    					check3.setFill(new ImagePattern(Check));
-				    					CreateAccountPage.add(check3, 3, 4);
 				    					
-				    					Image Check2 = new Image("check image.png");
-				    					Circle check4 = new Circle(10);
-				    					check4.setFill(new ImagePattern(Check2));
-				    					CreateAccountPage.add(check4, 3, 5);
-				    					
-				    					TextField GoodMessage = new TextField("Good Password");
-				    					GoodMessage.setEditable(false);
-				    					GoodMessage.setStyle("-fx-background-color: rgba(255, 255, 255, 1);");
-				    					CreateAccountPage.add(GoodMessage, 1, 9);
-				    					
+<<<<<<< HEAD
 				    					ProfHomepage profPage = new ProfHomepage();
 				            			theFirstOne.hide();  //TODO timmy has to make sure that this is teacher sql
 		    						}
 		    						else {
+=======
+		    						} else 
+				    					{
+>>>>>>> 35894cf6a0f225b00cecec84cfd7b7108143c65b
 		    							Wrong = new Image("x image.png");
 					    				Circle check1 = new Circle(10);
 					    				check1.setFill(new ImagePattern(Wrong));

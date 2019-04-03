@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Random;
 import java.util.Scanner;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
@@ -41,6 +40,7 @@ public class StudentAccount {
 			e.printStackTrace();
 		}
 	}
+<<<<<<< HEAD
 
 */
 
@@ -63,6 +63,28 @@ public class StudentAccount {
 		System.out.println("Your new password is: " + pwdStr);
 
 		/*
+=======
+	
+	
+	
+	
+	public void reset(String email) {		//takes in email and gives back new random password
+		String newPassArray[]= {};
+		String alphaArray[]= {"A", "a", "B", "b", "C", "c", "D", "d", "E", "e", "F", "f", "G", "g", "H", "h", "I", "i", "J", "j", "K", "k", "L", "l", "M", "m", "N", "n", "O", "o", "P", "p", "Q", "q", "R", "r", "S", "s", "T", "t", "U", "u"
+				+ "V", "v", "W", "w", "X", "x", "Y", "y", "Z", "z", "1", "!", "2", "@", "3", "#", "4", "$", "5", "%", "6", "^", "7", "&", "8", "*", "9", "(", "0", ")", "-", "=", "+", "<", ">", "?"};
+		
+		
+		for (int i=0; i<=10; i++) {
+			int randElement = (int) Math.random() * 76 + 1;
+			newPassArray[i]=alphaArray[randElement];			//CREATES NEW RANDOM PASSWORD DO NOT TOUCH
+		}
+
+		pwd=newPassArray[0]+ newPassArray[1]+ newPassArray[2]+ newPassArray[3]
+				+newPassArray[4]+newPassArray[5]+ newPassArray[6]+ newPassArray[7]+ newPassArray[8]+newPassArray[9];		//prints new password
+		//System.out.println("Enter your email: ");		//Nino-GUI
+		email=scan.nextLine();
+		//Tim- search for email in database
+>>>>>>> 35894cf6a0f225b00cecec84cfd7b7108143c65b
 		try {
 
 			Scanner scanner = new Scanner(file);
@@ -70,7 +92,7 @@ public class StudentAccount {
 				String line= scanner.nextLine();
 				String strArray[]=line.split(",");
 				if(strArray[3].equals(email)) {
-					System.out.println("Your new password is: " + pwd);	//Nino-GUI DONE
+					System.out.println("Your new password is: " + pwd);	//Nino-GUI
 					break;
 				}
 			}
@@ -78,6 +100,7 @@ public class StudentAccount {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+<<<<<<< HEAD
 
 */
 
@@ -125,6 +148,46 @@ public class StudentAccount {
 		//Tim- search for email in database
 
 		return pwdStr;	//takes in email and gives back new random password
+=======
+		System.out.println("Your email was not found in the database. Try again.\n");  //Nino- GUI
+	}
+	
+	
+	
+	
+	public void recovery(String fn, String ln) {		//attempts to recover the account by matching first and last names
+	/*	
+		System.out.println("First name: ");		//Nino-GUI
+		fn=scan.nextLine();
+		System.out.println("Last name: ");		//Nino-GUI
+		ln=scan.nextLine();
+		*/
+		//Tim- search name in database
+		try {
+			Scanner scanner = new Scanner(file);
+			while(scanner.hasNextLine()) {
+				String line= scanner.nextLine();
+				String strArray[]=line.split(",");
+				if(strArray[1].equals(fn)) {
+					if(strArray[2].equals(ln)) {
+						System.out.printf("Your username is: %s", usn);		//Nino-GUI
+					}
+					break;
+				}
+			}
+			scanner.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Your information does not match the database. Try again.\n");		//Nino-Gui
+	}
+	
+	
+	
+	public void printConfirm() {		//prints a confirmation of account info to USER upon creation---NINO
+		System.out.printf("Your account information is as follows: \n  Password: %s\n First name: %s\n Last name: %s\n Email: %s\n",  pwd, fn, ln, email);
+		System.out.println("Please keep this information for your records.\n");
+>>>>>>> 35894cf6a0f225b00cecec84cfd7b7108143c65b
 	}
 
 
