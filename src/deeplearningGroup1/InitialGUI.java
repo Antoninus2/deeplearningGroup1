@@ -73,7 +73,7 @@ public  class InitialGUI extends Application {
 	HBox horisontalBox;
 	Image Check, Wrong;
 	CheckBox StudentCheckBox, TeacherCheckBox;
-	
+	ProfHomepage prof = new ProfHomepage();
 
 	@Override
 	public void start(Stage theFirstOne) {
@@ -619,9 +619,29 @@ public  class InitialGUI extends Application {
 				    					//GoodMessage.setText(Color.GREEN);
 				    					
 				    					
+				    					 				/**
+				    									 * @check if the teacher's checkbox is selected then open the teacher home page
+				    									 */
+		    						} else if (passwordField.getText().contentEquals(RepeatPasswordField.getText()) && TeacherCheckBox.isSelected())
+		    						{
+		    							Check = new Image("check image.png");
+				    					Circle check3 = new Circle(10);
+				    					check3.setFill(new ImagePattern(Check));
+				    					CreateAccountPage.add(check3, 3, 4);
 				    					
-		    						} else 
-				    					{
+				    					Image Check2 = new Image("check image.png");
+				    					Circle check4 = new Circle(10);
+				    					check4.setFill(new ImagePattern(Check2));
+				    					CreateAccountPage.add(check4, 3, 5);
+				    					
+				    					TextField GoodMessage = new TextField("Good Password");
+				    					GoodMessage.setEditable(false);
+				    					GoodMessage.setStyle("-fx-background-color: rgba(255, 255, 255, 1);");
+				    					CreateAccountPage.add(GoodMessage, 1, 9);
+				    					
+				    					prof.ProfHomepage2();  //TODO timmy has to make sure that this is teacher sql
+		    						}
+		    						else {
 		    							Wrong = new Image("x image.png");
 					    				Circle check1 = new Circle(10);
 					    				check1.setFill(new ImagePattern(Wrong));

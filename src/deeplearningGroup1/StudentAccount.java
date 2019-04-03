@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class StudentAccount {
@@ -129,8 +130,43 @@ public class StudentAccount {
 	
 	
 	
-	public void reset(String email) {		//takes in email and gives back new random password
-		String newPassArray[]= {};
+	
+	protected String reset() {
+		/**
+	 * @return A sting password by generating a new one
+	 * Antoinon Abeshi
+	 */
+		 String PASSWORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";  //CREATES RANDOM STRING
+	        StringBuilder pwd = new StringBuilder();
+	        Random rnd = new Random();
+	        while (pwd.length() < 8) { // length of the random string.
+	            int index = (int) (rnd.nextFloat() * PASSWORD.length());
+	            pwd.append(PASSWORD.charAt(index));
+	        }
+	        String pwdStr = pwd.toString();
+	        
+	       System.out.println("Your new password is: " + pwdStr);
+	       
+	       try {
+
+			Scanner scanner = new Scanner(file);
+			while(scanner.hasNextLine()) {
+				String line= scanner.nextLine();
+				String strArray[]=line.split(",");
+				if(strArray[3].equals(email)) {
+					System.out.println("Your new password is: " + pwd);	//Nino-GUI DONE
+					break;
+				}
+			}
+			scanner.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Your email was not found in the database. Try again.\n");  //Nino- GUI
+			return pwdStr;	//takes in email and gives back new random password
+		
+		
+		/*String newPassArray[]= {};
 		String alphaArray[]= {"A", "a", "B", "b", "C", "c", "D", "d", "E", "e", "F", "f", "G", "g", "H", "h", "I", "i", "J", "j", "K", "k", "L", "l", "M", "m", "N", "n", "O", "o", "P", "p", "Q", "q", "R", "r", "S", "s", "T", "t", "U", "u"
 				+ "V", "v", "W", "w", "X", "x", "Y", "y", "Z", "z", "1", "!", "2", "@", "3", "#", "4", "$", "5", "%", "6", "^", "7", "&", "8", "*", "9", "(", "0", ")", "-", "=", "+", "<", ">", "?"};
 		
@@ -141,26 +177,13 @@ public class StudentAccount {
 		}
 
 		pwd=newPassArray[0]+ newPassArray[1]+ newPassArray[2]+ newPassArray[3]
-				+newPassArray[4]+newPassArray[5]+ newPassArray[6]+ newPassArray[7]+ newPassArray[8]+newPassArray[9];		//prints new password
+				+newPassArray[4]+newPassArray[5]+ newPassArray[6]+ newPassArray[7]+ newPassArray[8]+newPassArray[9];/*		//prints new password
+		*/
+		
 		//System.out.println("Enter your email: ");		//Nino-GUI
-		email=scan.nextLine();
+		//email=scan.nextLine();
 		//Tim- search for email in database
-		try {
-
-			Scanner scanner = new Scanner(file);
-			while(scanner.hasNextLine()) {
-				String line= scanner.nextLine();
-				String strArray[]=line.split(",");
-				if(strArray[3].equals(email)) {
-					System.out.println("Your new password is: " + pwd);	//Nino-GUI
-					break;
-				}
-			}
-			scanner.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Your email was not found in the database. Try again.\n");  //Nino- GUI
+		
 	}
 	
 	
