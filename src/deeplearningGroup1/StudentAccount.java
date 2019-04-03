@@ -22,7 +22,7 @@ public class StudentAccount {
 	String ln;		//Last name
 
 
-	
+	/*
 	// print account info from sql
 	private void printInfo() {		//for admin purposes only, prints account info for ALL accounts
 		
@@ -34,7 +34,7 @@ public class StudentAccount {
 			e.printStackTrace();
 		}
 	}
-	
+	*/
 	
 	
 	
