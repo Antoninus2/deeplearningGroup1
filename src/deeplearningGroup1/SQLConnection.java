@@ -19,16 +19,18 @@ public class SQLConnection {
     // Connect to the egs database.
     public String connect() {
     	String connectionUrl =
-                "jdbc:sqlserver://egs.database.windows.net:1433;"
-                        + "database=egs;"
-                        + "user=egs;"
-                        + "password=Grading2019!;"
+                "jdbc:sqlserver://db.database.windows.net:1433;"
+                        + "database=db;"
+                        + "user=usr;"
+                        + "password=pwd;"
                         + "encrypt=true;"
                         + "trustServerCertificate=false;"
                         + "loginTimeout=30;";
     	return connectionUrl;
     }
     
+    
+     /*
     // not done
     public double[][] pullWeights1() {
     	
@@ -87,7 +89,7 @@ public class SQLConnection {
     		e.printStackTrace();
     	}
         
-    }
+    } */
     
     /*public void saveData (double[][] data, String table) {
     	
