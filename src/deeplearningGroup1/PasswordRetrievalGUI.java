@@ -128,6 +128,7 @@ public class PasswordRetrievalGUI {
 			
 			Temporary.OpenTemp();
 	    	System.out.println(EmailTextField.getText());
+	    	thirdOne.hide();
 	    	//StudentAccount emailR = new StudentAccount();
 	    	//emailR.reset(EmailTextField.getText());
 	    
