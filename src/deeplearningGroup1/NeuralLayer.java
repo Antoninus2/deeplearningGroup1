@@ -1,5 +1,9 @@
 package deeplearningGroup1;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 /**
  * NeuralLayer holds the weights and biases corresponding to a single layer in a neural network in {@link Matrix} form
  * @author Steven Rose
@@ -23,6 +27,18 @@ public class NeuralLayer {
 	 */
 	private Matrix bias;
 	
+	private Matrix activations;
+	
+	private Matrix weightedInput;
+	
+	private Matrix outputError; //error in output of neuron, del C / del Z
+	
+	private Matrix weightsError;
+	
+	private Matrix cost;
+	
+	private final double modifier = 3; // how quickly the neural net learns, must be >= 1
+	
 	/**
 	 * Creates a new NeuralLayer with an id, and known weights and biases provided
 	 * @param id
@@ -36,6 +52,8 @@ public class NeuralLayer {
 		this.id = id;
 		this.weights = weights;
 		this.bias = bias;
+		this.activations = new Matrix(bias.getM(), 1);
+		this.weightedInput = this.activations;
 	}
 	
 	/**
@@ -66,6 +84,78 @@ public class NeuralLayer {
 		
 		this.weights = new Matrix(weights);
 		this.bias = new Matrix(bias);
+		this.activations = new Matrix(biasHeight, 1);
+		this.weightedInput = this.activations;
+	}
+	
+	/**
+	 * Calculates the sigmoid for each neuron in this layer
+	 * @param input
+	 * 		Column Matrix of inputs to this layer
+	 * @return
+	 * 		Column matrix of activations for this layer
+	 */
+	public Matrix calculateSigmoid(Matrix input) {
+		if (weights.getN() != input.getM()) {
+			System.out.println("ERROR: sigmoid size incompatibility:\nweights width = " + weights.getN() + ", input height = " + input.getM());
+			System.exit(1);
+		}
+		Matrix m = weights.multiply(input).plus(bias);
+		weightedInput = new Matrix(m.getData());
+		for (int i = 0; i < m.getM(); i++) {
+			for (int j = 0; j < m.getN(); j++) {
+				m.set(i, j, 1/(1+Math.exp(-1*m.get(i, j))));
+			}
+		}
+		activations = new Matrix(m.getData());
+		return m;
+	}
+	
+	public Matrix calculateError(Matrix delC_A) {
+		Matrix z = weightedInput;
+		Matrix delA_Z = new Matrix(z.getM(), z.getN());
+		double x;
+		for (int i = 0; i < z.getM(); i++) {
+			x = Math.exp(-1*z.get(i, 0));
+			delA_Z.set(i, 0, x/Math.pow(1+x, 2));
+		}
+		outputError = delC_A.elementMultiply(delA_Z);
+		return outputError;
+	}
+	
+	public Matrix calculateError(Matrix weightsNext, Matrix errorNext) {
+		Matrix z = weightedInput;
+		Matrix delA_Z = new Matrix(z.getM(), 1);
+		double x;
+		for (int i = 0; i < z.getM(); i++) {
+			x = Math.exp(-1*z.get(i, 0));
+			delA_Z.set(i, 0, x/Math.pow(1+x, 2));
+		}
+		outputError = weightsNext.transpose().multiply(errorNext).elementMultiply(delA_Z);
+		return outputError;
+	}
+	
+	public Matrix calculateWeightError(Matrix outputPrevious) {
+		Matrix m = new Matrix(weights.getM(), weights.getN());
+		for (int i = 0; i < m.getM(); i++)
+			for (int j = 0; j < m.getN(); j++)
+				m.set(i, j, outputPrevious.get(j, 0) * outputError.get(i, 0));
+		
+		weightsError = m;
+		return m;
+	}
+	
+	public Matrix calculateCost(Matrix desiredOutputs) {
+		cost = desiredOutputs.minus(activations).pow(2); //quadratic cost function
+		return cost;
+	}
+	
+	public void changeBias(Matrix delta) {
+		bias = bias.plus(delta.multiply(modifier));
+	}
+	
+	public void changeWeights(Matrix delta) {
+		weights = weights.plus(delta.multiply(modifier));
 	}
 	
 	/**
@@ -86,24 +176,67 @@ public class NeuralLayer {
 		return bias;
 	}
 	
-	/**
-	 * Calculates the sigmoid for each neuron in this layer
-	 * @param input
-	 * 		Column Matrix of inputs to this layer
-	 * @return
-	 * 		Column matrix of activations for this layer
-	 */
-	public Matrix calculateSigmoid(Matrix input) {
-		if (weights.getN() != input.getM()) {
-			System.out.println("ERROR: sigmoid size incompatibility:\nweights width = " + weights.getN() + ", input height = " + input.getM());
-			System.exit(1);
+	public Matrix getActivations() {
+		return activations;
+	}
+	
+	public Matrix getWeightedInput() {
+		return weightedInput;
+	}
+	
+	public Matrix getBiasError() {
+		return outputError;
+	}
+	
+	public Matrix getWeightsError() {
+		return weightsError;
+	}
+
+	public void print() {
+		if (Jarvis.debugging) {
+			log("id: " + id);
+			log("weights:");
+			weights.print();
+			log("biases:");
+			bias.print();
 		}
-		Matrix m = weights.multiply(input).plus(bias);
-		for (int i = 0; i < m.getM(); i++) {
-			for (int j = 0; j < m.getN(); j++) {
-				m.set(i, j, 1/(1+Math.exp(-1*m.get(i, j))));
+	}
+
+	public void printAll() {
+		if (Jarvis.debugging) {
+			print();
+			log("weighted inputs:");
+			weightedInput.print();
+			log("activations:");
+			activations.print();
+			log("bias error:");
+			outputError.print();
+			log("weights error:");
+			weightsError.print();
+			if (cost != null) {
+				log("cost:");
+				cost.print();
 			}
 		}
-		return m;
+	}
+
+	/**
+	 * Prints a String to the console and a log file
+	 * @param msg
+	 * 		Message to be printed
+	 */
+
+	private void log(String msg) {
+		if (Jarvis.debugging) {
+			System.out.println(msg);
+			PrintWriter out;
+			try {
+				out = new PrintWriter(new FileWriter("log_file.txt", true));
+				out.println(msg);
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
