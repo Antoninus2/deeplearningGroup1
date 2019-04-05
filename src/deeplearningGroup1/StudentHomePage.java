@@ -44,8 +44,6 @@ public class StudentHomePage {
 	private Scene scene5;
 	private Pane pane5;
 	private BorderPane borderPane1;
-	public StudentGUI SG= new StudentGUI(jarvis);
-	
 	public StudentHomePage() {
 		
 	}
@@ -97,9 +95,9 @@ public class StudentHomePage {
 			borderPane1.setCenter(toolbarMenuCourses);
 		});	
 		
-		Label gradeCourseOne = new Label("A");
-		Label gradeCourseTwo = new Label("B");
-		Label gradeCourseThree = new Label("C");
+		Label gradeCourseOne = new Label("64.3%");
+		Label gradeCourseTwo = new Label("50%");
+		Label gradeCourseThree = new Label("39.7%");
 		ToggleButton Button2 = new ToggleButton("Grades");
 		
 		

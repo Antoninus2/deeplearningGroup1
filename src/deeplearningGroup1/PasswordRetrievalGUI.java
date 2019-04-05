@@ -118,7 +118,7 @@ public class PasswordRetrievalGUI {
 	/**
 	 * @SubmitTheEmail this action will allow the system to sent an email to the person who is using this specific email.
 	 */
-	public void Submit() {
+	public String Submit() {
 		
 	
 		clickToSubmit = new Button("Click To Submit");   //button to submit
@@ -128,12 +128,14 @@ public class PasswordRetrievalGUI {
 			
 			Temporary.OpenTemp();
 	    	System.out.println(EmailTextField.getText());
+	    	
 	    	thirdOne.hide();
 	    	//StudentAccount emailR = new StudentAccount();
 	    	//emailR.reset(EmailTextField.getText());
 	    
 	    	
 	    });
+		return EmailTextField.getText();
 	}
 	
 	public void Back()

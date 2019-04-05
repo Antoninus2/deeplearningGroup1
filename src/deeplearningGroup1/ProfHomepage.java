@@ -14,6 +14,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 /**
@@ -29,43 +30,42 @@ public class ProfHomepage{
 	private Button nwClssB;
 	private int numClasses = 0;
 	
-	//TODO class statistics
-	//TODO make new essay
+	//TODO make this a normal pane
 	
-	// Constructor
+// Constructor
 	public ProfHomepage(){
+		// Create background
+		homePane = new GridPane();
+		Image image = new Image ("ERAUlogo.jpeg");
+		homePane.setBackground(new Background(new BackgroundImage(image,BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));
 		
+		homePane.setPadding(new Insets(25,25,25,25));
+		homePane.setAlignment(Pos.TOP_LEFT);
+		homePane.setHgap(25);
+		homePane.setVgap(5);
+		
+		// Create Buttons
+		nwClssB = new Button("Create New Section");
+		homePane.add(nwClssB, 4, 5);
+		
+		// Appareance
+		Line blueL = new Line();
+		// TODO clean up appearance
+		
+		// Place scene in stage
+		scene = new Scene(homePane, 680, 680);
+		profStage = new Stage();
+		profStage.setTitle(" Welcome Professor ");
+		profStage.setScene(scene);
+		profStage.show();
+		
+		homePane.setGridLinesVisible(false);
+		
+		// Assign actions to buttons
+		nwClssB.setOnAction(e -> createCourseWizard());
 	}
 	
-	public void ProfHomepage2() {
-		// Create background
-				homePane = new GridPane();
-				Image image = new Image ("redbackground.jpg");
-				homePane.setBackground(new Background(new BackgroundImage(image,BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));
-				
-				homePane.setPadding(new Insets(25,25,25,25));
-				homePane.setAlignment(Pos.TOP_LEFT);
-				homePane.setHgap(25);
-				homePane.setVgap(5);
-				
-				// Create Buttons
-				nwClssB = new Button("Create New Section");
-				homePane.add(nwClssB, 4, 5);
-				
-				// Place scene in stage
-				scene = new Scene(homePane, 600, 600);
-				profStage = new Stage();
-				profStage.setTitle(" Welcome Professor ");
-				profStage.setScene(scene);
-				profStage.show();
-				
-				homePane.setGridLinesVisible(false);
-				
-				// Assign actions to buttons
-				nwClssB.setOnAction(e -> createNewCourse());
-		
-	}
-	// Methods
+// Methods
 	
 	/**
 	 * @author J.McGuire
@@ -74,10 +74,9 @@ public class ProfHomepage{
 	 * Creates a new section for
 	 * students to join.
 	 */
-	private void createNewCourse() {
+	private void createCourseWizard() {
 		int scale = 20; 	// scale for pane nodes;
 		// Create Section Creation Wizard
-		System.out.println("Created new course.");
 		Pane ncPane = new Pane();
 		Scene ncScene = new Scene(ncPane, 300,100);
 		Stage ncStage = new Stage();
@@ -126,13 +125,9 @@ public class ProfHomepage{
 		}
 		// creation of the course object
 		Course course = new Course(courseID, courseName);
+		ProfCourseGUI courseGUI = new ProfCourseGUI(courseID, courseName, course);   
 		// go to course GUI when button clicked
-		courseB.setOnAction(e -> goToCourseGUI(courseID, courseName, course));
-	}
-	
-	// Might want to rework the logic here, doesn't make sense to make a new GUI every time button clicked
-	private void goToCourseGUI(int[] courseID, String courseName, Course course) {
-		ProfCourseGUI courseGUI = new ProfCourseGUI(courseID, courseName, profStage, course);
+		courseB.setOnAction(e -> courseGUI.courseStage.show()); 
 	}
 	
 	

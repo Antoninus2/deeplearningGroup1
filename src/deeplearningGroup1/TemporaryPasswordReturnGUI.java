@@ -72,9 +72,6 @@ public class TemporaryPasswordReturnGUI extends Application {
 		ClickToEnterCode = new Button("Copy the code and click to create a new password");
 		pane1.add(ClickToEnterCode, 1, 5);			//creating a back button
 	
-	
-	
-		
 		
 		ClickToEnterCode.setOnAction(e-> {  // adding the back button options to go back to the main scene 
 			
