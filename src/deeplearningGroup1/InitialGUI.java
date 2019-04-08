@@ -79,7 +79,7 @@ public  class InitialGUI extends Application {
 	public void start(Stage theFirstOne) {
 		
 		//Jarvis
-		jarvis = new Jarvis();
+		//jarvis = new Jarvis();
 		
 		/**
 		 * @function Antonino's

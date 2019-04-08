@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry including="**/*.java" kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="mssql-jdbc-7.2.1.jre8.jar"/>
 	<classpathentry kind="lib" path="poi-4.0.1/poi-4.0.1.jar"/>
 	<classpathentry kind="lib" path="poi-4.0.1/poi-ooxml-4.0.1.jar"/>
@@ -18,5 +27,94 @@
 	<classpathentry kind="lib" path="poi-4.0.1/lib/junit-4.12.jar"/>
 	<classpathentry kind="lib" path="poi-4.0.1/lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="poi-4.0.1/poi-ooxml-schemas-4.0.1.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/aho-corasick-double-array-trie.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/akka-actor_2.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/annotations.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/asm.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/bcprov-jdk15on.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/berkeleylm.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/catalan-pos-dict.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/cjftransform.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/commons-cli.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/commons-codec.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/commons-collections4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/commons-csv.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/commons-io.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/commons-lang.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/commons-lang3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/commons-logging.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/commons-pool2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/commons-text.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/config.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/FastInfoset.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/german-pos-dict.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/guava.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/hamcrest-core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/hppc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/hunspell-native-libs.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/ictclas4j.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/icu4j.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/indriya.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/istack-commons-runtime.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/jackson-annotations.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/jackson-core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/jackson-databind.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/jafama.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/java-jwt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/javax.activation-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/jaxb-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/jaxb-core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/jaxb-runtime.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/jcommander.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/jna.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/jsonic.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/junit.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/jwordsplitter.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/kryo.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/language-detector.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/languagetool-core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/languagetool-core-tests.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/languagetool-gui-commons.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/languagetool-tools.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/logback-classic.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/logback-core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/lucene-backward-codecs.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/lucene-core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/lucene-gosen-ipadic.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/mariadb-java-client.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/minlog.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/morfologik-fsa.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/morfologik-fsa-builders.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/morfologik-speller.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/morfologik-stemming.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/morfologik-tools.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/morfologik-ukrainian-lt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/morphology-el.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/mybatis.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/objenesis.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/opennlp-chunk-models.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/opennlp-postag-models.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/opennlp-tokenize-models.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/opennlp-tools.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/openregex.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/reflectasm-shaded.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/scala-compiler.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/scala-library.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/scala-parser-combinators_2.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/scala-reflect.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/scala-xml_2.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/segment.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/slf4j-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/stax-ex.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/txw2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/unit-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/uom-lib-common.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/xgboost4j.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/languagetool-master/LanguageTool-4.5-stable/libs/xgboost-predictor.jar"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
