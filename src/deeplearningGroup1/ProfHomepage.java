@@ -1,8 +1,6 @@
 package deeplearningGroup1;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,7 +10,6 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
@@ -26,31 +23,28 @@ public class ProfHomepage{
 	
 	public Stage profStage;
 	private Scene scene;
-	private GridPane homePane;
+	private Pane homePane;
 	private Button nwClssB;
 	private int numClasses = 0;
-	
-	//TODO make this a normal pane
+	private int scale = 10;
 	
 // Constructor
 	public ProfHomepage(){
 		// Create background
-		homePane = new GridPane();
+		homePane = new Pane();
 		Image image = new Image ("ERAUlogo.jpeg");
 		homePane.setBackground(new Background(new BackgroundImage(image,BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));
 		
-		homePane.setPadding(new Insets(25,25,25,25));
-		homePane.setAlignment(Pos.TOP_LEFT);
-		homePane.setHgap(25);
-		homePane.setVgap(5);
-		
 		// Create Buttons
 		nwClssB = new Button("Create New Section");
-		homePane.add(nwClssB, 4, 5);
+		nwClssB.setLayoutX(scale * 1);
+		nwClssB.setLayoutY(scale * 2);
+		homePane.getChildren().add(nwClssB);
 		
 		// Appareance
 		Line blueL = new Line();
 		// TODO clean up appearance
+		// TODO update number of students in each GUI
 		
 		// Place scene in stage
 		scene = new Scene(homePane, 680, 680);
@@ -58,8 +52,6 @@ public class ProfHomepage{
 		profStage.setTitle(" Welcome Professor ");
 		profStage.setScene(scene);
 		profStage.show();
-		
-		homePane.setGridLinesVisible(false);
 		
 		// Assign actions to buttons
 		nwClssB.setOnAction(e -> createCourseWizard());
@@ -100,7 +92,7 @@ public class ProfHomepage{
 		
 		// Make wizard work
 		crtCourseB.setOnAction(e -> {ncStage.close();
-								  	 numClasses++;
+								  	 numClasses++; 	// TODO possibly move this to create button method
 								  	 createCourseBttn(secInput.getCharacters().toString());
 								  	});
 	}
@@ -108,7 +100,7 @@ public class ProfHomepage{
 	
 	/**
 	 * @author J.McGuire
-	 * @param secName
+	 * @param courseName
 	 * @return void
 	 * Creates a button for a section.
 	 * Assigns section ID to section.
@@ -117,7 +109,9 @@ public class ProfHomepage{
 	private void createCourseBttn(String courseName) {
 		// TODO create multiple rows
 		Button courseB = new Button(courseName);
-		homePane.add(courseB, numClasses, 6);
+		courseB.setLayoutX(numClasses * scale * 10);
+		courseB.setLayoutY(6 * scale);
+		homePane.getChildren().add(courseB);
 		// Generate section ID
 		int[] courseID = new int[4];
 		for(int i = 0; i < 4; i++) {
@@ -127,7 +121,9 @@ public class ProfHomepage{
 		Course course = new Course(courseID, courseName);
 		ProfCourseGUI courseGUI = new ProfCourseGUI(courseID, courseName, course);   
 		// go to course GUI when button clicked
-		courseB.setOnAction(e -> courseGUI.courseStage.show()); 
+		courseB.setOnAction(e -> { courseGUI.updateStudentCount();
+								   courseGUI.courseStage.show();
+								 }); 
 	}
 	
 	

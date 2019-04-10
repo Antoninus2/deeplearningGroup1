@@ -2,7 +2,7 @@ package deeplearningGroup1;
 
 
 /**
- * this is a test - Me
+ * 
  * @author J.McGuire
  *
  */
@@ -25,6 +25,9 @@ public class Course {
 		numStudents = 0; 	// initially there are no students in a course
 		essayStatus = false; 	// initially there is no essay
 		initializeID(courseID);
+		
+		// TODO make student file to test this and prof course GUI
+		// TODO name course
 	}
 	
 // Methods
