@@ -5,69 +5,101 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * NeuralLayer holds the weights and biases corresponding to a single layer in a neural network in {@link Matrix} form
+ * NeuralLayer holds the weights and biases corresponding to a single layer in a neural network 
+ * in {@link Matrix} form. It also provides support in training the neural net by calculating the 
+ * partial derivatives of the cost function.
  * @author Steven Rose
- * @version 1.0
+ * @version 2.0
  * @see Jarvis
  */
 public class NeuralLayer {
 	
 	/**
-	 * id is a unique string id for a layer of the neural network
+	 * A unique string id for each layer of the neural network, useful for differentiating 
+	 * between layers when reading log files or console output.
 	 */
 	private String id;
 	
 	/**
-	 * weights is a 2D {@link Matrix} of the weights for a layer of the neural network
+	 * A {@link Matrix} of the weights for a layer of the neural network, of size [output x input], 
+	 * where output is the number of neurons in this layer, and input is the number of neurons in 
+	 * the previous layer.
 	 */
 	private Matrix weights;
 	
 	/**
-	 * bias is a 2D {@link Matrix} of the biases for a layer of the neural network
+	 * A {@link Matrix} of the biases for a layer of the neural network, of size [output x 1], 
+	 * where output is the number of neurons in this layer.
 	 */
 	private Matrix bias;
 	
+	/**
+	 * A {@link Matrix} of the activation values for this layer, calculated based on the input 
+	 * from the previous layer.  Used for training the neural net.
+	 */
 	private Matrix activations;
 	
+	/**
+	 * A {@link Matrix} of the weighted input from the previous layer.  Used for training the neural net.
+	 */
 	private Matrix weightedInput;
 	
+	/**
+	 * A {@link Matrix} of the error in the output of this layer, defined as how changes in the 
+	 * output of this layer affect the output of the neural net as a whole.  Used for training the 
+	 * neural net.
+	 */
 	private Matrix outputError; //error in output of neuron, del C / del Z
 	
+	/**
+	 * A {@link Matrix} of the error in the weights of this layer.  Used for training the neural net.
+	 */
 	private Matrix weightsError;
 	
+	/**
+	 * A {@link Matrix} of the cost of this layer, ie the difference between the actual output of 
+	 * this layer and the expected output.
+	 */
 	private Matrix cost;
 	
-	private final double modifier = 3; // how quickly the neural net learns, must be >= 1
+	/**
+	 * How quickly the neural net learns.  Set experimentally, must be >= 1.
+	 */
+	private final double modifier = 100;
 	
 	/**
-	 * Creates a new NeuralLayer with an id, and known weights and biases provided
+	 * Creates a new NeuralLayer with an id, with known weights and biases provided.
 	 * @param id
-	 * 		String id for this layer
+	 * 		String id for this layer.
 	 * @param weights
-	 * 		Matrix of weights for this layer
+	 * 		Matrix of weights for this layer.
 	 * @param bias
-	 * 		Matrix of biases for this layer
+	 * 		Matrix of biases for this layer.
 	 */
 	public NeuralLayer(String id, Matrix weights, Matrix bias) {
 		this.id = id;
 		this.weights = weights;
 		this.bias = bias;
 		this.activations = new Matrix(bias.getM(), 1);
-		this.weightedInput = this.activations;
+		this.weightedInput = new Matrix(bias.getM(), 1);
 	}
 	
 	/**
-	 * Creates an empty NeuralLayer with an id and the size of the Matrices for the weights and biases
+	 * Creates an empty NeuralLayer with an id and the size of the Matrices for the weights and biases.
 	 * @param id
-	 * 		String id for this layer
+	 * 		String id for this layer.
 	 * @param weightWidth
-	 * 		Width of the matrix for weights (This is equal to the number of inputs to this layer)
+	 * 		Width of the matrix for weights (This is equal to the number of inputs to this layer).
 	 * @param weightHeight
-	 * 		Height of the matrix for weights (This is equal to the number of neurons in this layer)
+	 * 		Height of the matrix for weights (This is equal to the number of neurons in this layer).
 	 * @param biasHeight
-	 * 		height of the matrix for biases (This is equal to the number of neurons in this layer)
+	 * 		height of the matrix for biases (This is equal to the number of neurons in this layer).
 	 */
 	public NeuralLayer(String id, int weightWidth, int weightHeight, int biasHeight) {
+		if (weightHeight != biasHeight)
+			throw new RuntimeException("Making a new Neural Layer, Weight and Bias dimensions don't match: weights = " +
+					"[" + weightHeight + ", " + weightWidth + "]; bias = [" + biasHeight + ", 1]");
+		
 		this.id = id;
 		double[][] weights = new double[weightHeight][weightWidth];
 		double[][] bias = new double[biasHeight][1];
@@ -89,16 +121,17 @@ public class NeuralLayer {
 	}
 	
 	/**
-	 * Calculates the sigmoid for each neuron in this layer
+	 * Calculates the sigmoid for each neuron in this layer. This ensures the output of each 
+	 * neuron is in the range (0,1).
 	 * @param input
-	 * 		Column Matrix of inputs to this layer
+	 * 		Column Matrix of inputs to this layer.
 	 * @return
-	 * 		Column matrix of activations for this layer
+	 * 		Column matrix of activations for this layer.
 	 */
 	public Matrix calculateSigmoid(Matrix input) {
 		if (weights.getN() != input.getM()) {
 			System.out.println("ERROR: sigmoid size incompatibility:\nweights width = " + weights.getN() + ", input height = " + input.getM());
-			System.exit(1);
+			//System.exit(1);
 		}
 		Matrix m = weights.multiply(input).plus(bias);
 		weightedInput = new Matrix(m.getData());
@@ -111,6 +144,15 @@ public class NeuralLayer {
 		return m;
 	}
 	
+	/**
+	 * Calculates the error in the output of this layer (how far off expected the actual output 
+	 * is). Used for training the neural net.
+	 * @param delC_A
+	 * 		The partial derivative of the total cost function with respect to the activations of 
+	 * this layer.
+	 * @return
+	 * 		The error in the output for this layer.
+	 */
 	public Matrix calculateError(Matrix delC_A) {
 		Matrix z = weightedInput;
 		Matrix delA_Z = new Matrix(z.getM(), z.getN());
@@ -123,6 +165,15 @@ public class NeuralLayer {
 		return outputError;
 	}
 	
+	/**
+	 * Calculates the error in the output of this layer (how far off expected the actual output 
+	 * is). Used for training the neural net.
+	 * @param weightsNext
+	 * 		The weights for the next layer in the neural net.
+	 * @param errorNext
+	 * 		The output error of the next layer in the neural net.
+	 * @return
+	 */
 	public Matrix calculateError(Matrix weightsNext, Matrix errorNext) {
 		Matrix z = weightedInput;
 		Matrix delA_Z = new Matrix(z.getM(), 1);
@@ -135,6 +186,14 @@ public class NeuralLayer {
 		return outputError;
 	}
 	
+	/**
+	 * Calculates the error in the weights of this layer (how far off expected the actual values 
+	 * are).  User for training the neural net.
+	 * @param outputPrevious
+	 * 		The output of the previous layer in the neural net.
+	 * @return
+	 * 		The error in the weights for this layer.
+	 */
 	public Matrix calculateWeightError(Matrix outputPrevious) {
 		Matrix m = new Matrix(weights.getM(), weights.getN());
 		for (int i = 0; i < m.getM(); i++)
@@ -145,53 +204,94 @@ public class NeuralLayer {
 		return m;
 	}
 	
+	/**
+	 * Calculates the cost for this layer using a quadratic cost function.
+	 * @param desiredOutputs
+	 * 		The desired output values for this layer.
+	 * @return
+	 * 		The cost of the error in the outputs for this layer.
+	 */
 	public Matrix calculateCost(Matrix desiredOutputs) {
 		cost = desiredOutputs.minus(activations).pow(2); //quadratic cost function
 		return cost;
 	}
 	
+	/**
+	 * Changes the bias Matrix by a small change multipled by the {@link NeuralLayer#modifier}
+	 * @param delta
+	 * 		The small change to the bias.
+	 */
 	public void changeBias(Matrix delta) {
 		bias = bias.plus(delta.multiply(modifier));
 	}
 	
+	/**
+	 * Changes the weights Matrix by a small change multipled by the {@link NeuralLayer#modifier}
+	 * @param delta
+	 * 		The small change to the bias.
+	 */
 	public void changeWeights(Matrix delta) {
 		weights = weights.plus(delta.multiply(modifier));
 	}
 	
 	/**
-	 * Returns the Matrix of weights for this layer
+	 * Returns the Matrix of weights for this layer.
 	 * @return
-	 * 		Matrix of weights
+	 * 		Matrix of weights.
 	 */
 	public Matrix getWeights() {
 		return weights;
 	}
 	
 	/**
-	 * Returns the Matrix of biases for this layer
+	 * Returns the Matrix of biases for this layer.
 	 * @return
-	 * 		Matrix of biases
+	 * 		Matrix of biases.
 	 */
 	public Matrix getBias() {
 		return bias;
 	}
 	
+	/**
+	 * Returns the Matrix of activations for this layer.
+	 * @return
+	 * 		Matrix of activations.
+	 */
 	public Matrix getActivations() {
 		return activations;
 	}
 	
+	/**
+	 * Returns the Matrix of the weighted input for this layer.
+	 * @return
+	 * 		Matrix of the weighted input.
+	 */
 	public Matrix getWeightedInput() {
 		return weightedInput;
 	}
 	
+	/**
+	 * Returns the Matrix of the bias error for this layer.
+	 * @return
+	 * 		Matrix of the bias error.
+	 */
 	public Matrix getBiasError() {
 		return outputError;
 	}
 	
+	/**
+	 * Returns the Matrix of the weights error for this layer.
+	 * @return
+	 * 		Matrix of the weights error.
+	 */
 	public Matrix getWeightsError() {
 		return weightsError;
 	}
 
+	/**
+	 * Prints the id and the weights and bias Matrices to the console and writes them 
+	 * to the log file if {@link Jarvis#debugging} is set to true.
+	 */
 	public void print() {
 		if (Jarvis.debugging) {
 			log("id: " + id);
@@ -202,6 +302,10 @@ public class NeuralLayer {
 		}
 	}
 
+	/**
+	 * Prints all of the data for this neural layer to the console and writes it to the 
+	 * log file if {@link Jarvis#debugging} is set to true.
+	 */
 	public void printAll() {
 		if (Jarvis.debugging) {
 			print();
@@ -221,11 +325,11 @@ public class NeuralLayer {
 	}
 
 	/**
-	 * Prints a String to the console and a log file
+	 * Prints a String to the console and writes it to a log file if {@link Jarvis#debugging} 
+	 * is set to true.
 	 * @param msg
-	 * 		Message to be printed
+	 * 		Message to be printed.
 	 */
-
 	private void log(String msg) {
 		if (Jarvis.debugging) {
 			System.out.println(msg);

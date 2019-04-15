@@ -5,33 +5,33 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Matrix is a 2D array of doubles with defined matrix operations
+ * Matrix is a 2D array of doubles with defined matrix operations.
  * @author Steven Rose
- * @version 1.0
+ * @version 2.0
  */
 public class Matrix {
 	
 	/**
-	 * Number of rows in the matrix
+	 * Number of rows in the matrix.
 	 */
 	private final int M;
 	
 	/**
-	 * Number of columns in the matrix
+	 * Number of columns in the matrix.
 	 */
     private final int N;
     
     /**
-     * 2D array of data in matrix
+     * 2D array of data in the matrix.
      */
     private final double[][] data;   // M-by-N array
 
     /**
-     * Creates an empty m x n matrix
+     * Creates an empty m x n matrix.
      * @param M
-     * 		Height of matrix
+     * 		Number of rows in the matrix.
      * @param N
-     * 		Width of matrix
+     * 		Number of columns in the matrix.
      */
     public Matrix(int M, int N) {
         this.M = M;
@@ -40,9 +40,9 @@ public class Matrix {
     }
 
     /**
-     * Creates a matrix from existing 2D array
+     * Creates a matrix from existing array of doubles.
      * @param data
-     * 		2D array of data to make matrix from
+     * 		Array of data to make matrix from.
      */
     public Matrix(double[][] data) {
         M = data.length;
@@ -54,29 +54,31 @@ public class Matrix {
     }
 
     /**
-     * Returns m x n matrix of random values [0..1)
+     * Returns m x n matrix of random double values between (-multiplier, multiplier).
      * @param M
      * 		Height of matrix
      * @param N
      * 		Width of matrix
+     * @param multiplier
+     * 		Maximum value of absolute value of generated numbers.
      * @return
-     * 		Matrix with random [0..1) values
+     * 		Matrix with random values.
      */
-    public static Matrix random(int M, int N, int max) {
+    public static Matrix random(int M, int N, int multiplier) {
         Matrix A = new Matrix(M, N);
         for (int i = 0; i < M; i++)
             for (int j = 0; j < N; j++) {
-            	A.data[i][j] = Math.random() * max * (Math.random() < 0.5 ? -1 : 1);
+            	A.data[i][j] = Math.random() * multiplier * (Math.random() < 0.5 ? -1 : 1);
             }
         return A;
     }
 
     /**
-     * Creates n x n identity matrix
+     * Creates n x n identity matrix.
      * @param N
-     * 		Size of matrix
+     * 		Size of matrix.
      * @return
-     * 		Identity matrix
+     * 		Identity matrix.
      */
     public static Matrix identity(int N) {
         Matrix I = new Matrix(N, N);
@@ -86,9 +88,9 @@ public class Matrix {
     }
 
     /**
-     * Returns transpose of the matrix
+     * Returns transpose of the matrix.
      * @return
-     * 	Transpose of matrix
+     * 	Transpose of matrix.
      */
     public Matrix transpose() {
         Matrix A = new Matrix(N, M);
@@ -99,15 +101,15 @@ public class Matrix {
     }
 
     /**
-     * Returns Matrix A + B
+     * Returns Matrix A + Matrix B.
      * @param B
-     * 		Matrix to add
+     * 		Matrix to add.
      * @return
-     * 		Sum of matrices
+     * 		Sum of matrices.
      */
     public Matrix plus(Matrix B) {
         Matrix A = this;
-        if (B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix dimensions.");
+        if (B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix dimensions. A = [" + A.M +", " + A.N + "], B = [" + B.M + ", " + B.N + "]");
         Matrix C = new Matrix(M, N);
         for (int i = 0; i < M; i++)
             for (int j = 0; j < N; j++)
@@ -116,15 +118,15 @@ public class Matrix {
     }
 
     /**
-     * Returns Matrix A - B
+     * Returns Matrix A - Matrix B.
      * @param B
-     * 		Matrix to subtract
+     * 		Matrix to subtract.
      * @return
-     * 		Difference of matrices
+     * 		Difference of matrices.
      */
     public Matrix minus(Matrix B) {
         Matrix A = this;
-        if (B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix dimensions.");
+        if (B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix dimensions. A = [" + A.M +", " + A.N + "], B = [" + B.M + ", " + B.N + "]");
         Matrix C = new Matrix(M, N);
         for (int i = 0; i < M; i++)
             for (int j = 0; j < N; j++)
@@ -133,15 +135,15 @@ public class Matrix {
     }
 
     /**
-     * Checks if two matrices are equal
+     * Checks if two matrices are equal.
      * @param B
-     * 		Matrix to check against
+     * 		Matrix to check against.
      * @return
-     * 		True if matrices are equal, false otherwise
+     * 		True if matrices are element wise equal, false otherwise.
      */
     public boolean isEqual(Matrix B) {
         Matrix A = this;
-        if (B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix dimensions.");
+        if (B.M != A.M || B.N != A.N) throw new RuntimeException("Illegal matrix dimensions. A = [" + A.M +", " + A.N + "], B = [" + B.M + ", " + B.N + "]");
         for (int i = 0; i < M; i++)
             for (int j = 0; j < N; j++)
                 if (A.data[i][j] != B.data[i][j]) return false;
@@ -149,15 +151,15 @@ public class Matrix {
     }
 
     /**
-     * Returns matrix A * B
+     * Returns Matrix A * Matrix B.
      * @param B
-     * 		Matrix to multiply by
+     * 		Matrix to multiply by.
      * @return
-     * 		Product of matrices
+     * 		Product of matrices.
      */
     public Matrix multiply(Matrix B) {
         Matrix A = this;
-        if (A.N != B.M) throw new RuntimeException("Illegal matrix dimensions.");
+        if (A.N != B.M) throw new RuntimeException("Illegal matrix dimensions. A = [" + A.M +", " + A.N + "], B = [" + B.M + ", " + B.N + "]");
         Matrix C = new Matrix(A.M, B.N);
         for (int i = 0; i < C.M; i++)
             for (int j = 0; j < C.N; j++)
@@ -167,11 +169,11 @@ public class Matrix {
     }
     
     /**
-     * Returns matrix A * b
+     * Returns Matrix A * b.
      * @param b
-     * 		Scalar to multiply by
+     * 		Scalar to multiply by.
      * @return
-     * 		Product of matrix and scalar
+     * 		Product of matrix and scalar.
      */
     public Matrix multiply(double b) {
     	Matrix A = this;
@@ -183,15 +185,15 @@ public class Matrix {
     }
     
     /**
-     * Returns element by element product of A .* B
+     * Returns element by element product of A .* B.
      * @param B
-     * 		Matrix to multiply by
+     * 		Matrix to multiply by.
      * @return
-     * 		Element wise product of matrices
+     * 		Element wise product of matrices.
      */
     public Matrix elementMultiply(Matrix B) {
     	Matrix A = this;
-    	if (A.M != B.M || A.N != B.N) throw new RuntimeException("Illegal matrix dimensions.");
+    	if (A.M != B.M || A.N != B.N) throw new RuntimeException("Illegal matrix dimensions. A = [" + A.M +", " + A.N + "], B = [" + B.M + ", " + B.N + "]");
     	Matrix C = new Matrix(A.M, A.N);
     	for (int i = 0; i < A.M; i++)
             for (int j = 0; j < A.N; j++)
@@ -200,11 +202,11 @@ public class Matrix {
     }
     
     /**
-     * Returns Matrix elements raised to a power
+     * Returns Matrix elements raised to a power.
      * @param p
-     * 		power to raise matrix element to
+     * 		Power to raise matrix element to.
      * @return
-     * 		Element wise matrix raised to the power p
+     * 		Element wise matrix raised to the power p.
      */
     public Matrix pow(double p) {
     	Matrix A = this;
@@ -217,6 +219,13 @@ public class Matrix {
     	return B;
     }
     
+    /**
+     * Returns Matrix A / b.
+     * @param b
+     * 		Scalar to divide by.
+     * @return
+     * 		Element wise division of Matrix by scalar.
+     */
     public Matrix divide(double b) {
     	Matrix A = this;
     	Matrix C = new Matrix(A.M, A.N);
@@ -227,22 +236,22 @@ public class Matrix {
     }
     
     /**
-     * Returns the 2D array of data of matrix
+     * Returns the 2D array of data of matrix.
      * @return
-     * 		2D array of data
+     * 		2D array of data.
      */
     public double[][] getData() {
     	return data;
     }
     
     /**
-     * Returns a single element of a matrix
+     * Returns a single element of matrix.
      * @param y
-     * 		Y location of element
+     * 		Y location of element.
      * @param x
-     * 		X location of element
+     * 		X location of element.
      * @return
-     * 		Value of matrix at location (x, y)
+     * 		Value of matrix at location (x, y).
      */
     public double get(int y, int x) {
     	return data[y][x];
@@ -262,25 +271,26 @@ public class Matrix {
     }
     
     /**
-     * Returns height of matrix
+     * Returns height of matrix.
      * @return
-     * 		Number of rows in matrix
+     * 		Number of rows in matrix.
      */
     public int getM() {
     	return M;
     }
     
     /**
-     * Returns width of matrix
+     * Returns width of matrix.
      * @return
-     * 		Number of columns in matrix
+     * 		Number of columns in matrix.
      */
     public int getN() {
     	return N;
     }
 
     /**
-     * Prints all the values of a matrix to the console
+     * Prints all the values of a matrix to the console  and writes them to the log file 
+     * if {@link Jarvis#debugging} is set to true.
      */
     public void print() {
     	if (Jarvis.debugging) {
