@@ -166,7 +166,8 @@ public class StudentHomePage {
 		
 		scene5 = new Scene(borderPane1, 900, 600);
 		fifthOne = new Stage();
-		fifthOne.setTitle(" Homepage ");
+		fifthOne.setTitle("Welcome"); 
+		
 		fifthOne.setScene(scene5);
 		fifthOne.show();
 		
@@ -174,6 +175,9 @@ public class StudentHomePage {
 		
 		
 	}
+	
+	
+	
 
 	public static void main(String[] args) {
 	

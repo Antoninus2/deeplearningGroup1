@@ -72,6 +72,7 @@ public  class InitialGUI extends Application {
 	PasswordField passwordField, RepeatPasswordField;
 	HBox horisontalBox;
 	Image Check, Wrong;
+	String GetName;
 	CheckBox StudentCheckBox, TeacherCheckBox;
 	//ProfHomepage prof = new ProfHomepage();
 
@@ -232,8 +233,11 @@ public  class InitialGUI extends Application {
 			            	if (sqlPasswords.equals(passwordField.getText())) {
 			            		if (sqlUserType.equals("Student")) {
 							        // Brings you to your student account
-					 				StudentGUI studentGui = new StudentGUI(jarvis);
-					 				studentGui.StudentBox();
+					 				//StudentGUI studentGui = new StudentGUI(jarvis);
+					 				//studentGui.StudentBox();
+					 				//theFirstOne.hide();
+					 				StudentHomePage homePage = new StudentHomePage();
+					 				homePage.StudentHomePageStarting();
 					 				theFirstOne.hide();
 			            		} else if (sqlUserType.equals("Teacher")) {
 			            			ProfHomepage profPage = new ProfHomepage();
@@ -372,6 +376,7 @@ public  class InitialGUI extends Application {
 				FirstName = new Label("First Name:");
 				CreateAccountPage.add(FirstName, 0, 1);
 				FirstNameTextField = new TextField();
+				GetName = FirstNameTextField.getText();
 				CreateAccountPage.add(FirstNameTextField, 1, 1);
 				
 				/**
@@ -618,10 +623,33 @@ public  class InitialGUI extends Application {
 				    					
 				    					
 				    					
+				    					//ProfHomepage profPage = new ProfHomepage();
+				            			//theFirstOne.hide();  //TODO timmy has to make sure that this is teacher sql
+		    						}
+		    						else if (passwordField.getText().contentEquals(RepeatPasswordField.getText()) && TeacherCheckBox.isSelected())		// checking if the text is equal to the other repeat password
+		    						{
+		    						
+				    					Check = new Image("check image.png");
+				    					Circle check3 = new Circle(10);
+				    					check3.setFill(new ImagePattern(Check));
+				    					CreateAccountPage.add(check3, 3, 4);
+				    					
+				    					Image Check2 = new Image("check image.png");
+				    					Circle check4 = new Circle(10);
+				    					check4.setFill(new ImagePattern(Check2));
+				    					CreateAccountPage.add(check4, 3, 5);
+				    					
+				    					TextField GoodMessage = new TextField("Good Password");
+				    					GoodMessage.setEditable(false);
+				    					GoodMessage.setStyle("-fx-background-color: rgba(255, 255, 255, 1);");
+				    					CreateAccountPage.add(GoodMessage, 1, 9);
+		    						
+		    						
 				    					ProfHomepage profPage = new ProfHomepage();
 				            			theFirstOne.hide();  //TODO timmy has to make sure that this is teacher sql
+				            			
 		    						}
-		    						else {
+				            			else {
 		    							Wrong = new Image("x image.png");
 					    				Circle check1 = new Circle(10);
 					    				check1.setFill(new ImagePattern(Wrong));
@@ -675,6 +703,16 @@ public  class InitialGUI extends Application {
 		theFirstOne.setScene(scene1);
 		theFirstOne.show();
 
+	}
+	
+	public void setFirstName(String name)
+	{
+		name = FirstNameTextField.getText();
+		this.GetName = name;
+	}
+	
+	public String getFirstName() {
+		return this.GetName;
 	}
 
 	public static void main(String[] args) {
