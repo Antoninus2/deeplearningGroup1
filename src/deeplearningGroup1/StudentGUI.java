@@ -5,6 +5,17 @@
 
 package deeplearningGroup1;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -35,8 +46,8 @@ public class StudentGUI{
 	private GridPane pane1;
 	private Button clickToSubmit;
 	private TextField enterEssayTopic;
-	private TextArea enterTextField;
-	private Text essayTopic, enterText;
+	private TextArea enterTextField, NameTextField;
+	private Text essayTopic, enterText, NameText;
 	private Jarvis jarvis;
 	public Stage fourthOne;
 	private Scene scene4;
@@ -83,16 +94,37 @@ public class StudentGUI{
 		
 		enterTextField = new TextArea();				//text are to enter the essay
 		enterTextField.setWrapText(true);
-		pane1.add(enterTextField, 0, 4, 10, 10);
+		pane1.add(enterTextField, 0, 4, 10, 20);
+		
+		
+		/**
+		 * @Enter the name of the actual essay to save as a pdf
+		 */
+		//The way the gridpane is set up is row 0, column 0, and spanning 2 columns  but only 1 row
+		
+		
+		NameText = new Text("Enter name to save File. Make sure to add '.pdf' at the end of your file.");
+		NameText.setFont(Font.font("Times New Roman",FontWeight.BOLD, 15));
+		pane1.add(NameText, 0,25,5,1);
+		
+		
+		NameTextField = new TextArea();				//text are to enter the essay
+		NameTextField.setWrapText(true);
+		pane1.add(NameTextField, 0, 27, 1, 1);
+		
+		
 		
 		clickToSubmit = new Button("Click To Submit");   //button to submit
-		pane1.add(clickToSubmit, 4, 25, 5,1);
+		pane1.add(clickToSubmit, 4, 27, 5,1);
 		
 		/**
 		 * @ButtonToSubmit this button makes sure that we retrieve the data from the typing and its graded by Jarvis
 		 */
 		clickToSubmit.setOnAction(event1 -> 
 	    {
+	    	
+	    	NameTextField.setEditable(false);
+	    	
 	    	/**
 			 * @Author Steven Rose Adding the connection from Jarvis to the sumbit button
 			 */
@@ -189,6 +221,124 @@ public class StudentGUI{
 	    	System.out.println("Topic: " + topic);
 	    	System.out.println("Essay: \n{\n" + enterTextField.getText() + "\n}");
 	    	System.out.println("Grade: " + grade);
+	    	
+	    	
+//************************************************************************************************************************************************
+	    	
+	    	/**
+	    	 *@Author Antonino Abeshi
+	    	 *@PDFBox libraries used. 
+	    	 *@PDDocument   Creates a document using the PDFBox Libraries
+	    	 */
+	    	PDDocument document = new PDDocument();
+			PDPage page = new PDPage();
+			document.addPage(page);
+			
+			//PDFont font = PDType1Font.HELVETICA_BOLD;
+			
+			// Start a new content stream which will "hold" the to be created content
+			
+			/**
+	    	 *@Author Antonino Abeshi
+	    	 *@PDPageContentStream this will crate a stream to print to the pdf
+	    	 */
+			PDPageContentStream contentStream;
+			try {
+				contentStream = new PDPageContentStream(document, page);
+				// Define a text content stream using the selected font, moving the cursor and drawing the text "Hello World"
+				
+				PDFont pdfFont = PDType1Font.TIMES_BOLD;
+				float fontSize = 12;
+				float leading = 1.5f * fontSize;
+				//contentStream.setFont(pdfFont, 12);
+			
+				
+				/**
+		    	 *@Author Antonino Abeshi
+		    	 *@PDRectangle Makes possible the creation of the box inside the PDF
+		    	 */
+				PDRectangle mediabox = page.getMediaBox();
+			    float margin = 72;
+			    float width = mediabox.getWidth() - 2*margin;
+			    float startX = mediabox.getLowerLeftX() + margin;
+			    float startY = mediabox.getUpperRightY() - margin;
+
+			    
+			    /**
+		    	 *@Author Antonino Abeshi
+		    	 *@List creates an array of strings
+		    	 *@A while look to make it possible to detect space
+		    	 *@ContentStream BeginText actually writes starts copying strings from here to the PDF file.
+		    	 */
+			    
+			    
+			    
+			    String text = enterTextField.getText();
+			    List<String> lines = new ArrayList<String>();
+			    int lastSpace = -1;
+			    while (text.length() > 0)
+			    {
+			        int spaceIndex = text.indexOf(' ', lastSpace + 1);
+			        if (spaceIndex < 0)
+			            spaceIndex = text.length();
+			        String subString = text.substring(0, spaceIndex);
+			        float size = fontSize * pdfFont.getStringWidth(subString) / 1000;
+			        System.out.printf("'%s' - %f of %f\n", subString, size, width);
+			        if (size > width)
+			        {
+			            if (lastSpace < 0)
+			                lastSpace = spaceIndex;
+			            subString = text.substring(0, lastSpace);
+			            lines.add(subString);
+			            text = text.substring(lastSpace).trim();
+			            System.out.printf("'%s' is line\n", subString);
+			            lastSpace = -1;
+			        }
+			        else if (spaceIndex == text.length())
+			        {
+			            lines.add(text);
+			            System.out.printf("'%s' is line\n", text);
+			            text = "";
+			        }
+			        else
+			        {
+			            lastSpace = spaceIndex;
+			        }
+			    }
+
+			    contentStream.beginText();
+			    contentStream.setFont(pdfFont, fontSize);
+			    contentStream.newLineAtOffset(startX, startY);
+			    for (String line: lines)
+			    {
+			        contentStream.showText(line);
+			        contentStream.newLineAtOffset(0, - leading);
+			    }
+			    contentStream.endText(); 
+			    contentStream.close();
+
+				
+			   // String gradeDisplay = grade = jarvis.gradeEssay(e);
+			   // contentStream.showText(gradeDisplay);
+
+				// Make sure that the content stream is closed:
+				contentStream.close();
+
+				String nameText = NameTextField.getText();
+				
+				
+				document.save(nameText);
+			
+				document.close();
+				
+			} catch (IOException e1) {
+				
+				e1.printStackTrace();
+			}
+			
+		//File file = new File("/Users/imac/Desktop/Eclipse workspace/Testing/ni.pdf");
+		
+		//fourthOne.close();
 	    	
 	    });
 		

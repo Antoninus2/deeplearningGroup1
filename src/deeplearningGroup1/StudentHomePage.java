@@ -94,7 +94,9 @@ public class StudentHomePage {
 			toolbarMenuCourses.setOrientation(Orientation.VERTICAL);
 			borderPane1.setCenter(toolbarMenuCourses);
 		});	
-		
+		/**
+		 * @Courses and Stuff adding a menu bar to the homepage
+		 */
 		Label gradeCourseOne = new Label("64.3%");
 		Label gradeCourseTwo = new Label("50%");
 		Label gradeCourseThree = new Label("39.7%");
@@ -143,6 +145,14 @@ public class StudentHomePage {
 			studentGui.StudentBox();
 		});
 		MenuItem lookAtEssay = new MenuItem("Previous Graded Essays");
+		lookAtEssay.setOnAction(e-> {
+			
+			ChoosingFiles Choose = new ChoosingFiles();
+			Choose.ChoosingFiles2();
+			
+		
+		
+		});
 		tools.getItems().add(writteEssay);
 		tools.getItems().add(lookAtEssay);
 		menuBar.getMenus().add(tools);

@@ -39,7 +39,7 @@ import javafx.stage.Stage;
 
 /**
  * @author Antonino Abeshi
- *
+ *this allows you to retrieve your password
  */
 	
 public class PasswordRetrievalGUI {

@@ -1,6 +1,6 @@
 
 /**
- * @author Antonino Abeshi
+ 
  *
  */
 package deeplearningGroup1;
@@ -24,6 +24,10 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * @author AntoninoAbeshi
+ *
+ */
 public class TemporaryPasswordReturnGUI extends Application {
 	
 	public Stage thirdOne,fourthOne,fifthOne;
@@ -41,7 +45,9 @@ public class TemporaryPasswordReturnGUI extends Application {
 
 	public TemporaryPasswordReturnGUI() {
 		
-	
+		/**
+		 * @Temp opens a temporary page, and that page gives you a temporary passsword
+		 */
 	}
 	
 	public void OpenTemp() {
@@ -82,7 +88,10 @@ public class TemporaryPasswordReturnGUI extends Application {
 			
 		});
 	}
-	
+	/**
+	 * @Antonino Abeshi
+	 * @CodeMatching allows you to enter the code from the previous screen into this one to match them together.
+	 */
 	public void CodeMatching()
 	
 	{
@@ -125,7 +134,9 @@ public class TemporaryPasswordReturnGUI extends Application {
 			
 		});
 	}
-	
+	/**@AntoninoAbeshi
+	 * @ResetPassword method for reseting the password 
+	 */
 public void ResetPassword()
 	
 	{

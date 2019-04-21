@@ -50,7 +50,8 @@ public class StudentAccount {
 	protected String reset() {
 		/**
 		 * @return A sting password by generating a new one
-		 * Antoinon Abeshi
+		 * Antonino Abeshi
+		 * Crunches numbers in and gives 
 		 */
 		String PASSWORD = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";  //CREATES RANDOM STRING
 		StringBuilder pwd = new StringBuilder();
