@@ -48,6 +48,11 @@ public class GrammarCheck {
 	private List< String > comments;
 	
 	/**
+	 * A list of positions corresponding to each comment
+	 */
+	private List< int[] > commentPositions;
+	
+	/**
 	 * The path to the external file that holds the list of grammar rules to check.
 	 */
 	private String grammarRulesFileName = "resources/grammar_rules.xlsx";
@@ -116,6 +121,7 @@ public class GrammarCheck {
 		List<RuleMatch> matches = null;
 		Matrix input = new Matrix(rules.size(), 1);
 		comments = new ArrayList<>();
+		commentPositions = new ArrayList<>();
 		String rule;
 		
 		for (int i = 0; i < input.getM(); i++) {
@@ -132,7 +138,8 @@ public class GrammarCheck {
 			langTool.disableRule(rule);
 			
 			for (RuleMatch match : matches) {
-				comments.add(match.getMessage() + ", at position [" + match.getFromPos() + ":" + match.getToPos() + "]");
+				comments.add(match.getMessage());
+				commentPositions.add(new int[] {match.getFromPos(), match.getToPos()});
 			}
 			input.set(i, 0, matches.size());
 		}
@@ -151,6 +158,15 @@ public class GrammarCheck {
 			str[i] = comments.get(i);
 		}
 		return str;
+	}
+	
+	/**
+	 * Returns the positions for the comments.
+	 * @return
+	 * 		List of positions in the form (start, end), zero initialized.
+	 */
+	public List< int[] > getCommentPositions() {
+		return commentPositions;
 	}
 	
 	/**

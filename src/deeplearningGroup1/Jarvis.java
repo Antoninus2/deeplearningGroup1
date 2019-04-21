@@ -806,6 +806,15 @@ public class Jarvis {
 	public String[] getComments() {
 		return gram.getComments();
 	}
+	
+	/**
+	 * Returns the positions for the comments from the GrammarChecker.
+	 * @return
+	 * 		List of positions in the form (start, end), zero initialized.
+	 */
+	public List< int[] > getCommentPositions() {
+		return gram.getCommentPositions();
+	}
 
 	/**
 	 * Prints a String to the console and writes it to a log file if log is set to true.
