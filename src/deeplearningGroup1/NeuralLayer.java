@@ -222,6 +222,7 @@ public class NeuralLayer {
 	 * 		The small change to the bias.
 	 */
 	public void changeBias(Matrix delta) {
+		//delta.fixNaN();
 		bias = bias.plus(delta.multiply(modifier));
 	}
 	
@@ -231,6 +232,7 @@ public class NeuralLayer {
 	 * 		The small change to the bias.
 	 */
 	public void changeWeights(Matrix delta) {
+		//delta.fixNaN();
 		weights = weights.plus(delta.multiply(modifier));
 	}
 	

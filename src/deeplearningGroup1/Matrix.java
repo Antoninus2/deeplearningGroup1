@@ -235,6 +235,15 @@ public class Matrix {
         return C;
     }
     
+    public void fixNaN() {
+    	for (int i = 0; i < M; i++) {
+    		for (int j = 0; j < N; j++) {
+    			if (Double.isNaN(data[i][j]))
+    				data[i][j] = 0;
+    		}
+    	}
+    }
+    
     /**
      * Returns the 2D array of data of matrix.
      * @return

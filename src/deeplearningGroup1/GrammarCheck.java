@@ -43,6 +43,11 @@ public class GrammarCheck {
 	private List< String > rules;
 	
 	/**
+	 * A list of comments made by the grader
+	 */
+	private List< String > comments;
+	
+	/**
 	 * The path to the external file that holds the list of grammar rules to check.
 	 */
 	private String grammarRulesFileName = "resources/grammar_rules.xlsx";
@@ -110,24 +115,42 @@ public class GrammarCheck {
 	public Matrix check(String str) {
 		List<RuleMatch> matches = null;
 		Matrix input = new Matrix(rules.size(), 1);
-		int count;
-
+		comments = new ArrayList<>();
+		String rule;
+		
 		for (int i = 0; i < input.getM(); i++) {
-			if (i%100 == 0 || i == (input.getM()-1))
-				log("rule # = " + i);
-			count = 0;
-			langTool.enableRule(rules.get(i));
+			log("rule # = " + i);
+			rule = rules.get(i);
+			
+			langTool.enableRule(rule);
 			try {
 				matches = langTool.check(str);
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.exit(1);
 			}
-			count += matches.size();
-			langTool.disableRule(rules.get(i));
-			input.set(i, 0, count);
+			langTool.disableRule(rule);
+			
+			for (RuleMatch match : matches) {
+				comments.add(match.getMessage() + ", at position [" + match.getFromPos() + ":" + match.getToPos() + "]");
+			}
+			input.set(i, 0, matches.size());
 		}
+		
 		return input;
+	}
+	
+	/**
+	 * Returns a list of the comments made by the grader.
+	 * @return
+	 * 		The list of comments.
+	 */
+	public String[] getComments() {
+		String[] str = new String[comments.size()];
+		for (int i = 0; i < comments.size(); i++) {
+			str[i] = comments.get(i);
+		}
+		return str;
 	}
 	
 	/**
@@ -300,6 +323,10 @@ public class GrammarCheck {
 		
 		workbook.close();
 		fis.close();
+	}
+	
+	public int getNumRules() {
+		return rules.size();
 	}
 	
 	/**

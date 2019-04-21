@@ -9,13 +9,24 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.ComparisonOperator;
+import org.apache.poi.ss.usermodel.ConditionalFormattingRule;
+import org.apache.poi.ss.usermodel.FontFormatting;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.PatternFormatting;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.SheetConditionalFormatting;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -55,7 +66,12 @@ public class Jarvis {
 	 * Sets whether all of the logs should be output to the console and saved to an external file.  If set 
 	 * to true, significantly increases runtime.
 	 */
-	final static boolean debugging = false;
+	static boolean debugging = false;
+	
+	/**
+	 * Used to number the copies of the weights and biases file as it changes
+	 */
+	private int excelNum = 0;
 
 	/**
 	 * Automated method for training and testing the neural net on data from a number of external files. It 
@@ -66,21 +82,35 @@ public class Jarvis {
 	 */
 	public static void main(String[] args) {
 		long startTime = System.nanoTime();
+		DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Jarvis j = new Jarvis();
-		j.log("----------START----------");
-
-		try {
-			j.test("resources/Essay Data/testing_set1.xlsx");
-			j.train("resources/Essay Data/training_set1.xlsx", 50);
-			j.train("resources/Essay Data/training_set7.xlsx", 50);
-			j.train("resources/Essay Data/training_set8.xlsx", 50);
-			j.test("resources/Essay Data/testing_set1.xlsx");
-		} catch (IOException e) {
-			e.printStackTrace();
+		j.log("----------START----------", true);
+		j.log("Start Time: " + sdf.format(new Date()), true);
+		
+		Essay essay = new Essay(0, 100, 30, "topic");
+		essay.writeEssay("Dear reader, @ORGANIZATION1 has had a dramatic effect on human life. It has changed the way we do almost everything today. The most well know, is the computer. This device has allowed people do buy things online, talk to people online, and also provides entertainment for some people. All good qualities that make everyones lives easier. Imagine you look into your refrigerator and you notice it's almost empty. Someone is using the car and you need to go grocery shopping and the store is too far. What do you do? Well you could go on a computer and look for food online. Ther are many great deals and some companies even deliver for free! The amazing and easy way to buy food without leaving your house. But food isn't all you can purchase. Many products are sold through the computer. Need new toys for kids? Or how about a new hat for your friend? Maybe even more curtains for your room? Well at the easy access of internet on a computer, you can buy all those items and more. The computer has also the way of communication. Let's say someone wants to talk to a friend or relative that lives far away in another country. @CAPS1 someone dosen't own a phone or @CAPS1 they can't make the call, all these is to be in you on the computer. You can communicate with anyone just by using your email adress. Now friends and families can talk to each other over the ease of the computer. Just type to want to say and \"boom,\" instant, on the chat. Let's face it. No matter what a child or even teenager . But now with a computer all that can change. With just one click you could actually be watching a movie from the comfort of your own home. But what @CAPS1 you don't want a movie? No entertainment like listing to musics, watching fun, and probable the most popular playing games. Everyone loves to play a game every once in a while, and with the selection of thousands of online games, these isn't or person who can't fled atleast our game enjoyable. There are even games for educational fun that many kids love. With all the entertainment a computer can produce; who could hate it? All in all the computer is a revolutinizing device that has changes the way we shop, communicate, and find exciting entertainment. To be able to do so much with just a couple clicks; new that I find extravagant. It blows my mind to see and think, \"@CAPS1 we can do this now, I wonder what we can accomplish in the future.");
+		j.gradeEssay(essay);
+		String[] str = j.getComments();
+		j.log("Comments:", true);
+		for (String s : str) {
+			j.log(s, true);
 		}
-		j.log("----------END----------");
+		
+		if (false) {
+			try {
+				j.test("resources/Essay Data/testing_set1.xlsx");
+				//j.train("resources/Essay Data/training_set1.xlsx", 100, 0);
+				j.train("resources/Essay Data/training_set7.xlsx", 100, 0);
+				j.train("resources/Essay Data/training_set8.xlsx", 100, 0);
+				j.test("resources/Essay Data/testing_set1.xlsx");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		j.log("End Time: " + sdf.format(new Date()), true);
+		j.log("----------END----------", true);
 		long endTime = System.nanoTime();
-		System.out.println("Time Elapsed = " + ((endTime - startTime) / 1e9) + " s");
+		j.log("Time Elapsed = " + ((endTime - startTime) / 1e9) + " s", true);
 	}
 
 	/**
@@ -89,21 +119,9 @@ public class Jarvis {
 	 * gram.
 	 */
 	public Jarvis() {
-
-		//loadWordList();
-
+		gram = new GrammarCheck();
 		String[] layerNames = {"input", "hidden 0", "hidden 1",
 				"hidden 2", "hidden 3", "hidden 4", "hidden 5", "output"};
-		/* Current size of neural network:
-		 * 		346 inputs
-		 * 		24 hidden 0
-		 * 		24 hidden 1
-		 * 		24 hidden 2
-		 * 		24 hidden 3
-		 * 		24 hidden 4
-		 * 		24 hidden 5
-		 * 		5 outputs
-		 */
 
 		Pair< List <List <Matrix>>, Boolean > savedData = null;
 		try {
@@ -115,7 +133,6 @@ public class Jarvis {
 		List <Matrix> biases = savedData.getKey().get(1);
 		
 		createNeuralNet(layerNames, weights, biases);
-		gram = new GrammarCheck();
 		
 		if (savedData.getValue() == false)
 			try {
@@ -136,9 +153,9 @@ public class Jarvis {
 	 */
 	private void createNeuralNet(String[] names, List< Matrix > weights, List< Matrix > biases) {
 		if (weights.size() != biases.size()) {
-			log("ERROR: # of weights and biases do not match:");
-			log("# of weight matrices = " + weights.size());
-			log("# of bias matrices = " + biases.size());
+			log("ERROR: # of weights and biases do not match:", true);
+			log("# of weight matrices = " + weights.size(), true);
+			log("# of bias matrices = " + biases.size(), true);
 			System.exit(1);
 		}
 
@@ -160,17 +177,17 @@ public class Jarvis {
 		Matrix output = calculateOutput(input, neuralLayers.size()-1);
 		
 		output.print();
-		log("\ninput:");
+		log("\ninput:", debugging);
 		input.print();
-		log("\nweights:");
+		log("\nweights:", debugging);
 		neuralLayers.get(0).getWeights().print();
-		log("\nbiases:");
+		log("\nbiases:", debugging);
 		neuralLayers.get(0).getBias().print();
-		log("\nweighted input:");
+		log("\nweighted input:", debugging);
 		neuralLayers.get(0).getWeightedInput().print();
-		log("\nactivations:");
+		log("\nactivations:", debugging);
 		neuralLayers.get(0).getActivations().print();
-		log("\nlayers: " + neuralLayers.size());
+		log("\nlayers: " + neuralLayers.size(), debugging);
 
 		return matrixToGrade(output);
 	}
@@ -202,54 +219,58 @@ public class Jarvis {
 	 * @throws IOException
 	 * 		Thrown in the event the file is already open in another program, or a similar IO Exception occurs.
 	 */
-	private void train(String fileName, int batchSize) throws IOException {
+	private void train(String fileName, int batchSize, int rowNum) throws IOException {
+		log("Training on " + fileName, true);
 
 		FileInputStream fis = new FileInputStream(new File(fileName));
 		XSSFWorkbook workbook = new XSSFWorkbook(fis);
 		XSSFSheet sheet = workbook.getSheetAt(0);
 
 		Row row;
-		int rowNum = 0;
 		int maxRowNum = sheet.getLastRowNum();
-		log("maxRowNum = " + maxRowNum);
+		log("maxRowNum = " + maxRowNum, debugging);
 
-		for (int batch = 0; batch < maxRowNum-1; batch += batchSize) {
+		for (int batch = rowNum/batchSize; batch < maxRowNum-1; batch += batchSize) {
+			log("batch = " + batch, debugging);
 			int batchSizeActual = Math.min(batchSize, maxRowNum - batch);
+			log("batchSizeActual = " + batchSizeActual, debugging);
 			String[] essays = new String[batchSizeActual];
 			Matrix[] grades = new Matrix[batchSizeActual];
 			double numGrade;
 			for (int i = 0; i < batchSizeActual; i++) {
 				row = sheet.getRow(rowNum);
 				essays[i] = row.getCell(2).getStringCellValue();
-				log("essay =\n" + essays[i]);
+				log("essay =\n" + essays[i], true);
 				numGrade = row.getCell(6).getNumericCellValue();
 				grades[i] = gradeToMatrix(numGrade);
 				rowNum++;
 			}
 
-			log("row # = " + rowNum);
+			log("row # = " + rowNum, debugging);
 
 			List< Matrix[][] > gradient = new ArrayList<>();
 			for (int i = 0; i < batchSizeActual; i++) {
-				log("Essay # = " + (rowNum - batchSizeActual + i));
-				System.out.println("Essay # = " + (rowNum - batchSizeActual + i));
+				log("Essay # = " + (rowNum - batchSizeActual + i), true);
 				gradient.add(calculateGradient(essays[i], grades[i]));
 			}
 
-			log("\n----------------------------\nGradient:\n");
+			log("\n----------------------------\nGradient:\n", debugging);
 			Matrix[][] avgGradient = new Matrix[2][neuralLayers.size()];
 			for (int i = 0; i < batchSizeActual; i++) {
-				log("\nessay #: " + (i+batch*batchSize));
+				log("\nessay #: " + (i+batch*batchSize), debugging);
 				for (int j = 0; j < neuralLayers.size(); j++) {
 					if (i == 0) {
 						avgGradient[0][j] = new Matrix(gradient.get(i)[0][j].getM(), 1);
 						avgGradient[1][j] = new Matrix(gradient.get(i)[1][j].getM(), gradient.get(i)[1][j].getN());
 					}
 
-					log("bias error:");
+					log("bias error:", debugging);
 					gradient.get(i)[0][j].print();
-					log("weights error:");
+					log("weights error:", debugging);
 					gradient.get(i)[1][j].print();
+					debugging = false;
+					gradient.get(i)[0][j].fixNaN();
+					gradient.get(i)[1][j].fixNaN();
 					avgGradient[0][j] = avgGradient[0][j].plus(gradient.get(i)[0][j]);
 					avgGradient[1][j] = avgGradient[1][j].plus(gradient.get(i)[1][j]);
 				}
@@ -257,40 +278,53 @@ public class Jarvis {
 			}
 
 			for (int j = 0; j < neuralLayers.size(); j++) {
+				log("\navgGradient[0][" + j + "]:", debugging);
+				avgGradient[0][j].print();
+				log("\navgGradient[1][" + j + "]:", debugging);
+				avgGradient[1][j].print();
+				log("batchSize = " + batchSize, debugging);
+				
 				avgGradient[0][j] = avgGradient[0][j].divide(batchSize);
 				avgGradient[1][j] = avgGradient[1][j].divide(batchSize);
+				
+				log("\navgGradient[0][" + j + "]:", debugging);
+				avgGradient[0][j].print();
+				log("\navgGradient[1][" + j + "]:", debugging);
+				avgGradient[1][j].print();
 			}
 
 			NeuralLayer nl;
-			log("\n-----------------------\ncurrent neural net:");
+			log("\n-----------------------\ncurrent neural net:", debugging);
 			for (int i = 0; i < neuralLayers.size(); i++) {
-				log("neural layer #" + (i+1));
+				log("neural layer #" + (i+1), debugging);
 				nl = neuralLayers.get(i);
 				nl.print();
 			}
 
-			log("\n\naverage bias errors:");
+			log("\n\naverage bias errors:", debugging);
 			for (int j = 0; j < neuralLayers.size(); j++) {
 				avgGradient[0][j].print();
-				log("");
+				log("", debugging);
 			}
 
-			log("\naverage weights errors:");
+			log("\naverage weights errors:", debugging);
 			for (int j = 0; j < neuralLayers.size(); j++) {
 				avgGradient[1][j].print();
-				log("");
+				log("", debugging);
 			}
 
-			log("-----------------------\nnew neural net:");
+			log("-----------------------\nnew neural net:", debugging);
 			for (int i = 0; i < neuralLayers.size(); i++) {
-				log("neural layer #" + (i+1));
+				log("neural layer #" + (i+1), debugging);
 				nl = neuralLayers.get(i);
 				nl.changeBias(avgGradient[0][i]);
 				nl.changeWeights(avgGradient[1][i]);
 				nl.print();
 			}
 
-			saveWeightsBiases(jarvisWeightsBiases);
+			saveWeightsBiases("resources/train_weights_biases/weights_biases_" + excelNum + ".xlsx");
+			log("\tExcel # = " + excelNum + "\n", true);
+			excelNum++;
 		}
 
 		workbook.close();
@@ -353,14 +387,14 @@ public class Jarvis {
 		Matrix output = calculateOutput(input, neuralLayers.size()-1);
 		Matrix delC_A = output.minus(desiredOutput).multiply(-2);
 
-		log("\n----------------\nTraining...");
-		log("input:");
+		log("\n----------------\nTraining...", debugging);
+		log("input:", debugging);
 		input.print();
-		log("output:");
+		log("output:", debugging);
 		output.print();
-		log("desired output:");
+		log("desired output:", debugging);
 		desiredOutput.print();
-		log("--------------------");
+		log("--------------------", debugging);
 
 		NeuralLayer nl, nlNext;
 		for (int i = neuralLayers.size()-1; i >= 0; i--) {
@@ -383,7 +417,7 @@ public class Jarvis {
 		Matrix[][] grad = new Matrix[2][neuralLayers.size()];
 		for (int i = 0; i < neuralLayers.size(); i++) {
 			nl = neuralLayers.get(i);
-			log("neural layer #" + (i+1));
+			log("neural layer #" + (i+1), debugging);
 			nl.printAll();
 			grad[0][i] = new Matrix(nl.getBiasError().getData());
 			grad[1][i] = new Matrix(nl.getWeightsError().getData());
@@ -441,7 +475,7 @@ public class Jarvis {
 		} else {
 			fileExists = false;
 			int randMax = 10;
-			weights.add(Matrix.random(24, 346, randMax));
+			weights.add(Matrix.random(24, gram.getNumRules(), randMax));
 			weights.add(Matrix.random(24, 24, randMax));
 			weights.add(Matrix.random(24, 24, randMax));
 			weights.add(Matrix.random(24, 24, randMax));
@@ -502,12 +536,14 @@ public class Jarvis {
 			}
 		}
 
-		System.out.println("Saved!");
+		log("Saved new Weights/Biases!", true);
 
 		FileOutputStream fileOut = new FileOutputStream(fileName);
 		workbook.write(fileOut);
 		fileOut.close();
 		workbook.close();
+		
+		loadWeightsBiases(fileName);
 	}
 
 	/**
@@ -518,6 +554,8 @@ public class Jarvis {
 	 * 		Thrown in the event the file is already open in another program, or a similar IO Exception occurs.
 	 */
 	private void test(String fileName) throws IOException {
+		log("Testing on " + fileName, true);
+		
 		FileInputStream fis = new FileInputStream(new File(fileName));
 		XSSFWorkbook workbook = new XSSFWorkbook(fis);
 		XSSFSheet sheet = workbook.getSheetAt(0);
@@ -525,15 +563,14 @@ public class Jarvis {
 		Row row;
 		int maxRowNum = sheet.getLastRowNum();
 		//maxRowNum = 5;
-		log("maxRowNum = " + maxRowNum);
+		log("maxRowNum = " + maxRowNum, debugging);
 		Matrix[] gradesExpected = new Matrix[maxRowNum];
 		Matrix[] gradesActual = new Matrix[maxRowNum];
 		Matrix input;
 		String[] essays = new String[maxRowNum];
 
 		for (int i = 0; i < maxRowNum; i++) {
-			log("Essay # = " + i);
-			System.out.println("Essay # = " + i);
+			log("Essay # = " + i, true);
 			row = sheet.getRow(i);
 			essays[i] = row.getCell(2).getStringCellValue();
 			gradesExpected[i] = gradeToMatrix(row.getCell(3).getNumericCellValue());
@@ -543,13 +580,15 @@ public class Jarvis {
 
 		workbook.close();
 		fis.close();
+		
+		String fileNum = fileName.substring(21, 33);
 
-		saveTestData(gradesExpected, gradesActual);
-		saveTestResults(essays, gradesExpected, gradesActual);
+		saveTestData(gradesExpected, gradesActual, fileNum);
+		saveTestResults(essays, gradesExpected, gradesActual, fileNum);
 	}
 	
 	/**
-	 * Saves the test data in an excel file to compare the raw output for each essay being tested on.
+	 * Saves the test data in an excel file to compare the raw output for each essay being tested to its expected output.
 	 * @param gradesExpected
 	 * 		Column Matrix of expected grade for essay
 	 * @param gradesActual
@@ -557,10 +596,12 @@ public class Jarvis {
 	 * @throws IOException
 	 * 		Thrown in the event the file is already open in another program, or a similar IO Exception occurs.
 	 */
-	private void saveTestData(Matrix[] gradesExpected, Matrix[] gradesActual) throws IOException {
+	private void saveTestData(Matrix[] gradesExpected, Matrix[] gradesActual, String fileNum) throws IOException {
 		String fileName = "resources/test_results_data.xlsx";
 		File file = new File(fileName);
 		Workbook workbook;
+		
+		//Open workbook
 		if (file.exists()) {
 			FileInputStream fis = new FileInputStream(file);
 			workbook = new XSSFWorkbook(fis);
@@ -569,11 +610,40 @@ public class Jarvis {
 			workbook = new XSSFWorkbook();
 		}
 		
+		//Setup sheet
 		String[] grades = {"A", "B", "C", "D", "F"};
 		int testNum = workbook.getNumberOfSheets();
 		Sheet sheet = workbook.createSheet("Test Data " + testNum);
+
+		//Setup conditional formatting
+		SheetConditionalFormatting formatLayer = sheet.getSheetConditionalFormatting();
+		ConditionalFormattingRule ruleGreen = formatLayer.createConditionalFormattingRule(ComparisonOperator.GE, "0.8");
+
+		//Change font color
+		FontFormatting fontFormat = ruleGreen.createFontFormatting();
+		fontFormat.setFontColorIndex(IndexedColors.DARK_GREEN.getIndex());
+
+		//Change background color
+		PatternFormatting fill = ruleGreen.createPatternFormatting();
+		fill.setFillBackgroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+		fill.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
+
+		//Define range for conditional formatting
+		CellRangeAddress[] address1 = {CellRangeAddress.valueOf("B2:AAA5")};
+		CellRangeAddress[] address2 = {CellRangeAddress.valueOf("B8:AAA11")};
+
+		//Apply conditional formatting
+		formatLayer.addConditionalFormatting(address1, ruleGreen);
+		formatLayer.addConditionalFormatting(address2, ruleGreen);
+
+		//Set style for numbers
+		CellStyle style = workbook.createCellStyle();
+		style.setDataFormat(workbook.createDataFormat().getFormat("0.00E+00"));
+
+		//Save expected output data
 		Row row = sheet.createRow(0);
 		row.createCell(0).setCellValue("Expected Output");
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));
 		for (int i = 0; i < gradesExpected[0].getM(); i++) {
 			row = sheet.createRow(i+1);
 			row.createCell(0).setCellValue(grades[i]);
@@ -581,17 +651,26 @@ public class Jarvis {
 				row.createCell(j+1).setCellValue(gradesExpected[j].get(i, 0));
 			}
 		}
-		
+
+		//Save actual output data
 		row = sheet.createRow(gradesExpected[0].getM() + 2);
 		row.createCell(0).setCellValue("Actual Output");
+		sheet.addMergedRegion(new CellRangeAddress(6, 6, 0, 1));
+		Cell cell;
 		for (int i = 0; i < gradesActual[0].getM(); i++) {
 			row = sheet.createRow(i+gradesExpected[0].getM()+3);
 			row.createCell(0).setCellValue(grades[i]);
 			for (int j = 0; j < gradesActual.length; j++) {
-				row.createCell(j+1).setCellValue(gradesActual[j].get(i, 0));
+				cell = row.createCell(j+1);
+				cell.setCellValue(gradesActual[j].get(i, 0));
+				cell.setCellStyle(style);
 			}
 		}
 		
+		sheet.createRow(12).createCell(0).setCellValue("File: " + fileNum);
+		sheet.addMergedRegion(new CellRangeAddress(12, 12, 0, 1));
+		
+		//Close file
 		FileOutputStream fileOut;
 		try {
 			fileOut = new FileOutputStream(fileName);
@@ -612,11 +691,12 @@ public class Jarvis {
 	 * @param gradesActual
 	 * 		List of column Matrices of the grade calculated by the neural net for each essay.
 	 */
-	private void saveTestResults(String[] essays, Matrix[] gradesExpected, Matrix[] gradesActual) {
+	private void saveTestResults(String[] essays, Matrix[] gradesExpected, Matrix[] gradesActual, String fileNum) {
 		String fileName = "resources/test_results.xlsx";
 		File file = new File(fileName);
 		Workbook workbook = null;
 		
+		//Open workbook
 		try {
 			FileInputStream fis = new FileInputStream(file);
 			workbook = new XSSFWorkbook(fis);
@@ -627,15 +707,18 @@ public class Jarvis {
 			e.printStackTrace();
 		}
 
+		//Setup sheet
 		int testNum = workbook.getNumberOfSheets();
 		Sheet sheet = workbook.createSheet("Test Results " + testNum);
 		Row row = sheet.createRow(0);
 		row.createCell(0).setCellValue("Essay");
 		row.createCell(1).setCellValue("Expected Grade");
 		row.createCell(2).setCellValue("Actual Grade");
-		row.createCell(4).setCellValue("Expected Grade");
-		row.createCell(5).setCellValue("Actual Grade");
-		row.createCell(6).setCellValue("Difference");
+		row.createCell(3).setCellValue("Expected Grade");
+		row.createCell(4).setCellValue("Actual Grade");
+		row.createCell(5).setCellValue("Difference");
+		row.createCell(6).setCellValue("Abs(Diff)");
+		
 
 		HashMap< String, Integer > map = new HashMap<>();
 		map.put("A", 4);
@@ -645,6 +728,7 @@ public class Jarvis {
 		
 		String expectedGrade, actualGrade;
 		
+		//Save results into sheet
 		for (int i = 0; i < essays.length; i++) {
 			expectedGrade = matrixToGrade(gradesExpected[i]);
 			actualGrade = matrixToGrade(gradesActual[i]);
@@ -653,16 +737,55 @@ public class Jarvis {
 			row.createCell(0).setCellValue(essays[i]);
 			row.createCell(1).setCellValue(expectedGrade);
 			row.createCell(2).setCellValue(actualGrade);
-			row.createCell(3);
-			row.createCell(4).setCellValue(map.get(expectedGrade).get());
-			row.createCell(5).setCellValue(map.get(actualGrade).get());
-			row.createCell(6).setCellFormula("E" + (i+2) + "-F" + (i+2));
+			row.createCell(3).setCellValue(map.get(expectedGrade).get());
+			row.createCell(4).setCellValue(map.get(actualGrade).get());
+			row.createCell(5).setCellFormula("D" + (i+2) + "-E" + (i+2));
+			row.createCell(6).setCellFormula("ABS(F" + (i+2) + ")");
 		}
 		
-		for (int i = 1; i <= 6; i++) {
+		Cell cell;
+		CellStyle stylePercent = workbook.createCellStyle();
+		stylePercent.setDataFormat(workbook.createDataFormat().getFormat("0.00%"));
+		CellStyle styleNumber = workbook.createCellStyle();
+		styleNumber.setDataFormat(workbook.createDataFormat().getFormat("0.000"));
+		
+		row = sheet.getRow(0);
+		row.createCell(8).setCellValue("# Essays:");
+		row.createCell(9).setCellFormula("COUNT(G2:G9999)");
+		
+		row = sheet.getRow(1);
+		row.createCell(8).setCellValue("# Incorrect:");
+		row.createCell(9).setCellFormula("COUNTIF(G2:G9999, \">0\")");
+		
+		row = sheet.getRow(2);
+		row.createCell(8).setCellValue("% Incorrect:");
+		cell = row.createCell(9);
+		cell.setCellFormula("J2/J1");
+		cell.setCellStyle(stylePercent);
+		
+		row = sheet.getRow(3);
+		row.createCell(8).setCellValue("Avg Amount Incorrect:");
+		cell = row.createCell(9);
+		cell.setCellFormula("SUM(G2:G9999)/J2");
+		cell.setCellStyle(styleNumber);
+		
+		row = sheet.getRow(4);
+		row.createCell(8).setCellValue("# Correct:");
+		row.createCell(9).setCellFormula("COUNTIF(G2:G9999, 0)");
+		
+		row = sheet.getRow(5);
+		row.createCell(8).setCellValue("% Correct:");
+		cell = row.createCell(9);
+		cell.setCellFormula("J5/J1");
+		cell.setCellStyle(stylePercent);
+		
+		sheet.getRow(7).createCell(8).setCellValue("File: " + fileNum);
+		
+		for (int i = 1; i <= 8; i++) {
 			sheet.autoSizeColumn(i);
 		}
-
+		
+		//Close file
 		FileOutputStream fileOut;
 		try {
 			fileOut = new FileOutputStream(fileName);
@@ -674,16 +797,27 @@ public class Jarvis {
 		}
 		
 	}
+	
+	/**
+	 * Returns the comments from the GrammarChecker.
+	 * @return
+	 * 		List of comments.
+	 */
+	public String[] getComments() {
+		return gram.getComments();
+	}
 
 	/**
-	 * Prints a String to the console and writes it to a log file if {@link #debugging} 
-	 * is set to true.
+	 * Prints a String to the console and writes it to a log file if log is set to true.
 	 * @param msg
 	 * 		Message to be printed.
+	 * @param
+	 * 		Whether or not  to write the message to the console and the log file, generally 
+	 * set to whatever {@link #debugging} is.
 	 */
 
-	void log(String msg) {
-		if (debugging) {
+	void log(String msg, boolean log) {
+		if (log) {
 			System.out.println(msg);
 			PrintWriter out;
 			try {
