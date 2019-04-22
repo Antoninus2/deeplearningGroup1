@@ -1,9 +1,16 @@
 
 /**
- 
+ * @author Antonino Abeshi
  *
  */
 package deeplearningGroup1;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -24,10 +31,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-/**
- * @author AntoninoAbeshi
- *
- */
 public class TemporaryPasswordReturnGUI extends Application {
 	
 	public Stage thirdOne,fourthOne,fifthOne;
@@ -36,7 +39,7 @@ public class TemporaryPasswordReturnGUI extends Application {
 	public Button ClickToEnterCode;
 	private TextField TemporaryPassword;
 	public Button SubmitGO,SubmitGO2, Back;
-	private TextField MatchTheCode, EnterNewPassword, RepeatNewPassword;
+	private TextField MatchTheCode, EmailText, EnterNewPassword, RepeatNewPassword;
 
 	
 	StudentAccount studentaccount = new StudentAccount();
@@ -45,9 +48,7 @@ public class TemporaryPasswordReturnGUI extends Application {
 
 	public TemporaryPasswordReturnGUI() {
 		
-		/**
-		 * @Temp opens a temporary page, and that page gives you a temporary passsword
-		 */
+	
 	}
 	
 	public void OpenTemp() {
@@ -88,10 +89,7 @@ public class TemporaryPasswordReturnGUI extends Application {
 			
 		});
 	}
-	/**
-	 * @Antonino Abeshi
-	 * @CodeMatching allows you to enter the code from the previous screen into this one to match them together.
-	 */
+	
 	public void CodeMatching()
 	
 	{
@@ -134,12 +132,11 @@ public class TemporaryPasswordReturnGUI extends Application {
 			
 		});
 	}
-	/**@AntoninoAbeshi
-	 * @ResetPassword method for reseting the password 
-	 */
+	
 public void ResetPassword()
 	
 	{
+	
 		pane3 = new GridPane();
 		
 		pane3.setPadding(new Insets(25,25,25,25));    
@@ -155,14 +152,18 @@ public void ResetPassword()
 		
 		pane3.setGridLinesVisible(false);
 		
+		Label EML = new Label("Email");
 		Label NewPass = new Label("Enter your new password");
 		Label RepeatPass = new Label("Repeat your new password");
-		pane3.add(NewPass, 0, 1);
-		pane3.add(RepeatPass, 0, 2);
+		pane3.add(EML, 0, 1);
+		pane3.add(NewPass, 0, 2);
+		pane3.add(RepeatPass, 0, 3);
+		EmailText = new TextField();
 		EnterNewPassword= new TextField();
 		RepeatNewPassword= new TextField();
-		pane3.add(EnterNewPassword, 1, 1, 2, 1);
-		pane3.add(RepeatNewPassword, 1, 2, 2, 1);
+		pane3.add(EmailText,1,1,2,1);
+		pane3.add(EnterNewPassword, 1, 2, 2, 1);
+		pane3.add(RepeatNewPassword, 1, 3, 2, 1);
 		
 		
 		SubmitGO2 = new Button("Submit");
@@ -176,7 +177,30 @@ public void ResetPassword()
 					{
 						
 						
-						 //TODO Timmy you have to make sure their password get replaced in SQL
+				    	StudentAccount student = new StudentAccount();
+				  
+						String password = EnterNewPassword.getText();
+						String Email = EmailText.getText();
+				
+						SQLConnection connecting = new SQLConnection();
+						String connectionurl = connecting.connect();
+
+						boolean resultSet;
+						try (Connection connection = DriverManager.getConnection(connectionurl);
+								Statement statement = connection.createStatement();) {
+
+							// Updates the account with the new password when they request it
+							String string1 = "'"+password+"'";
+							String string2 = "'"+Email+"'";
+							String selectSql = "update dbo.User_Info set Passwords = " + string1+ " where Username = " + string2; //dbo.Essays
+							resultSet = statement.execute(selectSql);
+
+
+						} catch (SQLServerException e1) {
+							e1.printStackTrace();
+						} catch (SQLException e2) {
+							e2.printStackTrace();
+						}
 						
 						EnterNewPassword.setEditable(false);   
 						RepeatNewPassword.setEditable(false);
@@ -225,4 +249,3 @@ public void ResetPassword()
 	
 
 }
-

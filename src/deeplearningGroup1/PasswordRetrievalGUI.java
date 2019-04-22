@@ -1,3 +1,4 @@
+
 /**
 		 * @author Antonino Abeshi 
 		 * Creating the Password Retrieval Tools nessesary to achieve success (Work in progress)
@@ -39,7 +40,7 @@ import javafx.stage.Stage;
 
 /**
  * @author Antonino Abeshi
- *this allows you to retrieve your password
+ *
  */
 	
 public class PasswordRetrievalGUI {
@@ -99,7 +100,6 @@ public class PasswordRetrievalGUI {
 		
 		EnterEmail();
 		Submit();
-		Back();
 	}
 	
 	/**
@@ -112,9 +112,12 @@ public class PasswordRetrievalGUI {
 		pane1.add(Email, 0, 1);
 		 EmailTextField = new TextField();
 		pane1.add(EmailTextField, 1, 1, 2, 1);
+		
+
 
 	}
 	
+
 	/**
 	 * @SubmitTheEmail this action will allow the system to sent an email to the person who is using this specific email.
 	 */
@@ -123,39 +126,43 @@ public class PasswordRetrievalGUI {
 	
 		clickToSubmit = new Button("Click To Submit");   //button to submit
 		pane1.add(clickToSubmit, 4, 10, 5,1);
-		clickToSubmit.setOnAction(e->
-		{
-			
-			Temporary.OpenTemp();
-	    	System.out.println(EmailTextField.getText());
+		clickToSubmit.setOnAction(event1 -> 
+	    {
 	    	
-	    	thirdOne.hide();
+	    	StudentAccount student = new StudentAccount();
+			String pass = student.reset();
+			String email = EmailTextField.getText();
+			SQLConnection connecting = new SQLConnection();
+			String connectionurl = connecting.connect();
+
+			boolean resultSet;
+			try (Connection connection = DriverManager.getConnection(connectionurl);
+					Statement statement = connection.createStatement();) {
+
+				// Updates the account with the new password when they request it
+				String string1 = "'"+pass+"'";
+				String string2 = "'"+email+"'";
+				String selectSql = "update dbo.User_Info set Passwords = " + string1+ " where Username = " + string2; //dbo.Essays
+				resultSet = statement.execute(selectSql);
+
+
+			} catch (SQLServerException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    	
+	    	Temporary.OpenTemp();
+			System.out.println(EmailTextField.getText());
+			
+			thirdOne.hide();
+	    	
 	    	//StudentAccount emailR = new StudentAccount();
 	    	//emailR.reset(EmailTextField.getText());
-	    
 	    	
 	    });
 		return EmailTextField.getText();
-	}
-	
-	public void Back()
-	{
-		
-		Button Back = new Button("Back");
-		pane1.add(Back, 1, 10);			//creating a back button
-		
-			Back.setOnAction(e-> {  // adding the back button options to go back to the main scene 
-			
-			
-				
-		
-			
-		});
-	}
-	
-		
-		
-		
+	}	
 	}
 	
 	

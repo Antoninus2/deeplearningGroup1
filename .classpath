@@ -35,5 +35,8 @@
 	<classpathentry kind="lib" path="src/Libraries For Printing PDF/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="src/Libraries For Printing PDF/fontbox-2.0.15-javadoc.jar"/>
 	<classpathentry kind="lib" path="src/Libraries For Printing PDF/pdfbox-2.0.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/eclipse workplace/deeplearningGroup1/src/Libraries For Printing PDF/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/eclipse workplace/deeplearningGroup1/src/Libraries For Printing PDF/fontbox-2.0.15-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tresi/Desktop/eclipse workplace/deeplearningGroup1/src/Libraries For Printing PDF/pdfbox-2.0.15.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

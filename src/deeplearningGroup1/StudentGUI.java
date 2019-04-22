@@ -5,7 +5,10 @@
 
 package deeplearningGroup1;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +18,8 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.text.PDFTextStripper;
+
 
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -123,6 +128,9 @@ public class StudentGUI{
 		clickToSubmit.setOnAction(event1 -> 
 	    {
 	    	
+	    	
+	    	
+	    	
 	    	NameTextField.setEditable(false);
 	    	
 	    	/**
@@ -175,7 +183,7 @@ public class StudentGUI{
 		    	case "C":	pane2 = new Pane();
 							scene4 = new Scene(pane2, 600, 600);
 							Label C = new Label();
-							C.setText("D");
+							C.setText("C");
 							C.setFont(Font.font("Calibri",FontWeight.BOLD, 100));
 							C.setLayoutX(250);
 							C.setLayoutY(200);
@@ -316,13 +324,31 @@ public class StudentGUI{
 			    }
 			    contentStream.endText(); 
 			    contentStream.close();
+			    
+			    // pdf annotator 
+			    /*
+			     * @Author Antonino Abeshi
+			     * @PDFTextStripper looks at the text in the pdf and highlights, or underlines the selected words.
+			     */
 
+			    PDFTextStripper annotate = new MyAnnotator();
+		        annotate.setSortByPosition(true);
+		        annotate.setStartPage(0);
+		        annotate.setEndPage(document.getNumberOfPages());
+		        Writer dummy = new OutputStreamWriter(new ByteArrayOutputStream());
+		        annotate.writeText(document, dummy);
+		        
+		        
+		        /// pdf annotator
+
+		        // Save the results and ensure that the document is properly closed:
 				
 			   // String gradeDisplay = grade = jarvis.gradeEssay(e);
 			   // contentStream.showText(gradeDisplay);
 
 				// Make sure that the content stream is closed:
 				contentStream.close();
+				
 
 				String nameText = NameTextField.getText();
 				
@@ -330,6 +356,7 @@ public class StudentGUI{
 				document.save(nameText);
 			
 				document.close();
+				
 				
 			} catch (IOException e1) {
 				
@@ -339,6 +366,13 @@ public class StudentGUI{
 		//File file = new File("/Users/imac/Desktop/Eclipse workspace/Testing/ni.pdf");
 		
 		//fourthOne.close();
+			
+			
+			//String[] string = jarvis.getComments();
+			System.out.println(jarvis.getComments());
+			System.out.println(jarvis.getCommentPositions());
+			
+			
 	    	
 	    });
 		
@@ -349,4 +383,66 @@ public class StudentGUI{
 		
 	}
 	
+	
+
+
+public void searchForString() {
+	
+	List<int[]> x = jarvis.getCommentPositions();
+	
+	
+	
+	//String dooshbag = new String();
+	String[] words = jarvis.getComments();
+	String str = enterTextField.getText();
+	
+	if (words.equals(str))
+	{
+		System.out.println(words);
+	}
+	Boolean found;
+	
+	//found = str.
+	
+	
+	//for(int i = -1; (i = str.lastIndexOf(str, x));
+
+	//System.out.println()); 
+	//for (int i = -1; (i = str.codePointAt(x)) != -1; i++) {
+	//    System.out.println(i);
+	//}
+	
+	//System.out.println(str.indexOf(x)); // prints "4"
+	//System.out.println(str.lastIndexOf(dooshbag)); // prints "22"
+	
+	System.out.println();
+	
+	
+	
+	// Returns index of first occurrence of character. 
+    int firstIndex = str.indexOf('s'); 
+    System.out.println("" + firstIndex); 
+  
+    // Returns index of last occurrence specified character. 
+    int lastIndex = str.lastIndexOf('s'); 
+    System.out.println("" + lastIndex); 
+  
+    // Index of the first occurrence of specified char 
+    // after the specified index if found. 
+    int first_in = str.indexOf('s', 10); 
+    System.out.println("" + first_in); 
+  
+    int last_in = str.lastIndexOf('s', 20); 
+    System.out.println("" + last_in); 
+  
+    // gives ASCII value of character at location 20 
+    int char_at = str.charAt(20); 
+    System.out.println("" +  char_at); 
+  
+    // throws StringIndexOutOfBoundsException 
+    // char_at = str.charAt(50); 
+  
+	
+}
+
 }
