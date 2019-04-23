@@ -108,7 +108,7 @@ public class StudentGUI{
 		//The way the gridpane is set up is row 0, column 0, and spanning 2 columns  but only 1 row
 		
 		
-		NameText = new Text("Enter name to save File. Make sure to add '.pdf' at the end of your file.");
+		NameText = new Text("Enter name to save FilE");
 		NameText.setFont(Font.font("Times New Roman",FontWeight.BOLD, 15));
 		pane1.add(NameText, 0,25,5,1);
 		
@@ -353,7 +353,7 @@ public class StudentGUI{
 				String nameText = NameTextField.getText();
 				
 				
-				document.save(nameText);
+				document.save(nameText + ".pdf");
 			
 				document.close();
 				

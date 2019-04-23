@@ -79,8 +79,8 @@ public  class InitialGUI extends Application {
 	@Override
 	public void start(Stage theFirstOne) {
 		
-		//Jarvis
-		//jarvis = new Jarvis();
+		Jarvis
+		jarvis = new Jarvis();
 		
 		/**
 		 * @function Antonino's
@@ -267,10 +267,11 @@ public  class InitialGUI extends Application {
 			    {
 			    	if(ev.getCode() == KeyCode.ENTER)						// if enter is pressed then you can sign in as well
 			    	{
-			    		student.setEmail((userTextField.getText()));
-				    	student.setPass((passwordField.getText()));
-			    		writtenText.setFill(Color.FIREBRICK);
-				    	writtenText.setText("Enter button pressed");
+			    	
+			    		student.setEmail(userTextField.getText());
+				    	student.setPass(passwordField.getText());
+				    	writtenText.setFill(Color.FIREBRICK);
+				    	writtenText.setText("Sign in button pressed");
 				    	
 				    	// Connects to sql
 				    	SQLConnection connect = new SQLConnection();
@@ -278,7 +279,7 @@ public  class InitialGUI extends Application {
 				        
 				        ResultSet resultSet;
 
-				        try (Connection connection = DriverManager.getConnection(connectionurl);
+						try (Connection connection = DriverManager.getConnection(connectionurl);
 				        	Statement statement = connection.createStatement();) {
 
 				            // Do a select statement that shows the entire table
@@ -293,11 +294,13 @@ public  class InitialGUI extends Application {
 				            	System.out.println(resultSet.getString(1));
 				            	if (sqlPasswords.equals(passwordField.getText())) {
 				            		if (sqlUserType.equals("Student")) {
-								        //Brings you to your student account
-						 				StudentGUI studentGui = new StudentGUI(jarvis);
-						 				studentGui.StudentBox();
+								        // Brings you to your student account
+						 				//StudentGUI studentGui = new StudentGUI(jarvis);
+						 				//studentGui.StudentBox();
+						 				//theFirstOne.hide();
+						 				StudentHomePage homePage = new StudentHomePage();
+						 				homePage.StudentHomePageStarting();
 						 				theFirstOne.hide();
-				            			
 				            		} else if (sqlUserType.equals("Teacher")) {
 				            			ProfHomepage profPage = new ProfHomepage();
 				            			theFirstOne.hide();
@@ -314,11 +317,10 @@ public  class InitialGUI extends Application {
 				        } catch (SQLException e) {
 				    		e.printStackTrace();
 				    	}
-			    		
+				        
 			    	}
-			    	
 			    });
-			   
+			    
 			    /**
 				 * @backButton creating a back button, and adding the back button options to go back to the main scene
 				 */

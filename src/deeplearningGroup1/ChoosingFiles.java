@@ -44,7 +44,7 @@ public class ChoosingFiles {
     public void ChoosingFiles2() {
     	
     primaryStage = new Stage();
-	primaryStage.setTitle("Welcome"); 
+	primaryStage.setTitle("Choose your file"); 
  
         final FileChooser fileChooser = new FileChooser();
  
@@ -69,6 +69,7 @@ public class ChoosingFiles {
                     openFile(file);
                     List<File> files = Arrays.asList(file);
                     printLog(textArea, files);
+                    primaryStage.close();
                 }
             }
         });
@@ -88,7 +89,7 @@ public class ChoosingFiles {
         root.setPadding(new Insets(10));
         root.setSpacing(5);
  
-        root.getChildren().addAll(textArea, button1, buttonM);
+        root.getChildren().addAll(button1);
  
         Scene scene = new Scene(root, 400, 200);
  
@@ -98,9 +99,7 @@ public class ChoosingFiles {
         
      // Add Extension Filters
         
-        fileChooser.getExtensionFilters().addAll(//
-               new FileChooser.ExtensionFilter("All Files", "*.*"), 
-               new FileChooser.ExtensionFilter("PDF", "*.pdf")); 
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF", "*.pdf")); 
               
 
     }

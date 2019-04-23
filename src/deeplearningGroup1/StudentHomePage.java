@@ -97,9 +97,9 @@ public class StudentHomePage {
 		/**
 		 * @Courses and Stuff adding a menu bar to the homepage
 		 */
-		Label gradeCourseOne = new Label("64.3%");
-		Label gradeCourseTwo = new Label("50%");
-		Label gradeCourseThree = new Label("39.7%");
+		Label gradeCourseOne = new Label("A");
+		Label gradeCourseTwo = new Label("C");
+		Label gradeCourseThree = new Label("C-");
 		ToggleButton Button2 = new ToggleButton("Grades");
 		
 		
