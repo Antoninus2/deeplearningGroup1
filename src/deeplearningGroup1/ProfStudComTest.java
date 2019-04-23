@@ -6,31 +6,44 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class ProfStudComTest{
-	// Attributes
+// Attributes
 	private Pane testPane;
 	private Scene testScene;
-	private Stage testStage;
-	private Button joinB, gradeB;
+	public Stage testStage;
+	private Button joinB;
+	private ProfStudComTest student;
+	private Course course;
 	
-	// Constructor
-	ProfStudComTest(){
+// Constructor
+	ProfStudComTest(CourseList cl){
 		testPane = new Pane();
-		addButtons();
+		joinB = new Button("Join Course");
+		testPane.getChildren().add(joinB);
 		
-		// Make Buttons work
+		// Make buttons work
+		joinB.setOnAction(e -> { cl.setStudent(student); 
+								 cl.clStage.show(); 
+							   });
 		
 		// Create stage
 		testScene = new Scene(testPane, 680, 680);
 		testStage = new Stage();
 		testStage.setTitle(" Student Test ");
 		testStage.setScene(testScene);
-		testStage.show();
 	}
 	
-	// Methods
-	
-	private void addButtons() {
-		joinB = new Button("Join Course");
-		testPane.getChildren().add(joinB);
+// Methods
+	public void addCourse(Course course, int studNum) {
+		this.course = course;
+		createCourseButton(course, studNum);
 	}
+	
+	private void createCourseButton(Course course, int studNum) {
+		// TODO
+	}
+	
+	public void setStudent(ProfStudComTest student) {
+		this.student = student;
+	}
+	
 }

@@ -4,33 +4,95 @@ package deeplearningGroup1;
 /**
  * 
  * @author J.McGuire
- *
+ * The course that both professor and student participate in
  */
 public class Course {
 // Attributes
 	int numStudents; 		// number of students enrolled in the course
 	String topic; 			// topic of the essay for student GUI purposes
+	String courseName; 		// name of the course
 	int minWrdCt; 			// minimum word count for essay
 	int maxWrdCt; 			// maximum word count for essay
-	int grades[]; 			// array of length numStudents with all grades
+	String grades[]; 		// array of length numStudents with all grades
+	String stuNames[];		// array of student names
 	int courseID[]; 		// 4 digit course ID number for students to join
-	double averageGrade; 	// average grade in course in double form
-	int minGrade; 			// worst grade on essay
-	int maxGrade;			// best grade on essay
-	double stDev; 			// standard deviation from average essay grade
 	Boolean essayStatus; 	// boolean value that essay is in progress
 	
 // Constructor
+	/**
+	 * 
+	 * @param courseID
+	 * @param courseName
+	 * Professor constructs a new course that students can join
+	 */
 	public Course(int[] courseID, String courseName) {
+		// Initialize Attributes
 		numStudents = 0; 	// initially there are no students in a course
 		essayStatus = false; 	// initially there is no essay
-		initializeID(courseID);
+		grades = new String [25];
+		stuNames = new String [25];
+		this.courseName = courseName;
 		
-		// TODO make student file to test this and prof course GUI
-		// TODO name course
+		// Call Methods
+		initializeID(courseID);
+		initializeNames();
+		resetGrades();
 	}
 	
 // Methods
+	
+	/**
+	 * 
+	 * @return counts
+	 * Counts the number of each grade given by Jarvis
+	 */
+	public int[] countGrades() {
+		int[] counts = new int [5];
+		
+		for (int n = 0; n < 5; n++) {
+			counts[n] = 0;
+		}
+		
+		for(int i = 0; i < 25; i++) {
+			if(grades[i] == "A") {
+				counts[4]++;
+			} else if (grades[i] == "B") {
+				counts[3]++;
+			} else if (grades[i] == "C") {
+				counts[2]++;
+			} else if (grades[i] == "D") {
+				counts[1]++;
+			} else if (grades[i] == "F") {
+				counts[0]++;
+			}
+		}
+		
+		return counts;
+	}
+	
+	/**
+	 * Resets the grades for a new essay
+	 */
+	public void resetGrades() {
+		for(int i = 0; i < 25; i++) {
+			grades[i] = " "; 	
+		}
+	}
+	
+	/**
+	 * Initializes student names array
+	 */
+	private void initializeNames() {
+		for(int i = 0; i < 25; i++) {
+			stuNames[i] = " ";
+		}
+	}
+	
+	/**
+	 * 
+	 * @param courseID
+	 * Initializes course ID
+	 */
 	private void initializeID(int[] courseID) {
 		this.courseID = new int[4];
 		for(int i = 0; i < 4; i++) {
@@ -38,30 +100,56 @@ public class Course {
 		}
 	}
 	
-	public void addStudent(int[] enteredID) {
-		int verified = 0;
+	/**
+	 * 
+	 * @param enteredID
+	 * @return right
+	 * Checks that the student is authorized to join the course
+	 */
+	public Boolean checkID(int[] enteredID) {
+		Boolean right = true;
 		for(int i = 0; i < 4; i++) {
-			if(courseID[i] == enteredID[i]) {
-				verified++;
+			if(courseID[i] != enteredID[i]) {
+				right = false;
+				i = 4;
 			}
 		}
 		
-		if (verified == 4) {
-			// TODO add student
-			numStudents++;
-		}
+		return right;
 	}
 	
+	/**
+	 * Must be called after sending student their location in the grade & name arrays!
+	 */
+	public void updateStuCt() {
+		numStudents++;
+	}
+	
+	/**
+	 * 
+	 * @param chosenTopic
+	 * @param minCt
+	 * @param maxCt
+	 * The professor can assign a new essay to the course.
+	 */
 	public void createNewEssay(String chosenTopic, int minCt, int maxCt) {
 		topic = chosenTopic;
 		minWrdCt = minCt;
 		maxWrdCt = maxCt;
-		System.out.println("The topic of the essay is: " + topic);
 	}
 	
 // Setters & Getters
+	
 	public void setEssayStatus(Boolean status) {
 		essayStatus = status;
+	}
+	
+	public int getMinWords() {
+		return minWrdCt;
+	}
+	
+	public int getMaxWords() {
+		return maxWrdCt;
 	}
 	
 	public String getTopic() {
@@ -72,14 +160,28 @@ public class Course {
 		return numStudents;
 	}
 	
-	public double[] getStatistics(){
-		double[] statistics = new double[] {averageGrade, minGrade, maxGrade};
-		return statistics;
-	}
-	
 	public Boolean getEssayStatus() {
 		return essayStatus;
 	}
 	
-	//TODO getGrades method
+	public String getName() {
+		return courseName;
+	}
+	
+	public void setStNamei(int i, String name) {
+		stuNames[i] = name;
+	}
+	
+	public String getStNamei(int i) {
+		return stuNames[i];
+	}
+	
+	public void setGradei(int i, String grade) {
+		grades[i] = grade;
+	}
+	
+	public String getGradei(int i) {
+		
+		return grades[i];
+	}
 }

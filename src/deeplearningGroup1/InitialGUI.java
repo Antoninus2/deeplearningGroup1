@@ -79,6 +79,12 @@ public  class InitialGUI extends Application {
 	@Override
 	public void start(Stage theFirstOne) {
 		
+		//**********************************************************
+		CourseList cl = new CourseList();
+		ProfHomepage t = new ProfHomepage(cl);
+		
+		
+		//**********************************************************
 		Jarvis
 		jarvis = new Jarvis();
 		
@@ -240,7 +246,8 @@ public  class InitialGUI extends Application {
 					 				homePage.StudentHomePageStarting();
 					 				theFirstOne.hide();
 			            		} else if (sqlUserType.equals("Teacher")) {
-			            			ProfHomepage profPage = new ProfHomepage();
+			            			t.profStage.show();
+			            			
 			            			theFirstOne.hide();
 			            		}
 				        	}
@@ -302,7 +309,8 @@ public  class InitialGUI extends Application {
 						 				homePage.StudentHomePageStarting();
 						 				theFirstOne.hide();
 				            		} else if (sqlUserType.equals("Teacher")) {
-				            			ProfHomepage profPage = new ProfHomepage();
+				            			t.profStage.show();
+				            			
 				            			theFirstOne.hide();
 				            		}
 					        	}
@@ -647,7 +655,8 @@ public  class InitialGUI extends Application {
 				    					CreateAccountPage.add(GoodMessage, 1, 9);
 		    						
 		    						
-				    					ProfHomepage profPage = new ProfHomepage();
+				    					t.profStage.show();
+			
 				            			theFirstOne.hide();  //TODO timmy has to make sure that this is teacher sql
 				            			
 		    						}

@@ -11,25 +11,33 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 /**
  * 
  * @author J.McGuire
- *
+ * The homepage of the professor GUI
  */
 public class ProfHomepage{
 	
-	public Stage profStage;
+	public Stage profStage; 	
 	private Scene scene;
 	private Pane homePane;
-	private Button nwClssB;
+	private Button nwClssB, eraseB;
 	private int numClasses = 0;
 	private int scale = 10;
+	private CourseList cList;
 	
 // Constructor
-	public ProfHomepage(){
+	/**
+	 * @author J.McGuire
+	 * @param cList
+	 * Creates the professor homepage GUI
+	 */
+	public ProfHomepage(CourseList cList){
+		// Initialize attributes
+		this.cList = cList;
+		
 		// Create background
 		homePane = new Pane();
 		Image image = new Image ("ERAUlogo.jpeg");
@@ -41,23 +49,46 @@ public class ProfHomepage{
 		nwClssB.setLayoutY(scale * 2);
 		homePane.getChildren().add(nwClssB);
 		
-		// Appareance
-		Line blueL = new Line();
-		// TODO clean up appearance
-		// TODO update number of students in each GUI
+		eraseB = new Button("End Semester");
+		eraseB.setLayoutX(scale * 1);
+		eraseB.setLayoutY(scale * 63);
+		homePane.getChildren().add(eraseB);
 		
 		// Place scene in stage
 		scene = new Scene(homePane, 680, 680);
 		profStage = new Stage();
 		profStage.setTitle(" Welcome Professor ");
 		profStage.setScene(scene);
-		profStage.show();
 		
 		// Assign actions to buttons
-		nwClssB.setOnAction(e -> createCourseWizard());
+		nwClssB.setOnAction(e -> { if(numClasses < 9) {
+								   	 createCourseWizard();
+								   }
+								 });
+		eraseB.setOnAction(e -> endSemester());
 	}
 	
 // Methods
+	/**
+	 * @author J.McGuire
+	 * @param void
+	 * @return void 
+	 * Erases all courses the professor has made
+	 */
+	private void endSemester() {
+		homePane.getChildren().clear();
+		numClasses = 0;
+		
+		nwClssB = new Button("Create New Section");
+		nwClssB.setLayoutX(scale * 1);
+		nwClssB.setLayoutY(scale * 2);
+		homePane.getChildren().add(nwClssB);
+				
+		eraseB = new Button("End Semester");
+		eraseB.setLayoutX(scale * 1);
+		eraseB.setLayoutY(scale * 63);
+		homePane.getChildren().add(eraseB);
+	}
 	
 	/**
 	 * @author J.McGuire
@@ -92,7 +123,7 @@ public class ProfHomepage{
 		
 		// Make wizard work
 		crtCourseB.setOnAction(e -> {ncStage.close();
-								  	 numClasses++; 	// TODO possibly move this to create button method
+								  	 numClasses++; 	
 								  	 createCourseBttn(secInput.getCharacters().toString());
 								  	});
 	}
@@ -107,18 +138,33 @@ public class ProfHomepage{
 	 * Allows user to open Course page.
 	 */
 	private void createCourseBttn(String courseName) {
-		// TODO create multiple rows
+		int xCo;
+		int yCo;
+		if(numClasses <= 3) {
+			xCo = (numClasses - 1) * 226;
+			yCo = 136;
+		} else if(numClasses <= 6) {
+			xCo = (numClasses - 4) * 226;
+			yCo = 136 + 125;
+		} else {
+			xCo = (numClasses - 7) * 226;
+			yCo = 136 + 250;
+		}
 		Button courseB = new Button(courseName);
-		courseB.setLayoutX(numClasses * scale * 10);
-		courseB.setLayoutY(6 * scale);
+		courseB.setMinSize(225, 125);
+		courseB.setLayoutX(xCo);
+		courseB.setLayoutY(yCo);
 		homePane.getChildren().add(courseB);
 		// Generate section ID
 		int[] courseID = new int[4];
 		for(int i = 0; i < 4; i++) {
 			courseID[i] = randomFrom(0,9);
 		}
-		// creation of the course object
+		// Creation of the course object
 		Course course = new Course(courseID, courseName);
+		// Add course to course list for student to join
+		cList.newCourse(course);
+		// Make the course GUI 
 		ProfCourseGUI courseGUI = new ProfCourseGUI(courseID, courseName, course);   
 		// go to course GUI when button clicked
 		courseB.setOnAction(e -> { courseGUI.updateStudentCount();

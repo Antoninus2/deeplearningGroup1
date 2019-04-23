@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 /**
  * 
  * @author J.McGuire
- *
+ * The professor's GUI for each course
  */
 public class ProfCourseGUI{
 // Attributes
@@ -35,17 +35,32 @@ public class ProfCourseGUI{
 	private ToggleButton grdBkB, statsB;
 	private int scale = 10;
 	private int essayCt;
-	private Group grdBkGroup, statsGroup;
+	private Group grdBkGroup, statsGroup, namesGroup;
 	public Stage courseStage;
-	//TODO make essay title attribute array
+	private int Act, Bct, Cct, Dct, Fct;
+	private Rectangle Arec, Brec, Crec, Drec, Frec;
+	private Text At, Bt, Ct, Dt, Ft;
 	
 // Constructor
+	/**
+	 * @author J.McGuire
+	 * @param courseID
+	 * @param courseName
+	 * @param course
+	 * Creates the GUI for the professor for each course
+	 */
 	public ProfCourseGUI(int[] courseID, String courseName, Course course) { 
 		// Initialize Attributes
 		this.course = course;
 		essayCt = 0;
 		grdBkGroup = new Group();
 		statsGroup = new Group();
+		namesGroup = new Group();
+		Act = 0;
+		Bct = 0;
+		Cct = 0;
+		Dct = 0;
+		Fct = 0;
 		
 		// Set up GUI
 		pcPane = new Pane();
@@ -67,6 +82,7 @@ public class ProfCourseGUI{
 		// Make Buttons Work
 		nwEssyB.setOnAction(e -> nwEssyWzrd());
 		backB.setOnAction(e -> courseStage.close());
+		
 		statsB.setOnAction(e -> {grdBkB.setSelected(false);
 								 grdBkGroup.setVisible(false);
 								 statsGroup.setVisible(statsB.isSelected());
@@ -74,18 +90,23 @@ public class ProfCourseGUI{
 		
 		grdBkB.setOnAction(e -> {statsB.setSelected(false);
 								 statsGroup.setVisible(false);
+								 addGrdBkNames();
+								 if (essayCt > 0) {
+									 addGrades();
+								 }
 								 grdBkGroup.setVisible(grdBkB.isSelected());
 								});
-		
-		// TODO add nodes to groups method, need to remove from pane, add node to group, and re-add group to pane
-		//      ... do this with buttons probably
 	}
 	
 // Methods
 	
+	/**
+	 * @author J.McGuire
+	 * @param void 
+	 * @return void 
+	 * Sets up the statistics GUI
+	 */
 	private void statsGUI() { 
-		
-		// TODO have each essay be its own color rectangle
 		
 		// Create background
 		Rectangle background = new Rectangle(0, scale * 16, 680, 680 - 160);
@@ -139,10 +160,179 @@ public class ProfCourseGUI{
 		aLab.setY(680 - xLabPad);
 		statsGroup.getChildren().add(aLab);
 		
+		// y axis labels
+		int yGap = 92;
+		Text hundredL = new Text("100");
+		hundredL.setWrappingWidth(25);
+		hundredL.setTextAlignment(TextAlignment.CENTER);
+		hundredL.setX(5);
+		hundredL.setY(190 + 0 * yGap);
+		statsGroup.getChildren().add(hundredL);
+		Text eightyL = new Text("80");
+		eightyL.setWrappingWidth(25);
+		eightyL.setTextAlignment(TextAlignment.CENTER);
+		eightyL.setX(5);
+		eightyL.setY(190 + 1 * yGap);
+		statsGroup.getChildren().add(eightyL);
+		Text sixtyL = new Text("60");
+		sixtyL.setWrappingWidth(25);
+		sixtyL.setTextAlignment(TextAlignment.CENTER);
+		sixtyL.setX(5);
+		sixtyL.setY(190 + 2 * yGap);
+		statsGroup.getChildren().add(sixtyL);
+		Text fortyL = new Text("40");
+		fortyL.setWrappingWidth(25);
+		fortyL.setTextAlignment(TextAlignment.CENTER);
+		fortyL.setX(5);
+		fortyL.setY(190 + 3 * yGap);
+		statsGroup.getChildren().add(fortyL);
+		Text twentyL = new Text("20");
+		twentyL.setWrappingWidth(25);
+		twentyL.setTextAlignment(TextAlignment.CENTER);
+		twentyL.setX(5);
+		twentyL.setY(190 + 4 * yGap);
+		statsGroup.getChildren().add(twentyL);
+		
+		
+		
+		// Add dummy rectangles to initial setup
+		Arec = new Rectangle();
+		statsGroup.getChildren().add(Arec);
+		Brec = new Rectangle();
+		statsGroup.getChildren().add(Brec);
+		Crec = new Rectangle();
+		statsGroup.getChildren().add(Crec);
+		Drec = new Rectangle();
+		statsGroup.getChildren().add(Drec);
+		Frec = new Rectangle();
+		statsGroup.getChildren().add(Frec);
+		
+		// Initialize Counts
+		Act = 0;
+		Bct = 0;
+		Cct = 0;
+		Dct = 0;
+		Fct = 0;
+		At = new Text(" " + Act);
+		Bt = new Text(" " + Bct);
+		Ct = new Text(" " + Cct);
+		Dt = new Text(" " + Dct);
+		Ft = new Text(" " + Fct);
+		statsGroup.getChildren().add(At);
+		statsGroup.getChildren().add(Bt);
+		statsGroup.getChildren().add(Ct);
+		statsGroup.getChildren().add(Dt);
+		statsGroup.getChildren().add(Ft);
+		
 		pcPane.getChildren().add(statsGroup);
 		statsGroup.setVisible(false);
 	}
 	
+	/**
+	 * @author J.McGuire
+	 * @param stats
+	 * @return void 
+	 * Updates the statistics GUI
+	 */
+	private void updateStats(int[] stats) {
+		// Erase Old Graph
+		statsGroup.getChildren().remove(Arec);
+		statsGroup.getChildren().remove(Brec);
+		statsGroup.getChildren().remove(Crec);
+		statsGroup.getChildren().remove(Drec);
+		statsGroup.getChildren().remove(Frec);
+		
+		statsGroup.getChildren().remove(At);
+		statsGroup.getChildren().remove(Bt);
+		statsGroup.getChildren().remove(Ct);
+		statsGroup.getChildren().remove(Dt);
+		statsGroup.getChildren().remove(Ft);
+		
+		// Update Grade Counts
+		Fct += stats[0];
+		Dct += stats[1];
+		Cct += stats[2];
+		Bct += stats[3];
+		Act += stats[4];
+		
+		// Update Graph
+		double oneSize = 4.6;
+		int width = 124;
+		
+		Arec = new Rectangle();
+		Arec.setWidth(width);
+		Arec.setHeight(oneSize * Act);
+		Arec.setX(30 + 4 * 124);
+		Arec.setY(649 - oneSize * Act);
+		Arec.setFill(Color.BLUE);
+		statsGroup.getChildren().add(Arec);
+		Brec = new Rectangle();
+		Brec.setWidth(width);
+		Brec.setHeight(oneSize * Bct);
+		Brec.setX(30 + 3 * 124);
+		Brec.setY(649 - oneSize * Bct);
+		Brec.setFill(Color.GREEN);
+		statsGroup.getChildren().add(Brec);
+		Crec = new Rectangle();
+		Crec.setWidth(width);
+		Crec.setHeight(oneSize * Cct);
+		Crec.setX(30 + 2 * 124);
+		Crec.setY(649 - oneSize * Cct);
+		Crec.setFill(Color.GOLD);
+		statsGroup.getChildren().add(Crec);
+		Drec = new Rectangle();
+		Drec.setWidth(width);
+		Drec.setHeight(oneSize * Dct);
+		Drec.setX(30 + 124);
+		Drec.setY(649 - oneSize * Dct);
+		Drec.setFill(Color.ORANGE);
+		statsGroup.getChildren().add(Drec);
+		Frec = new Rectangle();
+		Frec.setWidth(width);
+		Frec.setHeight(oneSize * Fct);
+		Frec.setX(30);
+		Frec.setY(649 - oneSize * Fct);
+		Frec.setFill(Color.RED);
+		statsGroup.getChildren().add(Frec);
+		
+		At = new Text("" + Act);
+		At.setWrappingWidth(width);
+		At.setTextAlignment(TextAlignment.CENTER);
+		At.setLayoutX(30 + 4 * 124);
+		At.setLayoutY(649 - oneSize * Act);
+		statsGroup.getChildren().add(At);
+		Bt = new Text("" + Bct);
+		Bt.setWrappingWidth(width);
+		Bt.setTextAlignment(TextAlignment.CENTER);
+		Bt.setLayoutX(30 + 3 * 124);
+		Bt.setLayoutY(649 - oneSize * Bct);
+		statsGroup.getChildren().add(Bt);
+		Ct = new Text("" + Cct);
+		Ct.setWrappingWidth(width);
+		Ct.setTextAlignment(TextAlignment.CENTER);
+		Ct.setLayoutX(30 + 2 * 124);
+		Ct.setLayoutY(649 - oneSize * Cct);
+		statsGroup.getChildren().add(Ct);
+		Dt = new Text("" + Dct);
+		Dt.setWrappingWidth(width);
+		Dt.setTextAlignment(TextAlignment.CENTER);
+		Dt.setLayoutX(30 + 124);
+		Dt.setLayoutY(649 - oneSize * Dct);
+		statsGroup.getChildren().add(Dt);
+		Ft = new Text("" + Fct);
+		Ft.setWrappingWidth(width);
+		Ft.setTextAlignment(TextAlignment.CENTER);
+		Ft.setLayoutX(30);
+		Ft.setLayoutY(649 - oneSize * Fct);
+		statsGroup.getChildren().add(Ft);
+	}
+	
+	/**
+	 * @author J.McGuire
+	 * @param void 
+	 * @return void
+	 * Initializes the grade book GUI
+	 */
 	private void gradeBookGUI() { 
 		// Create background
 		Rectangle background = new Rectangle(0, scale * 16, 680, 680 - 160);
@@ -170,11 +360,84 @@ public class ProfCourseGUI{
 			grdBkGroup.getChildren().add(hL);
 		}
 		
+		// Add dummy names to start
+		grdBkGroup.getChildren().add(namesGroup);
+		
 		pcPane.getChildren().add(grdBkGroup);
 		grdBkGroup.setVisible(false);
-		// TODO Add essay titles to table
 	}
 	
+	/**
+	 * @author J.McGuire
+	 * @param void
+	 * @return void
+	 * Adds grades to the gradebook
+	 */
+	private void addGrades() {
+		double vgap = (680 - 160) / 25;
+		double hgap = 680 / 8;
+		for(int i = 0; i < 25; i++) {
+			String grade = course.getGradei(i);
+			Text gradeT = new Text("" + grade);
+			gradeT.setWrappingWidth(680 / 8);
+			gradeT.setTextAlignment(TextAlignment.CENTER);
+			gradeT.setX(essayCt * hgap);
+			gradeT.setY(i * vgap + (155 + 2 * vgap));
+			grdBkGroup.getChildren().add(gradeT);
+		}
+	}
+	
+	/**
+	 * @author J.McGuire
+	 * @param void
+	 * @return void
+	 * Adds student names to gradebook
+	 */
+	private void addGrdBkNames() { 
+		// Remove old names
+		grdBkGroup.getChildren().remove(namesGroup);
+		namesGroup = new Group();
+		
+		// Add new names to the namesGroup
+		double vgap = (680 - 160) / 25;
+		for (int i = 0; i < 25; i++) {
+			String name = course.getStNamei(i);
+			Text nameT = new Text("" + name);
+			nameT.setWrappingWidth(680 / 8);
+			nameT.setTextAlignment(TextAlignment.CENTER);
+			nameT.setX(0);
+			nameT.setY(i * vgap + (155 + 2 * vgap));
+			namesGroup.getChildren().add(nameT);
+		}
+		
+		// Add namesGroup to grdBkGroup
+		grdBkGroup.getChildren().add(namesGroup);	
+	}
+	
+	/**
+	 * @author J.McGuire
+	 * @param topic
+	 * @return void
+	 * Adds essay topics to gradebook
+	 */
+	private void topicToGrdBk(String topic) {
+		pcPane.getChildren().remove(grdBkGroup);
+		Text label = new Text("" + topic);
+		label.setWrappingWidth(680 / 8);
+		label.setTextAlignment(TextAlignment.CENTER);
+		label.setX(essayCt * 680 / 8);
+		label.setY(155 + (680 - 160) / 25);
+		grdBkGroup.getChildren().add(label);
+		pcPane.getChildren().add(grdBkGroup);
+		grdBkGroup.setVisible(false); 
+	}
+	
+	/**
+	 * @author J.McGuire
+	 * @param topic
+	 * @return void
+	 * Shows the professor that an essay is in session
+	 */
 	private void essayInSessionGUI(String topic) {
 		// Remove New Essay Button
 		pcPane.getChildren().remove(nwEssyB);
@@ -192,15 +455,24 @@ public class ProfCourseGUI{
 		endEssaySessionB.setLayoutY(scale * 13);
 		pcPane.getChildren().add(endEssaySessionB);
 		
-		endEssaySessionB.setOnAction(e -> { course.setEssayStatus(false); 	// tell course class the essay can be graded
+		endEssaySessionB.setOnAction(e -> { course.setEssayStatus(false); 
 											pcPane.getChildren().remove(eInProgress);
 											pcPane.getChildren().remove(endEssaySessionB);
-											if (essayCt < 10) {
+											addGrades();
+											updateStats(course.countGrades());
+											course.resetGrades();
+											if (essayCt < 7) {
 												pcPane.getChildren().add(nwEssyB);
 											}
 										  });
 	}
 	
+	/**
+	 * @author J.McGuire
+	 * @param void
+	 * @return void
+	 * Allows the professor to create a new essay
+	 */
 	private void nwEssyWzrd() {
 		// Create wizard
 		Pane nwEssyP = new Pane();
@@ -253,7 +525,8 @@ public class ProfCourseGUI{
 										nwEssySt.close();
 										course.createNewEssay(topicInput.getCharacters().toString(), minCt, maxCt);
 										course.setEssayStatus(true); 	// tell course class there is an essay in session
-										essayCt++; 						// update the number of essays in this course
+										essayCt++; // update the number of essays in this course
+										topicToGrdBk(topicInput.getCharacters().toString());
 										essayInSessionGUI(topicInput.getCharacters().toString());
 									} else if(!checkWordCount(minCt, maxCt)) {
 										Text badCt = new Text("Invalid Word Count Parameters");
@@ -267,6 +540,13 @@ public class ProfCourseGUI{
 								  });
 	}
 	
+	/**
+	 * @author J.McGuire
+	 * @param minCt
+	 * @param maxCt
+	 * @return good
+	 * Ensures the professor entered valid word count parameters
+	 */
 	private Boolean checkWordCount(int minCt, int maxCt) {
 		Boolean good = true;
 		// 1. Check max is larger than min
@@ -280,6 +560,12 @@ public class ProfCourseGUI{
 		return good;
 	}
 	
+	/**
+	 * @author J.McGuire
+	 * @param void
+	 * @return void
+	 * Adds basic buttons to course GUI
+	 */
 	private void addButtons() {
 		// Add 3 vertical spaces for far left column
 		nwEssyB = new Button("New Essay");
@@ -304,6 +590,12 @@ public class ProfCourseGUI{
 		
 	}
 	
+	/**
+	 * @author J.McGuire
+	 * @param courseName
+	 * @return void
+	 * Displays the name of the course
+	 */
 	private void displayCourseName(String courseName) {
 		Text title = new Text("" + courseName);
 		//title.setFont(new Font("Impact", 60));
@@ -314,6 +606,12 @@ public class ProfCourseGUI{
 		pcPane.getChildren().add(title);
 	}
 	
+	/**
+	 * @author J.McGuire
+	 * @param void
+	 * @return void
+	 * Displays the number of students in the course
+	 */
 	private void displayStudentCount() {
 		int count = course.getNumStudents();
 		studCtT = new Text("There are currently " + count + " students in this course.");
@@ -324,6 +622,12 @@ public class ProfCourseGUI{
 		pcPane.getChildren().add(studCtT);
 	}
 	
+	/**
+	 * @author J.McGuire
+	 * @param courseID
+	 * @return void
+	 * Displays the ID of the course
+	 */
 	private void displayCourseID(int[] courseID) {
 		Text text = new Text("ID: " + courseID[0] + courseID[1] + courseID[2] + courseID[3]);
 		text.setWrappingWidth(678);

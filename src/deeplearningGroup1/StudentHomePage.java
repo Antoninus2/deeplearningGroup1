@@ -35,7 +35,9 @@ public class StudentHomePage {
 	public Stage fifthOne;
 	private Scene scene3;
 	//private GridPane pane1;
-	//private Button clickToSubmit;
+	private Button Number1;
+	private int numClasses = 0;
+	private int scale = 10;
 	//private TextField enterEssayTopic;
 	//private TextArea enterTextField;
 	//private Text essayTopic, enterText;
@@ -54,6 +56,11 @@ public class StudentHomePage {
 		/**
 		 * Adding a menu bar to the homepage
 		 */
+		
+		
+		
+		//***************************************************************
+		
 		jarvis = new Jarvis();
 		Image image2 = new Image ("redbackground.jpg");
 		//***********************Buttons**********************************
@@ -138,6 +145,7 @@ public class StudentHomePage {
 		Button2.setMinWidth(100);
 		MenuBar menuBar = new MenuBar();
 		Menu tools = new Menu("    Tools");
+		
 		MenuItem writteEssay = new MenuItem("Write Essays");
 		writteEssay.setOnAction(e -> {
 			
@@ -150,11 +158,25 @@ public class StudentHomePage {
 			ChoosingFiles Choose = new ChoosingFiles();
 			Choose.ChoosingFiles2();
 			
+		});
 		
-		
+		MenuItem StudentJoinCourse = new MenuItem("Join Course");
+		StudentJoinCourse.setOnAction(e ->{
+			
+			CourseList cl = new CourseList();
+			ProfHomepage t = new ProfHomepage(cl);
+			ProfStudComTest test = new ProfStudComTest(cl);
+			
+			// send the student GUI a copy of itself
+			// this is crucial to the student being able to retrieve a
+			// course from the course list made by the professors
+			test.setStudent(test);
+			test.testStage.show();
+			
 		});
 		tools.getItems().add(writteEssay);
 		tools.getItems().add(lookAtEssay);
+		tools.getItems().add(StudentJoinCourse);
 		menuBar.getMenus().add(tools);
 		menuBar.setMinHeight(20);
 		menuBar.setMinWidth(100);
