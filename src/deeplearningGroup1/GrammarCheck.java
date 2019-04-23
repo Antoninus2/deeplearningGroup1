@@ -26,7 +26,6 @@ import org.languagetool.rules.RuleMatch;
 /**
  * GrammarCheck makes use of the external LanguageTool library to check the grammar of a 
  * given essay based on a pre-defined set of rules, which are saved in an external excel file.
- * @author Antonino Abeshi
  * @author Steven Rose
  * @version 2.0
  */
@@ -341,6 +340,11 @@ public class GrammarCheck {
 		fis.close();
 	}
 	
+	/**
+	 * Returns the number of rules used for checking strings against.
+	 * @return
+	 * 		The number of rules in use.
+	 */
 	public int getNumRules() {
 		return rules.size();
 	}
@@ -356,7 +360,7 @@ public class GrammarCheck {
 			System.out.println(msg);
 			PrintWriter out;
 			try {
-				out = new PrintWriter(new FileWriter("log_file.txt", true));
+				out = new PrintWriter(new FileWriter("resources/log_file.txt", true));
 				out.println(msg);
 				out.close();
 			} catch (IOException e) {

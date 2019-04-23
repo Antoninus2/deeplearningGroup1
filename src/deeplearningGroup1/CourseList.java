@@ -1,6 +1,5 @@
 package deeplearningGroup1;
 
-
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;

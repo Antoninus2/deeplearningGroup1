@@ -208,7 +208,7 @@ public class Matrix {
      * @return
      * 		Element wise matrix raised to the power p.
      */
-    public Matrix pow(double p) {
+    public Matrix pow(int p) {
     	Matrix A = this;
     	Matrix B = new Matrix(A.M, A.N);
     	for (int i = 0; i < A.M; i++) {
@@ -234,6 +234,11 @@ public class Matrix {
             	C.data[i][j] = A.data[i][j] / b;
         return C;
     }
+    
+    /**
+     * If any of the data becomes corrupted, sets the number to zero. Only to be used 
+     * for debugging purposes.
+     */
     
     public void fixNaN() {
     	for (int i = 0; i < M; i++) {
@@ -305,7 +310,7 @@ public class Matrix {
     	if (Jarvis.debugging) {
     		PrintWriter out = null;
     		try {
-    			out = new PrintWriter(new FileWriter("log_file.txt", true));
+    			out = new PrintWriter(new FileWriter("resources/log_file.txt", true));
     		} catch (IOException e) {
     			e.printStackTrace();
     		}

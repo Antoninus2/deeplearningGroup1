@@ -87,21 +87,12 @@ public class Jarvis {
 		j.log("----------START----------", true);
 		j.log("Start Time: " + sdf.format(new Date()), true);
 		
-		Essay essay = new Essay(0, 100, 30, "topic");
-		essay.writeEssay("Dear reader, @ORGANIZATION1 has had a dramatic effect on human life. It has changed the way we do almost everything today. The most well know, is the computer. This device has allowed people do buy things online, talk to people online, and also provides entertainment for some people. All good qualities that make everyones lives easier. Imagine you look into your refrigerator and you notice it's almost empty. Someone is using the car and you need to go grocery shopping and the store is too far. What do you do? Well you could go on a computer and look for food online. Ther are many great deals and some companies even deliver for free! The amazing and easy way to buy food without leaving your house. But food isn't all you can purchase. Many products are sold through the computer. Need new toys for kids? Or how about a new hat for your friend? Maybe even more curtains for your room? Well at the easy access of internet on a computer, you can buy all those items and more. The computer has also the way of communication. Let's say someone wants to talk to a friend or relative that lives far away in another country. @CAPS1 someone dosen't own a phone or @CAPS1 they can't make the call, all these is to be in you on the computer. You can communicate with anyone just by using your email adress. Now friends and families can talk to each other over the ease of the computer. Just type to want to say and \"boom,\" instant, on the chat. Let's face it. No matter what a child or even teenager . But now with a computer all that can change. With just one click you could actually be watching a movie from the comfort of your own home. But what @CAPS1 you don't want a movie? No entertainment like listing to musics, watching fun, and probable the most popular playing games. Everyone loves to play a game every once in a while, and with the selection of thousands of online games, these isn't or person who can't fled atleast our game enjoyable. There are even games for educational fun that many kids love. With all the entertainment a computer can produce; who could hate it? All in all the computer is a revolutinizing device that has changes the way we shop, communicate, and find exciting entertainment. To be able to do so much with just a couple clicks; new that I find extravagant. It blows my mind to see and think, \"@CAPS1 we can do this now, I wonder what we can accomplish in the future.");
-		j.gradeEssay(essay);
-		String[] str = j.getComments();
-		j.log("Comments:", true);
-		for (String s : str) {
-			j.log(s, true);
-		}
-		
-		if (false) {
+		if (true) {
 			try {
-				j.test("resources/Essay Data/testing_set1.xlsx");
-				//j.train("resources/Essay Data/training_set1.xlsx", 100, 0);
-				j.train("resources/Essay Data/training_set7.xlsx", 100, 0);
-				j.train("resources/Essay Data/training_set8.xlsx", 100, 0);
+				//j.test("resources/Essay Data/testing_set1.xlsx");
+				j.train("resources/Essay Data/training_set1.xlsx", 10, 0);
+				j.train("resources/Essay Data/training_set7.xlsx", 10, 0);
+				j.train("resources/Essay Data/training_set8.xlsx", 10, 0);
 				j.test("resources/Essay Data/testing_set1.xlsx");
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -830,7 +821,7 @@ public class Jarvis {
 			System.out.println(msg);
 			PrintWriter out;
 			try {
-				out = new PrintWriter(new FileWriter("log_file.txt", true));
+				out = new PrintWriter(new FileWriter("resources/log_file.txt", true));
 				out.println(msg);
 				out.close();
 			} catch (IOException e) {

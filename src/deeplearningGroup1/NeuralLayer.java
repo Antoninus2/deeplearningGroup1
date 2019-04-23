@@ -337,7 +337,7 @@ public class NeuralLayer {
 			System.out.println(msg);
 			PrintWriter out;
 			try {
-				out = new PrintWriter(new FileWriter("log_file.txt", true));
+				out = new PrintWriter(new FileWriter("resources/log_file.txt", true));
 				out.println(msg);
 				out.close();
 			} catch (IOException e) {
