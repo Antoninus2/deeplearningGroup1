@@ -21,9 +21,9 @@ import javafx.scene.control.Label;
 // package deeplearningGroup1;
 
 /**
-*
-* @author J.McGuire
 * The list of available courses for the student
+* @author J.McGuire
+* 
 */
 
 public class CourseList{
@@ -38,8 +38,9 @@ public class CourseList{
 	
 // Constructor
 	/**
-	 * @param void
 	 * Creates initial course list object
+	 * @param void
+	 * 
 	 */
 	public CourseList() {
 		// Initialize Attributes
@@ -64,9 +65,9 @@ public class CourseList{
 //Public  Methods
 	
 	/**
-	 * 
-	 * @param course
 	 * Allows the professor to add a course to the catalog
+	 * @param course
+	 * 
 	 */
 	public void newCourse(Course course) {
 		// Create the button for the course list
@@ -84,9 +85,9 @@ public class CourseList{
 	}
 	
 	/**
-	 * 
-	 * @param student
 	 * Lets the list know which student is trying to add a course
+	 * @param student
+	 * 
 	 */
 	public void setStudent(ProfStudComTest student) {
 		this.student = student;
@@ -96,9 +97,9 @@ public class CourseList{
 // Private Methods
 	
 	/**
-	 * 
-	 * @param course
 	 * Shows join course wizard to student
+	 * @param course
+	 * 
 	 */
 	private void joinCourseWizard(Course course) {
 		// Make join course window
@@ -182,9 +183,9 @@ public class CourseList{
 	}
 	
 	/**
-	 * 
-	 * @param course
 	 * Gives the correct course object to the student
+	 * @param course
+	 * 
 	 */
 	private void giveStudentCourse(Course course) {
 		student.addCourse(course, course.getNumStudents());

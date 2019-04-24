@@ -2,9 +2,8 @@ package deeplearningGroup1;
 
 
 /**
- * 
- * @author J.McGuire
  * The course that both professor and student participate in
+ * @author J.McGuire
  */
 public class Course {
 // Attributes
@@ -20,10 +19,10 @@ public class Course {
 	
 // Constructor
 	/**
-	 * 
+	 * Professor constructs a new course that students can join
 	 * @param courseID
 	 * @param courseName
-	 * Professor constructs a new course that students can join
+	 * 
 	 */
 	public Course(int[] courseID, String courseName) {
 		// Initialize Attributes
@@ -42,9 +41,9 @@ public class Course {
 // Methods
 	
 	/**
-	 * 
-	 * @return counts
 	 * Counts the number of each grade given by Jarvis
+	 * @return counts
+	 *
 	 */
 	public int[] countGrades() {
 		int[] counts = new int [5];
@@ -89,9 +88,9 @@ public class Course {
 	}
 	
 	/**
-	 * 
-	 * @param courseID
 	 * Initializes course ID
+	 * @param courseID
+	 * 
 	 */
 	private void initializeID(int[] courseID) {
 		this.courseID = new int[4];
@@ -101,10 +100,10 @@ public class Course {
 	}
 	
 	/**
-	 * 
+	 * Checks that the student is authorized to join the course
 	 * @param enteredID
 	 * @return right
-	 * Checks that the student is authorized to join the course
+	 * 
 	 */
 	public Boolean checkID(int[] enteredID) {
 		Boolean right = true;
@@ -126,11 +125,11 @@ public class Course {
 	}
 	
 	/**
-	 * 
+	 * The professor can assign a new essay to the course.
 	 * @param chosenTopic
 	 * @param minCt
 	 * @param maxCt
-	 * The professor can assign a new essay to the course.
+	 * 
 	 */
 	public void createNewEssay(String chosenTopic, int minCt, int maxCt) {
 		topic = chosenTopic;
@@ -172,7 +171,7 @@ public class Course {
 		stuNames[i] = name;
 	}
 	
-	public String getStNamei(int i) {
+	public String getStNamei(int i) { 	
 		return stuNames[i];
 	}
 	
@@ -180,8 +179,7 @@ public class Course {
 		grades[i] = grade;
 	}
 	
-	public String getGradei(int i) {
-		
+	public String getGradei(int i) { 	
 		return grades[i];
 	}
 }

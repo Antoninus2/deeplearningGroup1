@@ -14,9 +14,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
- * 
- * @author J.McGuire
  * The homepage of the professor GUI
+ * @author J.McGuire
+ * 
  */
 public class ProfHomepage{
 	
@@ -30,9 +30,10 @@ public class ProfHomepage{
 	
 // Constructor
 	/**
+	 * Creates the professor homepage GUI
 	 * @author J.McGuire
 	 * @param cList
-	 * Creates the professor homepage GUI
+	 * 
 	 */
 	public ProfHomepage(CourseList cList){
 		// Initialize attributes
@@ -70,10 +71,11 @@ public class ProfHomepage{
 	
 // Methods
 	/**
+	 * Erases all courses the professor has made
 	 * @author J.McGuire
 	 * @param void
 	 * @return void 
-	 * Erases all courses the professor has made
+	 * 
 	 */
 	private void endSemester() {
 		homePane.getChildren().clear();
@@ -91,11 +93,12 @@ public class ProfHomepage{
 	}
 	
 	/**
+	 * Creates a new section for
+	 * students to join.
 	 * @author J.McGuire
 	 * @param none
 	 * @return void
-	 * Creates a new section for
-	 * students to join.
+	 * 
 	 */
 	private void createCourseWizard() {
 		int scale = 20; 	// scale for pane nodes;
@@ -130,12 +133,13 @@ public class ProfHomepage{
 	
 	
 	/**
-	 * @author J.McGuire
-	 * @param courseName
-	 * @return void
 	 * Creates a button for a section.
 	 * Assigns section ID to section.
 	 * Allows user to open Course page.
+	 * @author J.McGuire
+	 * @param courseName
+	 * @return void
+	 * 
 	 */
 	private void createCourseBttn(String courseName) {
 		int xCo;

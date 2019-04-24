@@ -12,7 +12,6 @@ public class ProfStudComTest{
 	public Stage testStage;
 	private Button joinB;
 	private ProfStudComTest student;
-	private Course course;
 	
 // Constructor
 	ProfStudComTest(CourseList cl){
@@ -33,13 +32,19 @@ public class ProfStudComTest{
 	}
 	
 // Methods
-	public void addCourse(Course course, int studNum) {
-		this.course = course;
-		createCourseButton(course, studNum);
+	public void addCourse(Course course, int studNum) { 	// TODO must send studNum and course object to student 
+		createCourseButton(course, studNum);				// create a new button for the course they just joined
 	}
 	
-	private void createCourseButton(Course course, int studNum) {
-		// TODO
+	private void createCourseButton(Course course, int studNum) { 		// TODO used to create button corresponding to course
+		Button gradeEssyB = new Button("Grade " + course.getName() + " essay");
+		gradeEssyB.setLayoutX(340);
+		gradeEssyB.setLayoutY(340);
+		testPane.getChildren().add(gradeEssyB);
+		gradeEssyB.setOnAction(e -> { if(course.getEssayStatus()) {		// show that there is an essay assigned
+										course.setGradei(studNum, "C"); // TODO send the grade to the course object so the professor can see it
+									  }
+									});
 	}
 	
 	public void setStudent(ProfStudComTest student) {
